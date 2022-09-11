@@ -9,20 +9,26 @@ import com.modu.ModuForm.member.MemberServiceImpl;
 import com.modu.ModuForm.member.MemoryMemberRepository;
 import com.modu.ModuForm.order.OrderService;
 import com.modu.ModuForm.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class AppConfig {
-    private static MemberRepository getMemberRepository() {
+    @Bean
+    public static MemberRepository getMemberRepository() {
         return new MemoryMemberRepository();
     }
-    private static DiscountPolicy getDiscountPolicy() {
-//        return new FixDiscountPolicy();
+    @Bean
+    public static DiscountPolicy getDiscountPolicy() {
         return new RateDiscountPolicy();
     }
     // 구체 클래스를 따로 메소드로 정의하여 반환하게함.
 
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(getMemberRepository());
     }
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
     }
