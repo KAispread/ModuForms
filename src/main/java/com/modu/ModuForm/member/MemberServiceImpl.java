@@ -1,7 +1,7 @@
 package com.modu.ModuForm.member;
 
 public class MemberServiceImpl implements MemberService{
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
     //Ctrl + Shift + Enter 자동 완성
 
     public MemberServiceImpl(MemberRepository memberRepository) {
@@ -12,9 +12,13 @@ public class MemberServiceImpl implements MemberService{
     public void joinMember(Member member) {
         memberRepository.save(member);
     }
-
     @Override
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    //Test용
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
     }
 }

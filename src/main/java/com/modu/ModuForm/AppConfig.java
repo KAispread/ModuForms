@@ -15,21 +15,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
     @Bean
-    public static MemberRepository getMemberRepository() {
+    public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
     @Bean
-    public static DiscountPolicy getDiscountPolicy() {
+    public DiscountPolicy discountPolicy() {
         return new RateDiscountPolicy();
     }
     // 구체 클래스를 따로 메소드로 정의하여 반환하게함.
-
     @Bean
     public MemberService memberService() {
-        return new MemberServiceImpl(getMemberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
     @Bean
     public OrderService orderService() {
-        return new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 }
