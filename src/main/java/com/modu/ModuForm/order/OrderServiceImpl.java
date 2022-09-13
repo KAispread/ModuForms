@@ -5,6 +5,7 @@ import com.modu.ModuForm.member.Member;
 import com.modu.ModuForm.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.jta.UserTransactionAdapter;
 
 @Component
 public class OrderServiceImpl  implements  OrderService{
