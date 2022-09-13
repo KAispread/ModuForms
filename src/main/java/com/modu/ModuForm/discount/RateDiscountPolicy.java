@@ -2,7 +2,9 @@ package com.modu.ModuForm.discount;
 
 import com.modu.ModuForm.member.Grade;
 import com.modu.ModuForm.member.Member;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RateDiscountPolicy implements DiscountPolicy{
     private int discountPercent = 10;
 
