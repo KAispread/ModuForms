@@ -1,11 +1,12 @@
 package com.modu.ModuForm.order;
 
+import com.modu.ModuForm.Annotaion.MainDiscountPolicy;
 import com.modu.ModuForm.discount.DiscountPolicy;
 import com.modu.ModuForm.member.Member;
 import com.modu.ModuForm.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.jta.UserTransactionAdapter;
+
 
 @Component
 public class OrderServiceImpl  implements  OrderService{
@@ -13,7 +14,7 @@ public class OrderServiceImpl  implements  OrderService{
     private final DiscountPolicy discountPolicy;
 
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
