@@ -1,13 +1,14 @@
 package com.modu.ModuForm.common;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.UUID;
 
-@Scope("request")
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Component
 public class MyLogger {
     private String uuid;
