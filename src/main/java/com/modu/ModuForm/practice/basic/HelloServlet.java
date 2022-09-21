@@ -1,4 +1,4 @@
-package com.modu.ModuForm.basic;
+package com.modu.ModuForm.practice.basic;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
