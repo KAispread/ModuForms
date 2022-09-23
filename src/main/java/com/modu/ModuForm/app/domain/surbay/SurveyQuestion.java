@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 import java.util.Objects;
 
 @Getter
@@ -13,6 +15,7 @@ import java.util.Objects;
 @Embeddable
 public class SurveyQuestion {
     private int number;
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
 
     @Builder

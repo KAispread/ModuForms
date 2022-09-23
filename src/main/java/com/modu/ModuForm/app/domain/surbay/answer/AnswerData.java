@@ -4,7 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -12,7 +14,9 @@ import java.util.Objects;
 @Embeddable
 public class AnswerData {
    private int number;
+   @Column(columnDefinition = "TEXT")
    private String question;
+   @Lob
    private String answer;
 
    @Builder
