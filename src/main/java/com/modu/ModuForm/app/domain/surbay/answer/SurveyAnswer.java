@@ -1,6 +1,6 @@
-package com.modu.ModuForm.app.domain.surbay;
+package com.modu.ModuForm.app.domain.surbay.answer;
 
-import com.modu.ModuForm.app.domain.surbay.answer.Answer;
+import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class SurveyAnswer {
     @JoinColumn(name = "SURVEY_ID", nullable = false)
     private Survey survey;
 
-    @OneToMany(mappedBy = "surveyAnswer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "surveyAnswer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answer;
 
     private Long count;

@@ -1,6 +1,5 @@
 package com.modu.ModuForm.app.domain.surbay.answer;
 
-import com.modu.ModuForm.app.domain.surbay.SurveyAnswer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

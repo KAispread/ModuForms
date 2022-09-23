@@ -16,7 +16,7 @@ public class AnswerData {
    private int number;
    @Column(columnDefinition = "TEXT")
    private String question;
-   @Lob
+   @Column(columnDefinition = "TEXT", nullable = false)
    private String answer;
 
    @Builder

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,7 +23,12 @@ public class Admin {
     private User user;
 
     @OneToMany(mappedBy = "admin")
-    private List<Survey> surveyList;
+    private List<Survey> surveyList = new ArrayList<>();
+
+    public void setSurveyList(Survey survey) {
+        this.surveyList.add(survey);
+        survey.setAdmin(this);
+    }
 
     @Column(nullable = false)
     private String name;

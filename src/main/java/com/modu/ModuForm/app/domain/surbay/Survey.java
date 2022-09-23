@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.domain.surbay;
 
+import com.modu.ModuForm.app.domain.surbay.answer.SurveyAnswer;
 import com.modu.ModuForm.app.domain.user.admin.Admin;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,18 +35,21 @@ public class Survey {
     private LocalDateTime postDate;
 
     @Column(name = "DEADLINE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deadLine;
+    private LocalDateTime deadLine;
 
     @Column(name = "MAXIMUM_ANSWER")
-    private Long maximumAnswer;
+    private int maximumAnswer;
 
     @Builder
-    public Survey(Admin admin, LocalDateTime postDate, Date deadLine, Long maximumAnswer) {
+    public Survey(Admin admin, LocalDateTime postDate, LocalDateTime deadLine, int maximumAnswer) {
         this.admin = admin;
         this.postDate = postDate;
         this.deadLine = deadLine;
         this.maximumAnswer = maximumAnswer;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     @Override
