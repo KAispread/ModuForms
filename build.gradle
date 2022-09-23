@@ -21,18 +21,19 @@ repositories {
 }
 
 dependencies {
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'javax.inject:javax.inject:1'
-	//lombok 라이브러리 추가
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'com.h2database:h2'
+
+	implementation 'org.springframework.session:spring-session-jdbc'
+
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
-	//
+	testCompileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	//web 라이브러리 추가
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 tasks.named('test') {
