@@ -14,16 +14,15 @@ import java.util.Objects;
 @NoArgsConstructor
 @Embeddable
 public class SurveyQuestion {
-    private int number;
+    private Integer number;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
 
     @Builder
-    public SurveyQuestion(int number, String question) {
+    public SurveyQuestion(Integer number, String question) {
         this.number = number;
         this.question = question;
     }
-
 
     @Override
     public boolean equals(Object o) {

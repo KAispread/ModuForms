@@ -41,16 +41,21 @@ public class Survey {
     private int maximumAnswer;
 
     @Builder
-    public Survey(Admin admin, LocalDateTime postDate, LocalDateTime deadLine, int maximumAnswer) {
+    public Survey(Admin admin, LocalDateTime postDate, LocalDateTime deadLine, int maximumAnswer,List<SurveyQuestion> surveyQuestionList) {
         this.admin = admin;
         this.postDate = postDate;
         this.deadLine = deadLine;
         this.maximumAnswer = maximumAnswer;
+        this.surveyQuestionList = surveyQuestionList;
     }
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
         admin.setSurveyList(this);
+    }
+
+    public void updateQuestion(List<SurveyQuestion> newSurveyQuestionList) {
+        surveyQuestionList = newSurveyQuestionList;
     }
 
     @Override
