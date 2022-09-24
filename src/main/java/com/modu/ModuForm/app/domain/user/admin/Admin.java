@@ -26,8 +26,7 @@ public class Admin {
     private List<Survey> surveyList = new ArrayList<>();
 
     public void setSurveyList(Survey survey) {
-        this.surveyList.add(survey);
-        survey.setAdmin(this);
+        surveyList.add(survey);
     }
 
     @Column(nullable = false)
