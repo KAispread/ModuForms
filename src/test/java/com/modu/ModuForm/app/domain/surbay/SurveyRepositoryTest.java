@@ -18,7 +18,6 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@WebAppConfiguration
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SurveyRepositoryTest {
