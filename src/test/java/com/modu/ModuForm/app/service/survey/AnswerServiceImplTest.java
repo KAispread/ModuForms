@@ -39,7 +39,6 @@ public class AnswerServiceImplTest {
     private UserRepository userRepository;
     @Autowired
     private AdminRepository adminRepository;
-
     @Autowired
     private AnswerServiceImpl answerService;
 
@@ -47,37 +46,18 @@ public class AnswerServiceImplTest {
     void cleanUp() {
         surveyRepository.deleteAll();
     }
-
-
-    @DisplayName("설문 응답이 등록된다.")
-    @Test
-    @Transactional(noRollbackFor = IllegalAccessException.class)
-    public void AnswerRegist(){
-        User user = User.builder()
+    private User userRegist() {
+        return User.builder()
                 .age(20)
                 .phone("1231")
                 .email("asdfasdf@vccoom")
                 .name("기우")
                 .role(Role.USER)
                 .build();
-        userRepository.save(user);
-        //given
-        // 관리자 생성
-        Admin admin = Admin.builder()
-                .user(null)
-                .name("KAI")
-                .phone("2323")
-                .company("Inflearn")
-                .email("asdfa@com")
-                .build();
-        adminRepository.save(admin);
+    }
 
-        // 질문 추가
-        List<SurveyQuestion> surveyQuestions = new ArrayList<>();
-        surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
-        surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
-        surveyQuestions.add(buildQuestion(3, "주소를 입력해주세요"));
-        Survey survey = Survey.builder()
+    private Survey surveyRegist(Admin admin, List<SurveyQuestion> surveyQuestions){
+        return Survey.builder()
                 .admin(admin)
                 .title("참여조사")
                 .postDate(LocalDateTime.now())
@@ -85,6 +65,35 @@ public class AnswerServiceImplTest {
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestions)
                 .build();
+    }
+
+    private Admin adminRegist() {
+        return Admin.builder()
+                .user(null)
+                .name("KAI")
+                .phone("2323")
+                .company("Inflearn")
+                .email("asdfa@com")
+                .build();
+    }
+
+    @DisplayName("설문 응답이 등록된다.")
+    @Test
+    @Transactional(noRollbackFor = IllegalAccessException.class)
+    public void AnswerRegist(){
+        //given
+        User user = userRegist();
+        userRepository.save(user);
+
+        Admin admin = adminRegist();
+        adminRepository.save(admin);
+        // 질문 추가
+        List<SurveyQuestion> surveyQuestions = new ArrayList<>();
+        surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
+        surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
+        surveyQuestions.add(buildQuestion(3, "주소를 입력해주세요"));
+
+        Survey survey = surveyRegist(admin, surveyQuestions);
         surveyRepository.save(survey);
 
         //when
@@ -105,6 +114,7 @@ public class AnswerServiceImplTest {
         assertThat(answerResult.getAnswerDataList().get(1).getAnswer()).isEqualTo("25");
         assertThat(answerResult.getUser().getId()).isEqualTo(user.getId());
     }
+
     private SurveyQuestion buildQuestion(Integer count, String question) {
         return SurveyQuestion.builder()
                 .number(count)
