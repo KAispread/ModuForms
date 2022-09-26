@@ -55,6 +55,7 @@ public class SurveyRepositoryTest {
         // 설문 양식 생성
         Survey newSurvey = Survey.builder()
                 .admin(admin)
+                .title("참여 조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -98,6 +99,7 @@ public class SurveyRepositoryTest {
         // 설문 양식 생성
         Survey newSurvey = Survey.builder()
                 .admin(admin)
+                .title("참여조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -143,6 +145,7 @@ public class SurveyRepositoryTest {
         // 설문 양식 생성
         Survey newSurvey = Survey.builder()
                 .admin(admin)
+                .title("참여조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
