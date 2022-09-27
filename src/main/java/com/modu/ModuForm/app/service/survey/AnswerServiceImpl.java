@@ -1,20 +1,17 @@
 package com.modu.ModuForm.app.service.survey;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
-import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
-import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
-import com.modu.ModuForm.app.web.dto.AnswerRequestDto;
-import com.modu.ModuForm.app.web.dto.SurveyListResponseDto;
-import com.modu.ModuForm.app.web.dto.SurveyResponseDto;
+import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
+import com.modu.ModuForm.app.web.dto.survey.AnswerResponseDto;
+import com.modu.ModuForm.app.web.dto.survey.SurveyListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,11 +21,11 @@ public class AnswerServiceImpl implements AnswerService{
     private final UserRepository userRepository;
 
     @Override
-    public Long save(AnswerRequestDto AnswerRequestDto, Long userId) {
-        User user = userRepository.getReferenceById(userId);
-        Survey survey = surveyRepository.getReferenceById(AnswerRequestDto.getSurveyId());
+    public Long save(AnswerRequestDto answerRequestDto, Long surveyId) {
+        User user = userRepository.getReferenceById(answerRequestDto.getUserId());
+        Survey survey = surveyRepository.getReferenceById(surveyId);
 
-        return answerRepository.save(AnswerRequestDto.toEntity(survey, user)).getId();
+        return answerRepository.save(answerRequestDto.toEntity(survey, user)).getId();
     }
 
     @Override
@@ -37,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public SurveyResponseDto findById() {
+    public AnswerResponseDto findById() {
         return null;
     }
 

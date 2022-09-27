@@ -10,9 +10,7 @@ import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.domain.user.admin.Admin;
 import com.modu.ModuForm.app.domain.user.admin.AdminRepository;
-import com.modu.ModuForm.app.web.dto.AnswerRequestDto;
-import org.assertj.core.api.Assertions;
-import org.hibernate.loader.collection.OneToManyJoinWalker;
+import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -103,10 +101,11 @@ public class AnswerServiceImplTest {
         answer.add("경기도");
 
         AnswerRequestDto answerRequestDto = AnswerRequestDto.builder()
-                .surveyId(survey.getId())
+                .userId(user.getId())
                 .answerQuestion(answer)
                 .build();
-        Long answerId = answerService.save(answerRequestDto, user.getId());
+
+        Long answerId = answerService.save(answerRequestDto, survey.getId());
 
         //then
         Answer answerResult = answerRepository.findById(answerId).orElseThrow();

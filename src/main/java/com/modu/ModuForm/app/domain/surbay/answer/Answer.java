@@ -44,6 +44,10 @@ public class Answer {
         servey.addAnswer(this);
     }
 
+    public void setSurveyRef(Survey survey) {
+        this.survey = survey;
+    }
+
     @Builder
     public Answer(User user,Survey survey, LocalDateTime answerDate, List<AnswerData> answerDataList) {
         this.user = user;

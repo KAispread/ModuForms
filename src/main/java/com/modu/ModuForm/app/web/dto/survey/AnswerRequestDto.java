@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.dto;
+package com.modu.ModuForm.app.web.dto.survey;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
@@ -6,21 +6,22 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerData;
 import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor
 @Getter
 public class AnswerRequestDto {
-    private final Long surveyId;
-    private final List<String> answerQuestion;
-
+    private Long userId;
+    private List<String> answerQuestion;
 
     @Builder
-    public AnswerRequestDto(Long surveyId, List<String> answerQuestion) {
-        this.surveyId = surveyId;
+    public AnswerRequestDto(List<String> answerQuestion, Long userId) {
+        this.userId = userId;
         this.answerQuestion = answerQuestion;
     }
 
@@ -30,7 +31,7 @@ public class AnswerRequestDto {
                 .answerDataList(convertAnswerData(answerQuestion))
                 .user(user)
                 .build();
-        ans.setSurvey(survey);
+        ans.setSurveyRef(survey);
         return ans;
     }
 
