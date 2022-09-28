@@ -1,11 +1,9 @@
 package com.modu.ModuForm.app.web.controller.user;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -64,16 +62,23 @@ public class UserIndexController {
         }
     }
 
-    @Component("helloBean")
-    static class HelloBean {
-        public String hello(String data) {
-            return "Hello " + data;
-        }
-    }
 
     @GetMapping("/basic/date")
     public String date(Model model) {
         model.addAttribute("localDateTime", LocalDateTime.now());
         return "basic/date";
+    }
+
+    @GetMapping("/basic/link")
+    public String link(Model model) {
+        model.addAttribute("param1", "data1");
+        model.addAttribute("param2", "data2");
+        return "/basic/link";
+    }
+
+    @GetMapping("/basic/literal")
+    public String literal(Model model) {
+        model.addAttribute("data", "Spring");
+        return "basic/literal";
     }
 }
