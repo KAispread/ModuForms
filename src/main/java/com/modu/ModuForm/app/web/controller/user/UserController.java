@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserServiceImpl userService;
     // 로그인
-    @GetMapping("/app/user/login")
+    @PostMapping("/app/user/login")
     public UserResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
         return userService.login(loginRequestDto);
     }
