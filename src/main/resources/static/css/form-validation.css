@@ -1,0 +1,10 @@
+.container {
+    max-width: 960px;
+}
+
+.form-regist {
+    width: 100%;
+    max-width: 650px;
+    padding: 15px;
+    margin: auto;
+}
