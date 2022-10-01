@@ -27,4 +27,9 @@ public class UserIndexController {
     public String surveySave() {
         return "survey-save";
     }
+
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
 }

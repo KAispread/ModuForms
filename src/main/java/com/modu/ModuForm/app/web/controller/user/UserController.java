@@ -3,7 +3,7 @@ package com.modu.ModuForm.app.web.controller.user;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
 import com.modu.ModuForm.app.web.dto.user.AdminRequestDto;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
-import com.modu.ModuForm.app.web.dto.user.UserRequestDto;
+import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import com.modu.ModuForm.app.web.dto.user.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +20,13 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/app/user")
-    public Long signUp(@RequestBody UserRequestDto userRequestDto) {
-        return null;
+    public Long register(@RequestBody UserRegisterDto userRegisterDto) {
+        return userService.register(userRegisterDto);
     }
 
     // 회원 정보 수정
     @PutMapping("/app/user/{id}")
-    public Long update(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
+    public Long update(@PathVariable Long id, @RequestBody UserRegisterDto userRequestDto) {
         return null;
     }
 
