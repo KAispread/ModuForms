@@ -46,8 +46,8 @@ public class AnswerServiceImplTest {
     }
     private User userRegist() {
         return User.builder()
-                .age(20)
-                .phone("1231")
+                .birth(19980112L)
+                .phone(1234L)
                 .email("asdfasdf@vccoom")
                 .name("기우")
                 .role(Role.USER)
