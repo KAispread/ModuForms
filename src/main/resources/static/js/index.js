@@ -4,6 +4,9 @@ let index = {
         $('#btn-register').on('click', function () {
             _this.register();
         })
+        // $('#btn-login').on('click', function () {
+        //     _this.login();
+        // })
     },
     register : function () {
         let data = {
@@ -22,13 +25,28 @@ let index = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function () {
+        }).done(function (data) {
             alert('회원 가입이 완료되었습니다.');
             window.location.href = '/login';
         }).fail(function (error) {
             alert(JSON.stringify(error));
-        }).always(function () {
-            window.location.href = '/login';
+        })
+    },
+    login : function () {
+        let data = {
+            userId : $('#userId').val(),
+            password : $('#password').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/login',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function (){
+            alert('로그인 성공');
+            window.location.href = '/';
         })
     }
 }

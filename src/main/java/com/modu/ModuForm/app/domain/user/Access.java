@@ -16,7 +16,7 @@ public class Access {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @Column(name = "ID", nullable = false, unique = true)

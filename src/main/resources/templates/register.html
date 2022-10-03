@@ -43,6 +43,9 @@
                         </div>
                     </div>
 
+                    <h1 th:text="${user}"></h1>
+                    <h1>강훈</h1>
+
                     <div class="col-12">
                         <label for="birth" class="form-label">생년월일 <span class="text-muted">(YYYY/MM/DD)</span></label>
                         <input type="number" class="form-control" id="birth" placeholder="Ex) 19980101" value="" required>
@@ -78,7 +81,7 @@
                 </div>
                 <hr class="my-4">
 
-                <button class="w-100 btn btn-primary btn-lg" type="submit" id="btn-register">가입 하기</button>
+                <button class="w-100 btn btn-primary btn-lg" type="button" id="btn-register">가입 하기</button>
             </form>
         </div>
     </main>
@@ -89,8 +92,5 @@
     </footer>
 
     <th:block th:replace="~{layout/footer :: common_footer}" />
-<!--    <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js"-->
-<!--            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"-->
-<!--            crossorigin="anonymous"></script>-->
 </body>
 </html>

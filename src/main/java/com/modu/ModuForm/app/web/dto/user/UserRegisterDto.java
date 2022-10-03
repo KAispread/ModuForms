@@ -42,7 +42,6 @@ public class UserRegisterDto {
         } else {
             userGender = null;
         }
-        userGender = Gender.MAN;
         return User.builder()
                 .name(username)
                 .birth(birth)
