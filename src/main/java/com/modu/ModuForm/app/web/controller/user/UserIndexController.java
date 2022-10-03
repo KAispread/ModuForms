@@ -5,7 +5,6 @@ import com.modu.ModuForm.app.service.user.UserService;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,9 +38,9 @@ public class UserIndexController {
     }
 
     @GetMapping("/")
-    public String mainPage(Model model, HttpSession session) {
+    public String mainPage(HttpSession session) {
         if (session.getAttribute("user") == null) {
-            return "redirect:/login";
+            return "loginForm";
         }
         return "home";
     }
