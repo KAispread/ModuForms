@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.service.user.UserService;
+import com.modu.ModuForm.app.web.config.SessionManager;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,21 +10,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 //@RequestMapping("basic/")
 @RequiredArgsConstructor
 @Controller
 public class UserIndexController {
-
     private final UserService userService;
+    private final SessionManager sessionManager;
+
     @GetMapping("/login")
     public String userLogin() {
         return "loginForm";
     }
 
     @PostMapping("/login")
-    public String login(LoginRequestDto loginRequestDto, BindingResult bindingResult, HttpSession session) {
+    public String login(LoginRequestDto loginRequestDto, BindingResult bindingResult, HttpSession session, HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
             return "loginForm";
         }
@@ -33,19 +37,19 @@ public class UserIndexController {
             return "loginForm";
         }
 
-        session.setAttribute("user", "1");
+        sessionManager.createSession(session, loginAccess, response);
         return "redirect:/";
     }
 
     @GetMapping("/")
-    public String mainPage(HttpSession session) {
-        if (session.getAttribute("user") == null) {
+    public String mainPage(HttpServletRequest request, HttpSession session) {
+        if(sessionManager.getSession(request, session) == null) {
             return "loginForm";
         }
-        return "home";
+        return "userMain";
     }
 
-    @GetMapping
+    @GetMapping()
     public String surveySave() {
         return "survey-save";
     }
