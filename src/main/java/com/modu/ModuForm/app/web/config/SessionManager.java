@@ -18,7 +18,7 @@ public class SessionManager {
         SESSION_CONST = "USER";
     }
 
-    public void createSession(HttpSession session, Access access, HttpServletResponse response) {
+    public Long createSession(HttpSession session, Access access, HttpServletResponse response) {
         String sessionId = UUID.randomUUID().toString();
         Long userPk = access.getUser().getId();
         session.setAttribute(sessionId, userPk);
@@ -26,6 +26,7 @@ public class SessionManager {
         accessCookie.setMaxAge(-1);
 
         response.addCookie(accessCookie);
+        return userPk;
     }
 
     public Long getSession(HttpServletRequest request, HttpSession session) {

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,13 +38,23 @@ public class UserIndexController {
             return "loginForm";
         }
 
-        sessionManager.createSession(session, loginAccess, response);
-        return "redirect:/";
+        Long userPk = sessionManager.createSession(session, loginAccess, response);
+        return "redirect:/" + userPk;
     }
 
     @GetMapping("/")
     public String mainPage(HttpServletRequest request, HttpSession session) {
-        if(sessionManager.getSession(request, session) == null) {
+        Long userPk = sessionManager.getSession(request, session);
+        if(userPk == null) {
+            return "loginForm";
+        }
+        return "redirect:/" + userPk;
+    }
+
+    @GetMapping("/{id}")
+    public String userMain(@PathVariable Long id, HttpServletRequest request, HttpSession session) {
+        Long userPk = sessionManager.getSession(request, session);
+        if(userPk == null) {
             return "loginForm";
         }
         return "userMain";

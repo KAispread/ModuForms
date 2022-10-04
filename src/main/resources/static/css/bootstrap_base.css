@@ -8,7 +8,7 @@
     user-select: none;
 }
 
-#logo_icon {
+h1 #logo_icon {
     font-family: 'Caveat', cursive;
     font-size: 50px;
     color: midnightblue;
