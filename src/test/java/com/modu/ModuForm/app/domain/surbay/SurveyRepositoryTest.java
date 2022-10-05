@@ -1,20 +1,22 @@
 package com.modu.ModuForm.app.domain.surbay;
 
-import com.modu.ModuForm.app.domain.user.admin.Admin;
-import com.modu.ModuForm.app.domain.user.admin.AdminRepository;
+import com.modu.ModuForm.app.domain.user.Gender;
+import com.modu.ModuForm.app.domain.user.Role;
+import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.domain.user.UserRepository;
+import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,7 +26,7 @@ public class SurveyRepositoryTest {
     @Autowired
     SurveyRepository surveyRepository;
     @Autowired
-    AdminRepository adminRepository;
+    UserRepository userRepository;
 
     @AfterEach
     public void cleanUp(){
@@ -36,15 +38,18 @@ public class SurveyRepositoryTest {
     @Transactional
     public void surveyRegistration() {
         //given
-        // 관리자 생성
-        Admin admin = Admin.builder()
-                        .user(null)
-                        .name("KAI")
-                        .phone("2323")
-                        .company("Inflearn")
-                        .email("asdfa@com")
-                        .build();
-        adminRepository.save(admin);
+        // 유저 생성
+        User user = userRepository.save(User.builder()
+                .name("기우")
+                .nickName("Kai")
+                .birth(19980101L)
+                .gender(Gender.MAN)
+                .email("asdf1234@naver.com")
+                .phone(01032111L)
+                .role(Role.USER)
+                .company("AnyangUniv")
+                .build());
+        userRepository.save(user);
 
         // 질문 추가
         List<SurveyQuestion> surveyQuestions = new ArrayList<>();
@@ -54,7 +59,7 @@ public class SurveyRepositoryTest {
 
         // 설문 양식 생성
         Survey newSurvey = Survey.builder()
-                .admin(admin)
+                .user(user)
                 .title("참여 조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
@@ -82,14 +87,17 @@ public class SurveyRepositoryTest {
     public void updateSurvey(){
         //given
         // 관리자 생성
-        Admin admin = Admin.builder()
-                .user(null)
-                .name("KAI")
-                .phone("2323")
-                .company("Inflearn")
-                .email("asdfa@com")
-                .build();
-        adminRepository.save(admin);
+        User user = userRepository.save(User.builder()
+                .name("기우")
+                .nickName("Kai")
+                .birth(19980101L)
+                .gender(Gender.MAN)
+                .email("asdf1234@naver.com")
+                .phone(0103211L)
+                .role(Role.USER)
+                .company("AnyangUniv")
+                .build());
+        userRepository.save(user);
 
         // 질문 추가
         List<SurveyQuestion> surveyQuestions = new ArrayList<>();
@@ -98,7 +106,7 @@ public class SurveyRepositoryTest {
 
         // 설문 양식 생성
         Survey newSurvey = Survey.builder()
-                .admin(admin)
+                .user(user)
                 .title("참여조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
@@ -128,14 +136,17 @@ public class SurveyRepositoryTest {
     public void deleteSurvey(){
         //given
         // 관리자 생성
-        Admin admin = Admin.builder()
-                .user(null)
-                .name("KAI")
-                .phone("2323")
-                .company("Inflearn")
-                .email("asdfa@com")
-                .build();
-        adminRepository.save(admin);
+        User user = userRepository.save(User.builder()
+                .name("기우")
+                .nickName("Kai")
+                .birth(19980101L)
+                .gender(Gender.MAN)
+                .email("asdf1234@naver.com")
+                .phone(0103211L)
+                .role(Role.USER)
+                .company("AnyangUniv")
+                .build());
+        userRepository.save(user);
 
         // 질문 추가
         List<SurveyQuestion> surveyQuestions = new ArrayList<>();
@@ -144,7 +155,7 @@ public class SurveyRepositoryTest {
 
         // 설문 양식 생성
         Survey newSurvey = Survey.builder()
-                .admin(admin)
+                .user(user)
                 .title("참여조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))

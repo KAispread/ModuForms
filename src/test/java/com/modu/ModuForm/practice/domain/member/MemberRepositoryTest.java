@@ -1,13 +1,11 @@
 package com.modu.ModuForm.practice.domain.member;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class MemberRepositoryTest {

@@ -8,8 +8,6 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
-import com.modu.ModuForm.app.domain.user.admin.Admin;
-import com.modu.ModuForm.app.domain.user.admin.AdminRepository;
 import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -35,8 +33,7 @@ public class AnswerServiceImplTest {
     private AnswerRepository answerRepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private AdminRepository adminRepository;
+
     @Autowired
     private AnswerServiceImpl answerService;
 
@@ -54,10 +51,11 @@ public class AnswerServiceImplTest {
                 .build();
     }
 
-    private Survey surveyRegist(Admin admin, List<SurveyQuestion> surveyQuestions){
+    private Survey surveyRegist(User user, List<SurveyQuestion> surveyQuestions){
         return Survey.builder()
-                .admin(admin)
+                .user(user)
                 .title("참여조사")
+                .description("회식에 참여할지에 대한 여론 조사입니다.")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -65,15 +63,6 @@ public class AnswerServiceImplTest {
                 .build();
     }
 
-    private Admin adminRegist() {
-        return Admin.builder()
-                .user(null)
-                .name("KAI")
-                .phone("2323")
-                .company("Inflearn")
-                .email("asdfa@com")
-                .build();
-    }
 
     @DisplayName("설문 응답이 등록된다.")
     @Test
@@ -83,15 +72,13 @@ public class AnswerServiceImplTest {
         User user = userRegist();
         userRepository.save(user);
 
-        Admin admin = adminRegist();
-        adminRepository.save(admin);
         // 질문 추가
         List<SurveyQuestion> surveyQuestions = new ArrayList<>();
         surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
         surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
         surveyQuestions.add(buildQuestion(3, "주소를 입력해주세요"));
 
-        Survey survey = surveyRegist(admin, surveyQuestions);
+        Survey survey = surveyRegist(user, surveyQuestions);
         surveyRepository.save(survey);
 
         //when

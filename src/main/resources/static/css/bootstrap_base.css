@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 
+@font-face {
+    font-family: "Caveat";
+    src: url("/static/fonts/Caveat-VariableFont_wght.ttf");
+}
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -9,7 +14,7 @@
 }
 
 h1 #logo_icon {
-    font-family: 'Caveat', cursive;
+    font-family: "Arial Black", monospace;
     font-size: 50px;
     color: midnightblue;
     padding-bottom: 10px;

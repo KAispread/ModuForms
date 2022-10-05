@@ -16,22 +16,26 @@ public class UserRegisterDto {
     private String id;
     private String pwd;
     private String username;
+    private String nickname;
     private Long birth;
     private String gender;
     private String email;
     private Long phone;
-
     private Gender userGender;
+    private String company;
 
     @Builder
-    public UserRegisterDto(String id, String pwd, String username, Long birth, String gender, String email, Long phone) {
+    public UserRegisterDto(String id, String pwd, String username, String nickname, Long birth, String gender, String email, Long phone, Gender userGender, String company) {
         this.id = id;
         this.pwd = pwd;
         this.username = username;
+        this.nickname = nickname;
         this.birth = birth;
         this.gender = gender;
         this.email = email;
         this.phone = phone;
+        this.userGender = userGender;
+        this.company = company;
     }
 
     public User toUserEntity() {
@@ -44,11 +48,13 @@ public class UserRegisterDto {
         }
         return User.builder()
                 .name(username)
+                .nickName(nickname)
                 .birth(birth)
                 .gender(userGender)
                 .email(email)
                 .phone(phone)
                 .role(Role.USER)
+                .company(company)
                 .build();
     }
 

@@ -6,6 +6,7 @@ import com.modu.ModuForm.app.web.config.SessionManager;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,11 +53,13 @@ public class UserIndexController {
     }
 
     @GetMapping("/{id}")
-    public String userMain(@PathVariable Long id, HttpServletRequest request, HttpSession session) {
+    public String userMain(Model model , @PathVariable Long id, HttpServletRequest request, HttpSession session) {
         Long userPk = sessionManager.getSession(request, session);
         if(userPk == null) {
             return "loginForm";
         }
+
+        model.addAttribute("userSubDetails", userService.getUserSubDetails(userPk));
         return "userMain";
     }
 
@@ -76,4 +79,10 @@ public class UserIndexController {
         return "home";
     }
 
+    @GetMapping("/users/{id}")
+    public String detail(@PathVariable Long id) {
+        userService.getUserDetails(id);
+
+        return "userDetail";
+    }
 }

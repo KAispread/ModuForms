@@ -1,14 +1,16 @@
 package com.modu.ModuForm.app.domain.surbay;
 
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
-import com.modu.ModuForm.app.domain.user.admin.Admin;
+import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
@@ -19,14 +21,16 @@ public class Survey {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ADMIN_ID", nullable = false)
-    private Admin admin;
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private User user;
 
     @OneToMany(mappedBy = "survey")
     private List<Answer> answers = new ArrayList<>();
 
     @Column(nullable = false)
     private String title;
+
+    private String description;
 
     @ElementCollection
     @CollectionTable(name = "SURVEY_QUESTION", joinColumns =
@@ -44,18 +48,20 @@ public class Survey {
     private int maximumAnswer;
 
     @Builder
-    public Survey(Admin admin, String title, LocalDateTime postDate, LocalDateTime deadLine, int maximumAnswer,List<SurveyQuestion> surveyQuestionList) {
-        this.admin = admin;
+    public Survey(User user, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime postDate, LocalDateTime deadLine, int maximumAnswer) {
+        this.user = user;
+        this.answers = answers;
         this.title = title;
+        this.description = description;
+        this.surveyQuestionList = surveyQuestionList;
         this.postDate = postDate;
         this.deadLine = deadLine;
         this.maximumAnswer = maximumAnswer;
-        this.surveyQuestionList = surveyQuestionList;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-        admin.setSurveyList(this);
+    public void setUser(User user) {
+        this.user = user;
+        user.setSurveyList(this);
     }
 
     public void addAnswer(Answer answer) {
@@ -71,11 +77,11 @@ public class Survey {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Survey survey = (Survey) o;
-        return Objects.equals(getId(), survey.getId()) && Objects.equals(getAdmin(), survey.getAdmin()) && Objects.equals(getAnswers(), survey.getAnswers()) && Objects.equals(getSurveyQuestionList(), survey.getSurveyQuestionList()) && Objects.equals(getPostDate(), survey.getPostDate()) && Objects.equals(getDeadLine(), survey.getDeadLine()) && Objects.equals(getMaximumAnswer(), survey.getMaximumAnswer());
+        return getMaximumAnswer() == survey.getMaximumAnswer() && Objects.equals(getId(), survey.getId()) && Objects.equals(getUser(), survey.getUser()) && Objects.equals(getAnswers(), survey.getAnswers()) && Objects.equals(getTitle(), survey.getTitle()) && Objects.equals(getDescription(), survey.getDescription()) && Objects.equals(getSurveyQuestionList(), survey.getSurveyQuestionList()) && Objects.equals(getPostDate(), survey.getPostDate()) && Objects.equals(getDeadLine(), survey.getDeadLine());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getAdmin(), getAnswers(), getSurveyQuestionList(), getPostDate(), getDeadLine(), getMaximumAnswer());
+        return Objects.hash(getId(), getUser(), getAnswers(), getTitle(), getDescription(), getSurveyQuestionList(), getPostDate(), getDeadLine(), getMaximumAnswer());
     }
 }

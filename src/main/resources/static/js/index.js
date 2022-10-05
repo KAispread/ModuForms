@@ -13,10 +13,12 @@ let index = {
             id : $('#input_id').val(),
             pwd : $('#input_pwd').val(),
             username : $('#username').val(),
+            nickname : $('#nickname').val(),
             birth : $('#birth').val(),
             gender : $("#gender option:selected").val(),
             email : $('#email').val(),
-            phone : $('#phone').val()
+            phone : $('#phone').val(),
+            company : $('#company').val()
         };
 
         $.ajax({
