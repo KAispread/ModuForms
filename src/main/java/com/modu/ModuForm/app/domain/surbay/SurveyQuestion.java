@@ -3,11 +3,8 @@ package com.modu.ModuForm.app.domain.surbay;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -15,13 +12,19 @@ import java.util.Objects;
 @Embeddable
 public class SurveyQuestion {
     private Integer number;
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
+    private String distractor;
+    @Enumerated(EnumType.STRING)
+    private QuesType questionType;
 
     @Builder
-    public SurveyQuestion(Integer number, String question) {
+    public SurveyQuestion(Integer number, String question, String distractor, QuesType questionType) {
         this.number = number;
         this.question = question;
+        this.distractor = distractor;
+        this.questionType = questionType;
     }
 
     @Override

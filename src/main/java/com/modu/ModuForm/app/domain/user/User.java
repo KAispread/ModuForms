@@ -19,6 +19,7 @@ public class User {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String nickName;
     private Long birth;
     @Enumerated(EnumType.STRING)

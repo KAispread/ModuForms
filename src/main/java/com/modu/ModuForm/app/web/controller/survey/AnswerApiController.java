@@ -2,7 +2,7 @@ package com.modu.ModuForm.app.web.controller.survey;
 
 import com.modu.ModuForm.app.service.survey.AnswerServiceImpl;
 import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
-import com.modu.ModuForm.app.web.dto.survey.AnswerResponseDto;
+import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

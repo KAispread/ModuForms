@@ -4,6 +4,7 @@ import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.service.user.UserService;
 import com.modu.ModuForm.app.web.config.SessionManager;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
+import com.modu.ModuForm.app.web.dto.user.UserSubDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,8 +40,10 @@ public class UserIndexController {
             return "loginForm";
         }
 
-        Long userPk = sessionManager.createSession(session, loginAccess, response);
-        return "redirect:/" + userPk;
+        String nickName = sessionManager.createSession(session, loginAccess, response);
+        session.setAttribute("userNickName", nickName);
+
+        return "redirect:/" + nickName;
     }
 
     @GetMapping("/")
@@ -49,15 +52,19 @@ public class UserIndexController {
         if(userPk == null) {
             return "loginForm";
         }
-        return "redirect:/" + userPk;
+
+        return "redirect:/" + session.getAttribute("userNickName");
     }
 
-    @GetMapping("/{id}")
-    public String userMain(Model model , @PathVariable Long id, HttpServletRequest request, HttpSession session) {
+    @GetMapping("/{nickName}")
+    public String userMain(Model model , @PathVariable String nickName, HttpServletRequest request, HttpSession session) {
         Long userPk = sessionManager.getSession(request, session);
         if(userPk == null) {
             return "loginForm";
         }
+        UserSubDetailsDto userSubDetails = userService.getUserSubDetails(userPk);
+        session.setAttribute("userName", userSubDetails.getName());
+        session.setAttribute("userPk", userSubDetails.getId());
 
         model.addAttribute("userSubDetails", userService.getUserSubDetails(userPk));
         return "userMain";

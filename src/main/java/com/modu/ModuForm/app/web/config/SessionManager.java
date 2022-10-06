@@ -18,15 +18,17 @@ public class SessionManager {
         SESSION_CONST = "USER";
     }
 
-    public Long createSession(HttpSession session, Access access, HttpServletResponse response) {
+    public String createSession(HttpSession session, Access access, HttpServletResponse response) {
         String sessionId = UUID.randomUUID().toString();
         Long userPk = access.getUser().getId();
+        String nickname = access.getUser().getNickName();
+
         session.setAttribute(sessionId, userPk);
         Cookie accessCookie = new Cookie(SESSION_CONST, sessionId);
         accessCookie.setMaxAge(-1);
 
         response.addCookie(accessCookie);
-        return userPk;
+        return nickname;
     }
 
     public Long getSession(HttpServletRequest request, HttpSession session) {
@@ -46,4 +48,5 @@ public class SessionManager {
                 .findFirst()
                 .orElse(null);
     }
+
 }

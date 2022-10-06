@@ -6,8 +6,8 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
-import com.modu.ModuForm.app.web.dto.survey.AnswerResponseDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyListResponseDto;
+import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

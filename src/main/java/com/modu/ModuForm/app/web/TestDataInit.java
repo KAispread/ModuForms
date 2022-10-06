@@ -1,9 +1,12 @@
 package com.modu.ModuForm.app.web;
 
+import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.user.*;
+import com.modu.ModuForm.app.service.survey.SurveyService;
+import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +21,7 @@ public class TestDataInit {
     private final UserRepository userRepository;
     private final AccessRepository accessRepository;
     private final SurveyRepository surveyRepository;
+    private final SurveyService surveyService;
 
     // 샘플 데이터 생성
     @PostConstruct
@@ -37,29 +41,28 @@ public class TestDataInit {
                 .userId("ppap012")
                 .password("love112")
                 .build());
-        // 질문 추가
-        List<SurveyQuestion> surveyQuestions = new ArrayList<>();
-        surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
-        surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
-        surveyQuestions.add(buildQuestion(3, "주소를 입력해주세요"));
 
-        // 설문 양식 생성
-        Survey newSurvey = Survey.builder()
-                .user(user)
-                .title("참여 조사")
-                .postDate(LocalDateTime.now())
-                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
-                .maximumAnswer(200)
-                .surveyQuestionList(surveyQuestions)
-                .build();
-
-        surveyRepository.save(newSurvey);
-    }
-
-    private SurveyQuestion buildQuestion(Integer count, String question) {
-        return SurveyQuestion.builder()
-                .number(count)
-                .question(question)
-                .build();
+//        //given
+//        List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
+//        surveyQuestionList.add(SurveyQuestion.builder()
+//                .number(1)
+//                .question("회식에 참여하십니까?")
+//                .questionType(QuesType.SHORT)
+//                .build());
+//        surveyQuestionList.add(SurveyQuestion.builder()
+//                .number(2)
+//                .question("참여자의 성함을 입력해주세요")
+//                .questionType(QuesType.SHORT)
+//                .build());
+//
+//        SurveySaveDto saveDto = SurveySaveDto.builder()
+//                .title("회식 참여 조사")
+//                .description("회식 참여 조사를 위한 설문입니다.")
+//                .deadLine("2022-10-06-15-30")
+//                .maximumAnswer(200)
+//                .surveyQuestionList(surveyQuestionList)
+//                .build();
+//
+//        Long saved = surveyService.save(saveDto, "Kai");
     }
 }

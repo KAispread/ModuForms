@@ -33,7 +33,6 @@ public class AnswerServiceImplTest {
     private AnswerRepository answerRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private AnswerServiceImpl answerService;
 

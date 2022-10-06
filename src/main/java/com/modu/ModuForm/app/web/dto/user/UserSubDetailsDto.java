@@ -12,6 +12,7 @@ import java.util.List;
 public class UserSubDetailsDto {
     private final Long id;
     private final String name;
+    private final String nickName;
     private final Role role;
     private List<AnswerPreview> answerPreviewList;
 
@@ -19,6 +20,7 @@ public class UserSubDetailsDto {
         this.id = user.getId();
         this.name = user.getName();
         this.role = user.getRole();
+        this.nickName = user.getNickName();
         createAnswerPreview(answerList);
     }
 

@@ -30,6 +30,8 @@ public class Survey {
     @Column(nullable = false)
     private String title;
 
+    private String email;
+
     private String description;
 
     @ElementCollection
@@ -45,10 +47,10 @@ public class Survey {
     private LocalDateTime deadLine;
 
     @Column(name = "MAXIMUM_ANSWER")
-    private int maximumAnswer;
+    private Integer maximumAnswer;
 
     @Builder
-    public Survey(User user, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime postDate, LocalDateTime deadLine, int maximumAnswer) {
+    public Survey(User user, String email, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime postDate, LocalDateTime deadLine, Integer maximumAnswer) {
         this.user = user;
         this.answers = answers;
         this.title = title;
@@ -56,6 +58,7 @@ public class Survey {
         this.surveyQuestionList = surveyQuestionList;
         this.postDate = postDate;
         this.deadLine = deadLine;
+        this.email = email;
         this.maximumAnswer = maximumAnswer;
     }
 

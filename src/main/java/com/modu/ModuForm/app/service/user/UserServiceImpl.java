@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService{
     public UserDetailsDto getUserDetails(Long id) {
         return null;
     }
+
+    @Override
+    public Long getUserPk(String nickName) {
+        return userRepository.findByNickName(nickName).orElseThrow().getId();
+    }
 }

@@ -1,8 +1,8 @@
 package com.modu.ModuForm.app.service.survey;
 
 import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
-import com.modu.ModuForm.app.web.dto.survey.AnswerResponseDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyListResponseDto;
+import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
 
 import java.util.List;
 
