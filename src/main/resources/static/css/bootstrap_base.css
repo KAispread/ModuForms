@@ -13,9 +13,9 @@
     user-select: none;
 }
 
-h1 #logo_icon {
-    font-family: "Arial Black", monospace;
-    font-size: 50px;
+.logo_icon {
+    font-family: 'Pacifico', cursive;
+    font-size: 10px;
     color: midnightblue;
     padding-bottom: 10px;
 }
