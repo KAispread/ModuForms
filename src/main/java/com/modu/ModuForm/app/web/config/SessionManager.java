@@ -13,7 +13,6 @@ import java.util.UUID;
 @Component
 public class SessionManager {
     private final String SESSION_CONST;
-
     public SessionManager() {
         SESSION_CONST = "USER";
     }
@@ -26,6 +25,10 @@ public class SessionManager {
         session.setAttribute(sessionId, userPk);
         Cookie accessCookie = new Cookie(SESSION_CONST, sessionId);
         accessCookie.setMaxAge(-1);
+
+        session.setAttribute("userNickName", nickname);
+        session.setAttribute("userName", access.getUser().getName());
+        session.setAttribute("userPk", access.getUser().getId());
 
         response.addCookie(accessCookie);
         return nickname;
