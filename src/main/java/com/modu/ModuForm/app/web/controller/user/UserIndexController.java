@@ -39,9 +39,7 @@ public class UserIndexController {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "loginForm";
         }
-
         String nickName = sessionManager.createSession(session, loginAccess, response);
-        session.setAttribute("userNickName", nickName);
 
         return "redirect:/" + nickName;
     }
@@ -62,9 +60,6 @@ public class UserIndexController {
         if(userPk == null) {
             return "loginForm";
         }
-        UserSubDetailsDto userSubDetails = userService.getUserSubDetails(userPk);
-        session.setAttribute("userName", userSubDetails.getName());
-        session.setAttribute("userPk", userSubDetails.getId());
 
         model.addAttribute("userSubDetails", userService.getUserSubDetails(userPk));
         return "userMain";
