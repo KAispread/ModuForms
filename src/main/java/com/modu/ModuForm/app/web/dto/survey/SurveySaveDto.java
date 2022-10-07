@@ -37,6 +37,7 @@ public class SurveySaveDto {
         Survey survey = Survey.builder()
                 .title(title)
                 .description(description)
+                .email(email)
                 .postDate(LocalDateTime.now())
                 .deadLine(toDeadLineObject(deadLine))
                 .surveyQuestionList(surveyQuestionList)
@@ -50,7 +51,7 @@ public class SurveySaveDto {
         if (deadLine == null) {
             return null;
         }
-        String[] split = deadLine.split("-");
+        String[] split = deadLine.split("-|:");
         for(int i = 0; i < 5; i++) {
             DATE_TIME[i] = Integer.parseInt(split[i]);
         }
