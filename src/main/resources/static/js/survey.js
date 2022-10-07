@@ -6,27 +6,27 @@ let survey = {
         })
     },
     survey_save : function () {
-        let data = {
-            "title": "회식 참여 조사",
-            "description": "회식 참여 조사를 위한 설문입니다.",
-            "deadLine": "2022-10-06-15-30",
-            "email": "sinf01@gmail.com",
-            "maximumAnswer": 200,
-            "surveyQuestionList": [
-                {
-                    "number": 1,
-                    "question": "회식에 참여하십니까?",
-                    "distractor": null,
-                    "questionType": "SHORT"
-                },
-                {
-                    "number": 2,
-                    "question": "참여자의 성함을 입력해주세요.",
-                    "distractor": null,
-                    "questionType": "SHORT"
-                }
-            ]
+        let number_of_question = $('input[name=question]').length;
+        let question_list = new Array(number_of_question);
+
+        for (let i = 0; i < number_of_question; i++) {
+            question_list[i] = {
+                number: i,
+                question: $("input[name=question]").eq(i).val(),
+                distractor: null,
+                questionType: $("select[name=question_type] option:selected").eq(i).val()
+            };
         }
+
+        let data = {
+            title: $('#survey_title').val(),
+            description: $('#survey_description').val(),
+            deadLine: $('#date').val() + "-" + $('#time').val(),
+            email: $('#survey_email').val(),
+            maximumAnswer: $('#survey_max').val(),
+            surveyQuestionList: question_list
+        }
+
         let nickname = $('#userNickName').val();
 
         $.ajax({
@@ -35,7 +35,7 @@ let survey = {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function (data) {
+        }).done(function () {
             alert('설문이 등록되었습니다.');
             window.location.href = '/' + nickname;
         }).fail(function (error) {
