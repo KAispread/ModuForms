@@ -1,5 +1,7 @@
 package com.modu.ModuForm.app.service.user;
 
+import com.modu.ModuForm.app.domain.surbay.Survey;
+import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.Access;
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final AccessRepository accessRepository;
     private final AnswerRepository answerRepository;
+    private final SurveyRepository surveyRepository;
 
     @Override
     public Access login(LoginRequestDto loginRequestDto) {
@@ -40,7 +43,8 @@ public class UserServiceImpl implements UserService{
     public UserSubDetailsDto getUserSubDetails(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
         List<Answer> answerList = answerRepository.findAnswersByUser(user);
-        return new UserSubDetailsDto(user, answerList);
+        List<Survey> surveyList = surveyRepository.findSurveysByUser(user);
+        return new UserSubDetailsDto(user, answerList, surveyList);
     }
 
     @Override
