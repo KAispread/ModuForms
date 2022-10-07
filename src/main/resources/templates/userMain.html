@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
     <title></title>
     <link href="/css/bootstrap_base.css" rel="stylesheet">
@@ -12,7 +12,7 @@
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a href="#" class="navbar-brand d-flex align-items-center">
-                <strong>ModuForm</strong>
+                <strong style="font-family: 'Pacifico', cursive">ModuForm</strong>
             </a>
             <a th:href="@{/users/${userSubDetails.getNickName()}}">
                 <strong id="user_detail" th:text="${userSubDetails.getName()}"></strong>
