@@ -62,7 +62,7 @@
                             <p th:text="${surveyPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    <a th:href="@{/survey/id (id=${surveyPreview.getId()})}" class="btn btn-sm btn-outline-secondary">View</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>

@@ -4,6 +4,7 @@ import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyResponseDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +28,9 @@ public class SurveyServiceImpl implements SurveyService{
         return null;
     }
 
+    @Override
+    public SurveyCheckDto getSurveyCheckDto(Long id) {
+        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        return new SurveyCheckDto(survey);
+    }
 }
