@@ -2,7 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title}, ~{::link}, ~{::meta})}">
     <title>회원가입</title>
-    <link href="/css/bootstrap_base.css" rel="stylesheet">
     <link href="/css/form-validation.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
@@ -11,7 +10,7 @@
 <div class="container">
     <main class="form-regist">
         <div class="py-5 text-center">
-            <h1 id="logo_icon">Modu Form</h1>
+            <h1 th:replace="~{layout/header :: logo_h1}">logo</h1>
             <h2>회원가입</h2>
         </div>
 
@@ -44,7 +43,7 @@
                     </div>
 
                     <div class="col-12">
-                        <label for="username" class="form-label">닉네임 <span class="text-muted">(영문)</span></label>
+                        <label for="nickname" class="form-label">닉네임 <span class="text-muted">(영문)</span></label>
                         <input type="text" class="form-control" id="nickname" placeholder="사용할 닉네임을 입력해주세요." value="" required>
                         <div class="invalid-feedback">
                             사용할 닉네임을 입력해주세요. (영문만 가능)

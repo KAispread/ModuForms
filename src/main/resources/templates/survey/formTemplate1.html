@@ -19,7 +19,7 @@
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a th:href="@{/${session.userNickName}}" class="navbar-brand d-flex align-items-center">
-                <strong>ModuForm</strong>
+                <h4 th:replace="~{layout/header :: logo_h4}">logo</h4>
             </a>
             <a th:href="@{/users/${session.userNickName}}">
                 <strong id="user_detail" th:text="${session.userName}"></strong>
@@ -50,7 +50,7 @@
                     <div class="input-group">
                         <span class="input-group-text">설명</span>
                         <textarea class="form-control" id="survey_description" aria-label="With textarea"
-                                  aria-valuetext="회식 참여 조사를 위한 설문입니다." placeholder="설문에 대한 간단한 설명을 입력해주세요."
+                                  placeholder="설문에 대한 간단한 설명을 입력해주세요."
                                   required></textarea>
                     </div>
                     <div class="col-12">
