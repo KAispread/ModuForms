@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
-    <title></title>
-    <link href="/css/bootstrap_base.css" rel="stylesheet">
+    <title>Modu Form - 모두를 위한 설문</title>
     <link href="/css/user-main.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
 <body>
-
-<header>
+<header style="height: 50px">
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a href="#" class="navbar-brand d-flex align-items-center">
-                <strong style="font-family: 'Pacifico', cursive">ModuForm</strong>
+                <h4 th:replace="~{layout/header :: logo_h4}">logo</h4>
             </a>
             <a th:href="@{/users/${userSubDetails.getNickName()}}">
                 <strong id="user_detail" th:text="${userSubDetails.getName()}"></strong>
             </a>
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"-->
-<!--                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--                <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
         </div>
     </div>
 </header>
@@ -62,7 +56,7 @@
                             <p th:text="${surveyPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a th:href="@{/survey/id (id=${surveyPreview.getId()})}" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a th:href="@{/survey/{id} (id=${surveyPreview.getId()})}" class="btn btn-sm btn-outline-secondary">View</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>

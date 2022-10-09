@@ -43,6 +43,7 @@ public class AnswerServiceImplTest {
     private User userRegist() {
         return User.builder()
                 .birth(19980112L)
+                .nickName("Kesper")
                 .phone(1234L)
                 .email("asdfasdf@vccoom")
                 .name("기우")

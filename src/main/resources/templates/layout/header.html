@@ -5,19 +5,24 @@
 
     <!-- 공통 view port | bootstrap.css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="/css/bootstrap_base.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <!-- logo font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+
+    <!-- 메인 한글폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
     <!-- 추가 -->
     <th:block th:replace="${link}" />
     <th:block th:replace="${meta}" />
 </head>
 <body>
+    <h1 class="logo_icon" style="font-family: 'Yellowtail', cursive;" th:fragment="logo_h1">Modu Form</h1>
+    <h4 class="logo_icon" style="font-family: 'Yellowtail', cursive; margin-top: 50%" th:fragment="logo_h4">ModuForm</h4>
 </body>
 </html>

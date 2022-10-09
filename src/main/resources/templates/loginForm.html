@@ -4,13 +4,12 @@
 
     <title>로그인</title>
     <link href="/css/signin.css" rel="stylesheet">
-    <link href="/css/bootstrap_base.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
 <body class="text-center">
 <main class="form-signin">
     <form action="/login" method="post">
-        <h1 style="font-family: 'Pacifico', cursive" class="logo_icon">Modu Form</h1>
+        <h1 th:replace="~{layout/header :: logo_h1}">logo</h1>
         <h3 class="h5 mb-3 fw-normal">로그인이 필요합니다.</h3>
 
         <div class="form-floating">
