@@ -32,6 +32,7 @@ public class UserControllerTest {
         UserRegisterDto registerDto = UserRegisterDto.builder()
                 .id("siadsf123")
                 .pwd("asdfower123")
+                .nickname("Kasper")
                 .username("기우")
                 .birth(19980112L)
                 .gender("남자")

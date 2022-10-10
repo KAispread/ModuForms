@@ -7,12 +7,33 @@
     -moz-user-select: none;
     user-select: none;
 }
+.jua-font-ko {
+    font-family: 'Jua', sans-serif;
+}
+
+.gowun-font-ko {
+    font-family: 'Gowun Dodum', sans-serif !important;
+}
 
 h1 .logo_icon {
     font-family: 'Caveat', cursive;
     font-size: 70px;
     color: midnightblue;
     padding-bottom: 10px;
+}
+
+.user_link {
+    text-decoration: none;
+    float: right;
+}
+
+.logout-btn {
+    margin-right: 1rem;
+}
+
+#user_detail {
+    color: whitesmoke;
+    font-family: "카페24 아네모네에어", monospace;
 }
 
 @media (min-width: 768px) {

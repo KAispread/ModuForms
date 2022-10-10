@@ -3,12 +3,8 @@ package com.modu.ModuForm.app.web.config;
 import com.modu.ModuForm.app.domain.user.Access;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.UUID;
 
 @Component
 public class SessionManager {
@@ -17,39 +13,25 @@ public class SessionManager {
         SESSION_CONST = "USER";
     }
 
-    public String createSession(HttpSession session, Access access, HttpServletResponse response) {
-        String sessionId = UUID.randomUUID().toString();
+    public String createSession(HttpServletRequest request, Access access) {
+        HttpSession session = request.getSession();
+
         Long userPk = access.getUser().getId();
         String nickname = access.getUser().getNickName();
 
-        session.setAttribute(sessionId, userPk);
-        Cookie accessCookie = new Cookie(SESSION_CONST, sessionId);
-        accessCookie.setMaxAge(-1);
+        session.setAttribute(SESSION_CONST, userPk);
 
         session.setAttribute("userNickName", nickname);
         session.setAttribute("userName", access.getUser().getName());
         session.setAttribute("userPk", access.getUser().getId());
-
-        response.addCookie(accessCookie);
         return nickname;
     }
 
-    public Long getSession(HttpServletRequest request, HttpSession session) {
-        Cookie cookie = findCookie(request);
-        if (cookie == null) {
+    public Long getUserPk(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
             return null;
         }
-        return (Long) session.getAttribute(cookie.getValue());
+        return (Long) session.getAttribute(SESSION_CONST);
     }
-
-    public Cookie findCookie(HttpServletRequest request) {
-        if (request.getCookies() == null) {
-            return null;
-        }
-        return Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals(SESSION_CONST))
-                .findFirst()
-                .orElse(null);
-    }
-
 }
