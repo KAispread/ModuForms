@@ -6,25 +6,29 @@
     <meta name="theme-color" content="#7952b3">
 </head>
 <body>
-<header style="height: 50px">
+
+<header>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a href="#" class="navbar-brand d-flex align-items-center">
-                <h4 th:replace="~{layout/header :: logo_h4}">logo</h4>
+                <h3 class="logo_icon" style="font-family: 'Yellowtail', cursive;">ModuForm</h3>
             </a>
-            <a th:href="@{/users/${userSubDetails.getNickName()}}">
-                <strong id="user_detail" th:text="${userSubDetails.getName()}"></strong>
-            </a>
+            <div>
+                <a id="btn-logout" href="/logout" class="btn btn-outline-light logout-btn">Logout</a>
+                <a class="user_link" th:href="@{/users/${session.userNickName}}">
+                    <h4 id="user_detail" th:text="${session.userName}"></h4>
+                </a>
+            </div>
         </div>
     </div>
 </header>
-
 <main>
 
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 style="font-family: 'Jua', sans-serif;" class="fw-light" th:text="|${userSubDetails.getName()}님 안녕하세요!!|"></h1>
+                <h1 style="font-family: 'Jua', sans-serif;" class="fw-light"
+                    th:text="|${userSubDetails.getName()}님 안녕하세요!!|"></h1>
                 <p class="lead text-muted">
                     여러분의 설문을 등록하세요
                 </p>
@@ -56,7 +60,8 @@
                             <p th:text="${surveyPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a th:href="@{/survey/{id} (id=${surveyPreview.getId()})}" class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a th:href="@{/survey/{id} (id=${surveyPreview.getId()})}"
+                                       class="btn btn-sm btn-outline-secondary">View</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
                                 <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>
@@ -124,5 +129,8 @@
                 href="/docs/5.1/getting-started/introduction/">getting started guide</a>.</p>
     </div>
 </footer>
+
+<th:block th:replace="~{layout/footer :: common_footer}"/>
+
 </body>
 </html>
