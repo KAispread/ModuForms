@@ -2,33 +2,20 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
     <title>Modu Form - 모두를 위한 설문</title>
-    <link href="/css/user-main.css" rel="stylesheet">
+    <link>
     <meta name="theme-color" content="#7952b3">
 </head>
 <body>
 
-<header>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-                <h3 class="logo_icon" style="font-family: 'Yellowtail', cursive;">ModuForm</h3>
-            </a>
-            <div>
-                <a id="btn-logout" href="/logout" class="btn btn-outline-light logout-btn">Logout</a>
-                <a class="user_link" th:href="@{/users/${session.userNickName}}">
-                    <h4 id="user_detail" th:text="${session.userName}"></h4>
-                </a>
-            </div>
-        </div>
-    </div>
+<header th:replace="~{layout/header :: body-header-main}">
 </header>
+
 <main>
 
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 style="font-family: 'Jua', sans-serif;" class="fw-light"
-                    th:text="|${userSubDetails.getName()}님 안녕하세요!!|"></h1>
+                <h1 class="fw-light gowun-font-ko" th:text="|${userSubDetails.getName()}님 안녕하세요!!|"></h1>
                 <p class="lead text-muted">
                     여러분의 설문을 등록하세요
                 </p>
@@ -42,7 +29,7 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-            <h4>내가 작성한 설문</h4>
+            <h4 class="gowun-font-ko">내가 작성한 설문</h4>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div th:each="surveyPreview : ${userSubDetails.surveyPreviewList}" class="col">
@@ -82,7 +69,7 @@
 
     <div class="album py-5 bg-white">
         <div class="container">
-            <h4>응답한 설문</h4>
+            <h4 class="gowun-font-ko">응답한 설문</h4>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 

@@ -2,26 +2,12 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
     <title>설문 작성</title>
-    <link href="/css/user-main.css" rel="stylesheet">
     <link href="/css/form-validation.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
 
 <body class="bg-light">
-<header>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-                <h3 class="logo_icon" style="font-family: 'Yellowtail', cursive;">ModuForm</h3>
-            </a>
-            <div>
-                <a id="btn-logout" href="/logout" class="btn btn-outline-light logout-btn">Logout</a>
-                <a class="user_link" th:href="@{/users/${session.userNickName}}">
-                    <h4 id="user_detail" th:text="${session.userName}"></h4>
-                </a>
-            </div>
-        </div>
-    </div>
+<header th:replace="~{layout/header :: body-header-main}">
 </header>
 
 <input id="userNickName" type="hidden" th:value="${session.userNickName}">
