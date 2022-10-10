@@ -7,6 +7,13 @@
     -moz-user-select: none;
     user-select: none;
 }
+.jua-font-ko {
+    font-family: 'Jua', sans-serif;
+}
+
+.gowun-font-ko {
+    font-family: 'Gowun Dodum', sans-serif !important;
+}
 
 h1 .logo_icon {
     font-family: 'Caveat', cursive;
@@ -22,6 +29,11 @@ h1 .logo_icon {
 
 .logout-btn {
     margin-right: 1rem;
+}
+
+#user_detail {
+    color: whitesmoke;
+    font-family: "카페24 아네모네에어", monospace;
 }
 
 @media (min-width: 768px) {
