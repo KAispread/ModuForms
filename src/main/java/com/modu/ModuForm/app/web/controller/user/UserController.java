@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserServiceImpl userService;
     // 로그인
-    @PostMapping("/login")
-    public Access login(@RequestBody LoginRequestDto loginRequestDto, BindingResult bindingResult) {
-        return userService.login(loginRequestDto);
-    }
+//    @PostMapping("/login")
+//    public Access login(@RequestBody LoginRequestDto loginRequestDto, BindingResult bindingResult) {
+//        return userService.login(loginRequestDto);
+//    }
 
     // 회원가입
     @PostMapping
