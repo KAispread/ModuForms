@@ -4,6 +4,8 @@ import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.service.user.UserService;
 import com.modu.ModuForm.app.web.config.SessionManager;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 //@RequestMapping("basic/")
+@Api(tags = "UserIndexController")
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -24,11 +27,13 @@ public class UserIndexController {
     private final UserService userService;
     private final SessionManager sessionManager;
 
+    @Operation(summary = "로그인", description = "로그인 템플릿을 반환합니다.")
     @GetMapping("/login")
     public String userLogin() {
         return "loginForm";
     }
 
+    @Operation(summary = "로그인 요청 처리", description = "로그인 요청을 처리합니다.")
     @PostMapping("/login")
     public String login(LoginRequestDto loginRequestDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
