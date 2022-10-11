@@ -8,7 +8,7 @@
 </head>
 <body class="text-center">
 <main class="form-signin">
-    <form action="/login" method="post">
+    <form action="/users/login" method="post">
         <h1 th:replace="~{layout/header :: logo_h1}">logo</h1>
         <h3 class="h5 mb-3 fw-normal">로그인이 필요합니다.</h3>
 
@@ -30,7 +30,7 @@
         <hr class="my-4">
         <div>
             ModuForm에 처음이세요?
-            <span><a href="/register">회원가입하기</a></span>
+            <span><a href="/users/register">회원가입하기</a></span>
         </div>
         <p class="mt-5 mb-3 text-muted">&copy; 2022~</p>
     </form>

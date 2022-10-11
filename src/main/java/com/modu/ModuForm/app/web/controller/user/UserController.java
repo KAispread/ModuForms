@@ -1,47 +1,56 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
-import com.modu.ModuForm.app.web.dto.user.AdminRequestDto;
-import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
-import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
+import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.BindingResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+@Api(tags = "User DATA handling API")
+@Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/app/user")
+@RequestMapping("/app/users")
 public class UserController {
     private final UserServiceImpl userService;
-    // 로그인
-//    @PostMapping("/login")
-//    public Access login(@RequestBody LoginRequestDto loginRequestDto, BindingResult bindingResult) {
-//        return userService.login(loginRequestDto);
-//    }
 
     // 회원가입
+    @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
     @PostMapping
     public Long register(@RequestBody UserRegisterDto userRegisterDto) {
         return userService.register(userRegisterDto);
     }
 
+    @Operation(summary = "로그아웃 요청 처리", description = "로그아웃 요청을 처리합니다.")
+    @PostMapping("/logout")
+    public Long logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return 0L;
+        }
+
+        Long user = (Long) session.getAttribute("userPk");
+        log.info("{}: logout application", session.getAttribute("userNickName"));
+        session.invalidate();
+        return user;
+    }
+
     // 회원 정보 수정
-    @PutMapping("/{id}")
-    public Long update(@PathVariable Long id, @RequestBody UserRegisterDto userRequestDto) {
+    @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
+    @PatchMapping("/{nickname}")
+    public Long update(@PathVariable String nickname, @RequestBody UserRegisterDto userRequestDto) {
         return null;
     }
 
-    // 관리자 계정 생성
-    @PostMapping("{id}/admin")
-    public Long createAdmin(@PathVariable Long id, @RequestBody AdminRequestDto adminRequestDto) {
-        return null;
-    }
-
-    // 회원 정보 보기
-    @GetMapping("/{id}")
-    public UserDetailsDto viewProfile(@PathVariable Long id) {
+    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴 요청을 처리합니다.")
+    @DeleteMapping("/{nickname}")
+    public Long delete(@PathVariable String nickname) {
         return null;
     }
 }

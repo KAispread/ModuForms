@@ -9,25 +9,24 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-//@RequestMapping("basic/")
-@Api(tags = "UserIndexController")
+@Api(tags = "User TEMPLATE handling")
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/users")
 @Controller
 public class UserIndexController {
     private final UserService userService;
     private final SessionManager sessionManager;
 
-    @Operation(summary = "로그인", description = "로그인 템플릿을 반환합니다.")
+    @Operation(summary = "로그인 페이지", description = "로그인 템플릿을 반환합니다.")
     @GetMapping("/login")
     public String userLogin() {
         return "loginForm";
@@ -44,52 +43,19 @@ public class UserIndexController {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "loginForm";
         }
-        String nickName = sessionManager.createSession(request, loginAccess);
 
-        log.info("{}: login application", nickName);
-        return "redirect:/" + nickName;
+        log.info("{}: login application", sessionManager.createSession(request, loginAccess));
+        return "redirect:/";
     }
 
-    @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if(session == null) {
-            return "redirect:/login";
-        }
-
-        log.info("{}: logout application", session.getAttribute("userNickName"));
-        session.invalidate();
-        return "redirect:/login";
-    }
-
-    @GetMapping("/")
-    public String mainPage(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Long userPk = sessionManager.getUserPk(request);
-        if(session == null || userPk == null) {
-            return "loginForm";
-        }
-
-        return "redirect:/" + session.getAttribute("userNickName");
-    }
-
-    @GetMapping("/{nickName}")
-    public String userMain(Model model , @PathVariable String nickName, HttpServletRequest request) {
-        Long userPk = sessionManager.getUserPk(request);
-        if(userPk == null) {
-            return "redirect:/login";
-        }
-
-        model.addAttribute("userSubDetails", userService.getUserSubDetails(userPk));
-        return "userMain";
-    }
-
+    @Operation(summary = "회원가입 페이지", description = "회원가입 페이지를 반환합니다.")
     @GetMapping("/register")
     public String register() {
         return "register";
     }
 
-    @GetMapping("/users/{id}")
+    @Operation(summary = "프로필 조회", description = "로그인 템플릿을 반환합니다.")
+    @GetMapping("/{nickName}")
     public String detail(@PathVariable Long id) {
         userService.getUserDetails(id);
 
