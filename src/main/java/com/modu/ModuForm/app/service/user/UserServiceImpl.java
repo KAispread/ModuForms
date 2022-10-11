@@ -56,11 +56,6 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Long createAdmin(Long id, AdminRequestDto adminRequestDto) {
-        return null;
-    }
-
-    @Override
     public UserDetailsDto getUserDetails(Long id) {
         return null;
     }
