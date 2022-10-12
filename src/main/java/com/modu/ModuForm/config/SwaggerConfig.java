@@ -28,8 +28,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("제목")
-                .description("설명")
+                .title("ModuForm API Doc.")
+                .description("ModuForm의 전체 API 문서입니다.")
                 .version(version)
                 .contact(new Contact("이름", "홈페이지 URL", "e-mail"))
                 .build();
