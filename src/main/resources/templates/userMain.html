@@ -20,7 +20,7 @@
                     여러분의 설문을 등록하세요
                 </p>
                 <p>
-                    <a href="/surveys/form/1" class="btn btn-primary my-2">설문 만들기</a>
+                    <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
                     <a href="#" class="btn btn-secondary my-2">다른 설문 보기</a>
                 </p>
             </div>
@@ -44,6 +44,9 @@
                         </svg>
 
                         <div class="card-body">
+                            <div>
+                                <small th:text="|설문 작성자 : ${surveyPreview.author}|" class="text-muted"/>
+                            </div>
                             <p th:text="${surveyPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
@@ -111,9 +114,9 @@
         <p class="float-end mb-1">
             <a href="#">Back to top</a>
         </p>
-        <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                href="/docs/5.1/getting-started/introduction/">getting started guide</a>.</p>
+        <p class="mb-1">KAispread's first toy project!!</p>
+        <p class="mb-0">Click the following link to view the code for this project →
+            <a href="https://github.com/KAispread/ModuForms">Github Repo</a></p>
     </div>
 </footer>
 
