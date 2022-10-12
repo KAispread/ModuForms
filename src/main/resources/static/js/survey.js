@@ -12,7 +12,7 @@ let survey = {
         for (let i = 0; i < number_of_question; i++) {
             question_list[i] = {
                 number: i,
-                question: $("input[name=question]").eq(i).val(),
+                question: $(".question_wrapper").eq(i).children("input[name=question]").val(),
                 distractor: null,
                 questionType: $("select[name=question_type] option:selected").eq(i).val()
             };
@@ -38,8 +38,8 @@ let survey = {
         }).done(function () {
             alert('설문이 등록되었습니다.');
             window.location.href = '/';
-        }).fail(function (error) {
-            alert(JSON.stringify(error));
+        }).fail(function () {
+            alert('양식에 맞게 설문을 작성해주세요');
         })
     }
 }
