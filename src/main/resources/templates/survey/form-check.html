@@ -57,7 +57,7 @@
                     <h4 class="md-3 gowun-font-ko">질문 등록</h4>
 
                     <div class="col-12" th:each="question : ${surveyCheck.surveyQuestionList}">
-                        <label class="form-label" th:text="|질문 ${questionStat.count}|"></label>
+                    <label class="form-label" th:text="|Question ${questionStat.count}.|"></label>
                         <span th:if="${question.questionType.name()} == 'SHORT'" style="float: right;"><p>단답형</p></span>
                         <span th:if="${question.questionType.name()} == 'MULTIPLE'"
                               style="float: right;"><p>객관식</p></span>

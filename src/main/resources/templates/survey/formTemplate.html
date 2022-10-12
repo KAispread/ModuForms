@@ -23,7 +23,7 @@
                     <div class="col-12">
                         <label for="survey_title" class="form-label">제목</label>
                         <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
-                               value="회식 참여 조사"
+                               value=""
                                required>
                         <div class="invalid-feedback">
                             설문 제목은 필수입니다.
@@ -58,50 +58,25 @@
                     </div>
                     <hr class="my-4">
 
-                    <h4 class="md-3">질문 등록</h4>
-
-                    <div class="col-12">
-                        <label for="question1" class="form-label">질문 1.</label>
-                        <select class="form-select form-select-sm" name="question_type" id="type1"
-                                aria-label=".form-select-sm example">
-                            <option selected>질문 유형 선택</option>
-                            <option value="SHORT">단답형</option>
-                            <option value="MULTIPLE">객관식</option>
-                        </select>
-                        <input type="text" class="form-control" name="question" id="question1" placeholder="질문을 입력하세요."
-                               value="회식에 참여할 예정이십니까?"
-                               required>
-
+                    <h4 class="md-3 gowun-font-ko">질문 등록</h4>
+                    <div id="question_box">
+                        <div class="question_root">
+                            <div class="col-12 question_wrapper">
+                                <label class="form-label">Question </label>
+                                <select class="form-select form-select-sm" name="question_type">
+                                    <option selected>질문 유형 선택</option>
+                                    <option value="SHORT">단답형</option>
+                                    <option value="MULTIPLE">객관식</option>
+                                </select>
+                                <input type="text" class="form-control" name="question" placeholder="질문을 입력하세요."
+                                       value="" required>
+                            </div>
+                        </div>
                     </div>
-                    <hr class="my-4">
 
-                    <div class="col-12">
-                        <label for="question2" class="form-label">질문 2.</label>
-                        <select class="form-select form-select-sm" name="question_type" id="type2"
-                                aria-label=".form-select-sm example">
-                            <option selected>질문 유형 선택</option>
-                            <option value="SHORT">단답형</option>
-                            <option value="MULTIPLE">객관식</option>
-                        </select>
-                        <input type="text" class="form-control" name="question" id="question2" placeholder="질문을 입력하세요."
-                               value="참여자의 성함을 입력해주세요."
-                               required>
-                    </div>
                     <hr class="my-4">
-
-                    <div class="col-12">
-                        <label for="question3" class="form-label">질문 3.<span class="text-muted">(선택)</span></label>
-                        <select class="form-select form-select-sm" name="question_type" id="type3"
-                                aria-label=".form-select-sm example">
-                            <option selected>질문 유형 선택</option>
-                            <option value="SHORT">단답형</option>
-                            <option value="MULTIPLE">객관식</option>
-                        </select>
-                        <input type="text" class="form-control" name="question" id="question3" placeholder="질문을 입력하세요."
-                               value="추천할만한 회식 장소가 있으십니까?" required>
-                    </div>
+                    <button type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
                     <hr class="my-4">
-
                     <button class="w-100 btn btn-primary btn-lg" type="button" id="btn-survey-save">설문 등록하기</button>
                 </div>
             </form>
@@ -117,6 +92,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script src="/js/survey.js"></script>
+<script src="/js/survey-interaction.js"></script>
 </body>
 
 </html>
