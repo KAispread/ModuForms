@@ -11,6 +11,10 @@
     font-family: 'Jua', sans-serif;
 }
 
+.btn-question-close {
+    float: right;
+}
+
 .gowun-font-ko {
     font-family: 'Gowun Dodum', sans-serif !important;
 }

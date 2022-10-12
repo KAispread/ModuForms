@@ -8,7 +8,6 @@ public interface UserService {
     public Long register(UserRegisterDto userRequestDto);
     public UserSubDetailsDto getUserSubDetails(Long id);
     public Long updateUser(Long id, UserRegisterDto userRequestDto);
-    public Long createAdmin(Long id, AdminRequestDto adminRequestDto);
     public UserDetailsDto getUserDetails(Long id);
     public Long getUserPk(String nickName);
 }

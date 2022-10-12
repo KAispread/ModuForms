@@ -10,11 +10,13 @@ import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.user.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.saveAndFlush(registerDto.toUserEntity());
         accessRepository.save(registerDto.toAccessEntity(user));
 
+        log.info("{}: has registered", user.getNickName());
         return user.getId();
     }
 
@@ -49,11 +52,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Long updateUser(Long id, UserRegisterDto userRequestDto) {
-        return null;
-    }
-
-    @Override
-    public Long createAdmin(Long id, AdminRequestDto adminRequestDto) {
         return null;
     }
 

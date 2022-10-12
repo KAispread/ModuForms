@@ -3,10 +3,10 @@ let index = {
         let _this = this;
         $('#btn-register').on('click', function () {
             _this.register();
-        })
+        });
         $('#btn-logout').on('click', function () {
             _this.logout();
-        })
+        });
     },
     register : function () {
         let data = {
@@ -23,13 +23,13 @@ let index = {
 
         $.ajax({
             type: 'POST',
-            url: '/app/user',
+            url: '/app/users',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function () {
             alert('회원 가입이 완료되었습니다.');
-            window.location.href = '/login';
+            window.location.href = '/';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         })
@@ -37,7 +37,8 @@ let index = {
     logout : function () {
         $.ajax({
             type: 'POST',
-            url: '/logout',
+            url: '/app/users/logout',
+            dataType: 'json',
         }).done(function (){
             alert('로그아웃 했습니다.');
             window.location.href = '/';

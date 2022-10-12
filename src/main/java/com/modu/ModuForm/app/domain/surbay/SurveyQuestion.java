@@ -17,6 +17,7 @@ public class SurveyQuestion {
     private String question;
     private String distractor;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private QuesType questionType;
 
     @Builder
