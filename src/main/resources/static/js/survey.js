@@ -10,10 +10,25 @@ let survey = {
         let question_list = new Array(number_of_question);
 
         for (let i = 0; i < number_of_question; i++) {
+            let number_of_distractor = $(".question_wrapper").eq(i).children(".multiple_box").children(".input-group").length;
+            let distractor_all = "";
+
+            for (let j = 0; j < number_of_distractor; j++) {
+                if (j === 0) {
+                    distractor_all += $(".question_wrapper").eq(i).children(".multiple_box").children(".input-group").eq(j).children("input[name=distractor]").val();
+                } else {
+                    distractor_all += "|";
+                    distractor_all += $(".question_wrapper").eq(i).children(".multiple_box").children(".input-group").eq(j).children("input[name=distractor]").val();
+                }
+            }
+            if (distractor_all === "") {
+                distractor_all = null;
+            }
+
             question_list[i] = {
                 number: i,
                 question: $(".question_wrapper").eq(i).children("input[name=question]").val(),
-                distractor: null,
+                distractor: distractor_all,
                 questionType: $("select[name=question_type] option:selected").eq(i).val()
             };
         }

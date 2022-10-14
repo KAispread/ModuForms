@@ -63,6 +63,10 @@
                               style="float: right;"><p>객관식</p></span>
                         <input type="text" class="form-control" name="question" disabled
                                th:value="${question.question}"/>
+                        <div class="form-check" th:each="selectOption : ${question.distractor}">
+                            <input class="form-check-input" type="checkbox" value="" disabled>
+                            <label class="form-check-label" th:text="${selectOption}"></label>
+                        </div>
                     </div>
 
                     <hr class="my-4">

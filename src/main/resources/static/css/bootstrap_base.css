@@ -40,8 +40,13 @@ h1 .logo_icon {
     font-family: "카페24 아네모네에어", monospace;
 }
 
+.multiple_box {
+    text-align: center;
+}
+
 @media (min-width: 768px) {
     .bd-placeholder-img-lg {
         font-size: 3.5rem;
     }
 }
+
