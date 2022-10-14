@@ -4,6 +4,7 @@ import com.modu.ModuForm.app.service.survey.SurveyService;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "Survey DATA handling API")
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class SurveyApiController {
     private final SurveyService surveyService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{nickName}")
     public Long save(@RequestBody SurveySaveDto surveySaveDto, @PathVariable String nickName) {
         return surveyService.save(surveySaveDto, nickName);

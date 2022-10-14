@@ -1,12 +1,12 @@
 package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
-import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
 import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +22,7 @@ public class UserController {
 
     // 회원가입
     @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Long register(@RequestBody UserRegisterDto userRegisterDto) {
         return userService.register(userRegisterDto);
