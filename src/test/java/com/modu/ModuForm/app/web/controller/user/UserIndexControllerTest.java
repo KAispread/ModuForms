@@ -1,29 +1,37 @@
 package com.modu.ModuForm.app.web.controller.user;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = UserIndexController.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class UserIndexControllerTest {
 
+    @LocalServerPort
+    private int port;
+
     @Autowired
-    MockMvc mvc;
+    private TestRestTemplate restTemplate;
 
     @Test
-    public void 로그인_페이지_반환() throws Exception {
+    public void 로그인페이지_로딩() throws Exception {
+        //when
         String comment = "로그인이 필요합니다.";
+        String body = this.restTemplate.getForObject("/users/login", String.class);
 
-        mvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(comment));
+        //then
+        assertThat(body).contains(comment);
     }
 }

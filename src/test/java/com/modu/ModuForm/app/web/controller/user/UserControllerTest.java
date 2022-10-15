@@ -7,16 +7,27 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
+
+    @LocalServerPort
+    private int port;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @Autowired
     private AccessRepository accessRepository;
@@ -24,30 +35,31 @@ public class UserControllerTest {
     @Autowired
     private UserController userController;
 
-    @Transactional
-    @DisplayName("회원 가입 성공")
     @Test
-    public void 회원가입에_성공한다() {
+    public void Register_성공한다() {
         //given
+        String nickname = "Kasper";
         UserRegisterDto registerDto = UserRegisterDto.builder()
                 .id("siadsf123")
                 .pwd("asdfower123")
-                .nickname("Kasper")
+                .nickname(nickname)
                 .username("기우")
                 .birth(19980112L)
                 .gender("남자")
                 .email("asdfa@comg.com")
                 .phone(19980112L)
                 .build();
-        Long user = userController.register(registerDto);
 
         //when
-        User user1 = userRepository.findById(user).orElseThrow();
-        Access access = accessRepository.findByUser(user1).orElseThrow();
+        String url = "http://localhost:" + port + "/app/users";
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, registerDto, Long.class);
 
         //then
-        assertThat(user1.getName()).isEqualTo("기우");
-        assertThat(access.getUserId()).isEqualTo("siadsf123");
-        assertThat(user1.getGender()).isEqualTo(Gender.MAN);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        User Kasper = userRepository.findByNickName(nickname).orElseThrow();
+        assertThat(Kasper.getGender()).isEqualTo(Gender.MAN);
+        assertThat(Kasper.getBirth()).isEqualTo(19980112L);
     }
 }

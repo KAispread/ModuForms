@@ -33,12 +33,9 @@ public class SurveyRepositoryTest {
         surveyRepository.deleteAll();
     }
 
-    @Test
-    @DisplayName(value = "설문이_등록된다.")
+    // 유저 생성
     @Transactional
-    public void surveyRegistration() {
-        //given
-        // 유저 생성
+    public User userInit() {
         User user = userRepository.save(User.builder()
                 .name("기우")
                 .nickName("Kai")
@@ -50,120 +47,85 @@ public class SurveyRepositoryTest {
                 .company("AnyangUniv")
                 .build());
         userRepository.save(user);
+        return user;
+    }
 
+    @Transactional
+    public List<SurveyQuestion> surveyQuestionInit() {
         // 질문 추가
         List<SurveyQuestion> surveyQuestions = new ArrayList<>();
-        surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
-        surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
-        surveyQuestions.add(buildQuestion(3, "주소를 입력해주세요"));
+        surveyQuestions.add(buildQuestion(0, "이름을 입력해주세요", null ,QuesType.SHORT));
+        surveyQuestions.add(buildQuestion(1, "나이를 입력해주세요", "20|30|40|50" ,QuesType.MULTIPLE));
+        surveyQuestions.add(buildQuestion(2, "주소를 입력해주세요", null ,QuesType.SHORT));
+        return surveyQuestions;
+    }
 
-        // 설문 양식 생성
+    @Transactional
+    public Survey surveyInit(User user, List<SurveyQuestion> surveyQuestionList) {
         Survey newSurvey = Survey.builder()
                 .user(user)
                 .title("참여 조사")
                 .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
-                .surveyQuestionList(surveyQuestions)
+                .surveyQuestionList(surveyQuestionList)
                 .build();
 
         surveyRepository.save(newSurvey);
+        return newSurvey;
+    }
+
+    @Test
+    @DisplayName(value = "설문이_등록된다.")
+    @Transactional
+    public void 설문이_등록된다() {
+        //given
+        User user = userInit();
+        List<SurveyQuestion> surveyQuestionList = surveyQuestionInit();
+        Survey newSurvey = surveyInit(user, surveyQuestionList);
 
         //when
         Optional<Survey> survey = surveyRepository.findById(newSurvey.getId());
 
-        //then;
+        //then
         assertThat(survey.orElseThrow().getMaximumAnswer()).isEqualTo(200);
         assertThat(survey.orElseThrow().getDeadLine()).isEqualTo(LocalDateTime.of(2022,9,30,20,0));
 
-        assertThat(survey.orElseThrow().getSurveyQuestionList().get(0)).isEqualTo(surveyQuestions.get(0));
-        assertThat(survey.orElseThrow().getSurveyQuestionList().get(1)).isEqualTo(surveyQuestions.get(1));
-        assertThat(survey.orElseThrow().getSurveyQuestionList().get(2)).isEqualTo(surveyQuestions.get(2));
+        assertThat(survey.orElseThrow().getSurveyQuestionList().get(0)).isEqualTo(surveyQuestionList.get(0));
+        assertThat(survey.orElseThrow().getSurveyQuestionList().get(1)).isEqualTo(surveyQuestionList.get(1));
+        assertThat(survey.orElseThrow().getSurveyQuestionList().get(1).getDistractor()).isEqualTo(surveyQuestionList.get(1).getDistractor());
     }
 
     @Test
     @DisplayName(value = "설문이 수정된다.")
     @Transactional
-    public void updateSurvey(){
+    public void 설문이_수정된다(){
         //given
-        // 관리자 생성
-        User user = userRepository.save(User.builder()
-                .name("기우")
-                .nickName("Kai")
-                .birth(19980101L)
-                .gender(Gender.MAN)
-                .email("asdf1234@naver.com")
-                .phone(0103211L)
-                .role(Role.USER)
-                .company("AnyangUniv")
-                .build());
-        userRepository.save(user);
-
-        // 질문 추가
-        List<SurveyQuestion> surveyQuestions = new ArrayList<>();
-        surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
-        surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
-
-        // 설문 양식 생성
-        Survey newSurvey = Survey.builder()
-                .user(user)
-                .title("참여조사")
-                .postDate(LocalDateTime.now())
-                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
-                .maximumAnswer(200)
-                .surveyQuestionList(surveyQuestions)
-                .build();
-
-        surveyRepository.save(newSurvey);
+        User user = userInit();
+        List<SurveyQuestion> surveyQuestionList = surveyQuestionInit();
+        Survey newSurvey = surveyInit(user, surveyQuestionList);
         Optional<Survey> survey = surveyRepository.findById(newSurvey.getId());
 
         //when
         // 질문 수정
         List<SurveyQuestion> newSurveyQuestions = new ArrayList<>();
-        newSurveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
-        newSurveyQuestions.add(buildQuestion(2, "주소를 입력해주세요"));
+        newSurveyQuestions.add(buildQuestion(0, "hello", null,QuesType.SHORT));
+        newSurveyQuestions.add(buildQuestion(1, "주소를 입력해주세요", null, QuesType.SHORT));
 
         survey.orElseThrow().updateQuestion(newSurveyQuestions);
         Optional<Survey> updatedSurvey = surveyRepository.findById(newSurvey.getId());
 
-        //then;
-        assertThat(updatedSurvey.orElseThrow().getMaximumAnswer()).isEqualTo(200);
-        assertThat(updatedSurvey.orElseThrow().getSurveyQuestionList().get(1)).isEqualTo(newSurveyQuestions.get(1));
+        //then
+        assertThat(updatedSurvey.orElseThrow().getSurveyQuestionList().get(0).getQuestion()).isEqualTo("hello");
     }
     @Test
     @DisplayName(value = "설문이 삭제된다.")
     @Transactional
-    public void deleteSurvey(){
+    public void 설문이_삭제된다(){
         //given
-        // 관리자 생성
-        User user = userRepository.save(User.builder()
-                .name("기우")
-                .nickName("Kai")
-                .birth(19980101L)
-                .gender(Gender.MAN)
-                .email("asdf1234@naver.com")
-                .phone(0103211L)
-                .role(Role.USER)
-                .company("AnyangUniv")
-                .build());
-        userRepository.save(user);
-
-        // 질문 추가
-        List<SurveyQuestion> surveyQuestions = new ArrayList<>();
-        surveyQuestions.add(buildQuestion(1, "이름을 입력해주세요"));
-        surveyQuestions.add(buildQuestion(2, "나이를 입력해주세요"));
-
-        // 설문 양식 생성
-        Survey newSurvey = Survey.builder()
-                .user(user)
-                .title("참여조사")
-                .postDate(LocalDateTime.now())
-                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
-                .maximumAnswer(200)
-                .surveyQuestionList(surveyQuestions)
-                .build();
-
-        surveyRepository.save(newSurvey);
+        User user = userInit();
+        List<SurveyQuestion> surveyQuestionList = surveyQuestionInit();
+        Survey newSurvey = surveyInit(user, surveyQuestionList);
         Optional<Survey> survey = surveyRepository.findById(newSurvey.getId());
 
         //when
@@ -173,10 +135,12 @@ public class SurveyRepositoryTest {
         assertThat(surveyRepository.findById(survey.get().getId())).isEmpty();
     }
 
-    private SurveyQuestion buildQuestion(Integer count, String question) {
+    private SurveyQuestion buildQuestion(Integer count, String question, String distractor, QuesType quesType) {
         return SurveyQuestion.builder()
                 .number(count)
+                .questionType(quesType)
                 .question(question)
+                .distractor(distractor)
                 .build();
     }
 }
