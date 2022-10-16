@@ -13,21 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class UserControllerTest {
-
-    @LocalServerPort
-    private int port;
-
+    private WebClient webClient = WebClient.create("http://localhost:" + 8080);
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Autowired
     private AccessRepository accessRepository;
@@ -51,8 +46,12 @@ public class UserControllerTest {
                 .build();
 
         //when
-        String url = "http://localhost:" + port + "/app/users";
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, registerDto, Long.class);
+        ResponseEntity<Long> responseEntity = webClient.post()
+                .uri("/app/users")
+                .bodyValue(registerDto)
+                .retrieve()
+                .toEntity(Long.class)
+                .block();
 
         //then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -61,5 +60,10 @@ public class UserControllerTest {
         User Kasper = userRepository.findByNickName(nickname).orElseThrow();
         assertThat(Kasper.getGender()).isEqualTo(Gender.MAN);
         assertThat(Kasper.getBirth()).isEqualTo(19980112L);
+    }
+
+    @Test
+    public void 로그아웃_성공한다() {
+        //
     }
 }

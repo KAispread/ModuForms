@@ -36,10 +36,11 @@ public class UserController {
             return 0L;
         }
 
-        Long user = (Long) session.getAttribute("userPk");
+        Long userPk = (Long) session.getAttribute("userPk");
         log.info("{}: logout application", session.getAttribute("userNickName"));
         session.invalidate();
-        return user;
+
+        return userPk;
     }
 
     // 회원 정보 수정

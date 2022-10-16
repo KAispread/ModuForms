@@ -1,37 +1,73 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import org.assertj.core.api.Assertions;
+import com.modu.ModuForm.app.DummyDataInit;
+import com.modu.ModuForm.app.domain.user.Access;
+import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class UserIndexControllerTest {
-
-    @LocalServerPort
-    private int port;
+    private WebClient webClient = WebClient.create("http://localhost:" + 8080);
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private DummyDataInit dummyDataInit;
+
 
     @Test
-    public void 로그인페이지_로딩() throws Exception {
+    public void 로그인페이지_로딩_성공() throws Exception {
         //when
-        String comment = "로그인이 필요합니다.";
-        String body = this.restTemplate.getForObject("/users/login", String.class);
+        ResponseEntity<String> responseEntity = webClient.get().uri("/users/login").retrieve().toEntity(String.class).block();
 
         //then
-        assertThat(body).contains(comment);
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).contains("로그인이 필요합니다.");
+    }
+
+    @Test
+    public void 회원가입페이지_로딩_성공() {
+        //when
+        ResponseEntity<String> responseEntity = webClient.get().uri("/users/register").retrieve().toEntity(String.class).block();
+
+        //then
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).contains("회원 정보 입력");
+        assertThat(responseEntity.getBody()).contains("가입 하기");
+    }
+
+    @Test
+    public void 로그인_요청_성공() {
+        //given
+        User user = dummyDataInit.userInit();
+        Access access = dummyDataInit.accessInit(user);
+        LoginRequestDto loginRequestDto = LoginRequestDto.builder().userId(access.getUserId()).password(access.getPassword()).build();
+
+
+        //when
+        ResponseEntity<String> block = webClient.post().uri("/users/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(loginRequestDto)
+                .retrieve()
+                .toEntity(String.class)
+                .block();
+
+        //then
+        assertThat(block).isNotNull();
     }
 }
