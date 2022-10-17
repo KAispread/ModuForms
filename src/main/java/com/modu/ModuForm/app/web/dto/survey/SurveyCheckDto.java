@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.web.dto.survey;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
+import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 public class SurveyCheckDto {
+    private User user;
     private String title;
     private String description;
     private LocalDateTime deadLine;
@@ -28,6 +30,7 @@ public class SurveyCheckDto {
         this.deadLine = survey.getDeadLine();
         this.email = survey.getEmail();
         this.maximumAnswer = survey.getMaximumAnswer();
+        this.user = survey.getUser();
         convertSurveyQuestionCheck(survey.getSurveyQuestionList());
     }
 

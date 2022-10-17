@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.service.survey;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
+import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SurveyServiceImpl implements SurveyService{
     private final SurveyRepository surveyRepository;
     private final UserRepository userRepository;
+    private final AnswerRepository answerRepository;
 
     @Override
     @Transactional
@@ -28,14 +30,27 @@ public class SurveyServiceImpl implements SurveyService{
         return survey.getId();
     }
 
+    @Transactional
     @Override
-    public Long update() {
-        return null;
+    public Long update(Long id, SurveySaveDto surveySaveDto) {
+        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        answerRepository.deleteAllBySurvey(survey);
+        survey.update(surveySaveDto);
+
+        return survey.getId();
     }
 
     @Override
     public SurveyCheckDto getSurveyCheckDto(Long id) {
         Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         return new SurveyCheckDto(survey);
+    }
+
+    @Transactional
+    @Override
+    public Long delete(Long id) {
+        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        surveyRepository.delete(survey);
+        return id;
     }
 }
