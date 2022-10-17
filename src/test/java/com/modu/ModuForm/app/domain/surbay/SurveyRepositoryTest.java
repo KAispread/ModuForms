@@ -33,13 +33,6 @@ public class SurveyRepositoryTest {
     @Autowired
     DummyDataInit dummyData;
 
-    @BeforeEach
-    void createDummyData() {
-        //given
-        User user = dummyData.userInit();
-        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
-        dummyData.surveyInit(user, surveyQuestionList);
-    }
 
     @AfterEach
     public void cleanUp(){
@@ -51,8 +44,12 @@ public class SurveyRepositoryTest {
     @DisplayName(value = "설문이_등록된다.")
     @Transactional
     public void 설문이_등록된다() {
+        //given
+        User user = dummyData.userInit(userRepository);
+        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
+        Survey survey1 = dummyData.surveyInit(surveyRepository ,user, surveyQuestionList);
+
         //when
-        User user = userRepository.findByNickName("Kai").orElseThrow();
         Survey survey = surveyRepository.findSurveysByUser(user).get(0);
 
         //then
@@ -62,29 +59,34 @@ public class SurveyRepositoryTest {
 
     @Test
     @DisplayName(value = "설문이 수정된다.")
+    @Transactional
     public void 설문이_수정된다(){
         //given
+        User user = dummyData.userInit(userRepository);
+        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
+        Survey survey = dummyData.surveyInit(surveyRepository, user, surveyQuestionList);
+
         // 질문 수정
         List<SurveyQuestion> newSurveyQuestions = new ArrayList<>();
         newSurveyQuestions.add(dummyData.buildQuestion(0, "hello", null,QuesType.SHORT));
         newSurveyQuestions.add(dummyData.buildQuestion(1, "주소를 입력해주세요", null, QuesType.SHORT));
 
         //when
-        User user = userRepository.findByNickName("Kai").orElseThrow();
-        Survey survey = surveyRepository.findSurveysByUser(user).get(0);
-
         survey.updateQuestion(newSurveyQuestions);
 
         Optional<Survey> updatedSurvey = surveyRepository.findById(survey.getId());
         //then
         assertThat(updatedSurvey.orElseThrow().getSurveyQuestionList().get(0).getQuestion()).isEqualTo("hello");
     }
+
     @Test
     @DisplayName(value = "설문이 삭제된다.")
+    @Transactional
     public void 설문이_삭제된다(){
         //given
-        User user = userRepository.findByNickName("Kai").orElseThrow();
-        Survey survey = surveyRepository.findSurveysByUser(user).get(0);
+        User user = dummyData.userInit(userRepository);
+        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
+        Survey survey = dummyData.surveyInit(surveyRepository, user, surveyQuestionList);
 
         //when
         surveyRepository.delete(survey);

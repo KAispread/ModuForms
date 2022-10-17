@@ -48,8 +48,9 @@ public class TestDataInit {
                 .build());
         surveyQuestionList.add(SurveyQuestion.builder()
                 .number(1)
-                .question("참여자의 성함을 입력해주세요")
-                .questionType(QuesType.SHORT)
+                .question("어떤 음식을 선호하십니까?")
+                .questionType(QuesType.MULTIPLE)
+                .distractor("회|곱창|고기|치킨|육회")
                 .build());
 
         SurveySaveDto saveDto = SurveySaveDto.builder()

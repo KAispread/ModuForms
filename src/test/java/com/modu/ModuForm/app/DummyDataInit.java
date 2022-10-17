@@ -17,23 +17,13 @@ import java.util.List;
 
 @Component
 public class DummyDataInit {
-    @Autowired
-    private SurveyRepository surveyRepository;
-    @Autowired
-    private AnswerRepository answerRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private AnswerServiceImpl answerService;
 
-    @Autowired
-    private AccessRepository accessRepository;
 
-    @Transactional
-    public User userInit() {
+
+    public User userInit(UserRepository userRepository) {
         User user = userRepository.save(User.builder()
                 .name("예진")
-                .nickName("Kai")
+                .nickName("Rachel")
                 .birth(19940101L)
                 .gender(Gender.WOMAN)
                 .email("asdf1234@naver.com")
@@ -45,8 +35,7 @@ public class DummyDataInit {
         return user;
     }
 
-    @Transactional
-    public Access accessInit(User user) {
+    public Access accessInit(AccessRepository accessRepository ,User user) {
         Access access = Access.builder()
                 .user(user)
                 .userId("pppp1234")
@@ -64,8 +53,7 @@ public class DummyDataInit {
         surveyQuestions.add(buildQuestion(2, "주소를 입력해주세요", null ,QuesType.SHORT));
         return surveyQuestions;
     }
-    @Transactional
-    public Survey surveyInit(User user, List<SurveyQuestion> surveyQuestionList) {
+    public Survey surveyInit(SurveyRepository surveyRepository ,User user, List<SurveyQuestion> surveyQuestionList) {
         Survey newSurvey = Survey.builder()
                 .user(user)
                 .title("참여 조사")
@@ -75,6 +63,7 @@ public class DummyDataInit {
                 .surveyQuestionList(surveyQuestionList)
                 .build();
 
+        newSurvey.setUser(user);
         surveyRepository.save(newSurvey);
         return newSurvey;
     }

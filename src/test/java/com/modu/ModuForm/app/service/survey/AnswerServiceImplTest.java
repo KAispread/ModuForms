@@ -47,9 +47,9 @@ public class AnswerServiceImplTest {
     @BeforeEach
     void createDummyData() {
         //given
-        User user = dummyData.userInit();
+        User user = dummyData.userInit(userRepository);
         List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
-        dummyData.surveyInit(user, surveyQuestionList);
+        dummyData.surveyInit(surveyRepository, user, surveyQuestionList);
     }
 
     @AfterEach
@@ -63,13 +63,18 @@ public class AnswerServiceImplTest {
     @Test
     @Transactional
     public void AnswerRegist(){
+        //given
+        User user1 = dummyData.userInit(userRepository);
+        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
+        dummyData.surveyInit(surveyRepository, user1, surveyQuestionList);
+
         //when
         List<String> answer = new ArrayList<>();
         answer.add("이기우");
         answer.add("25");
         answer.add("경기도");
 
-        User user = userRepository.findByNickName("Kai").orElseThrow();
+        User user = userRepository.findByNickName("Rachel").orElseThrow();
         Survey survey = surveyRepository.findSurveysByUser(user).get(0);
 
         AnswerRequestDto answerRequestDto = AnswerRequestDto.builder()

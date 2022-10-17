@@ -1,19 +1,21 @@
 package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.DummyDataInit;
+import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.user.Access;
+import com.modu.ModuForm.app.domain.user.AccessRepository;
 import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +29,19 @@ public class UserIndexControllerTest {
     @Autowired
     private DummyDataInit dummyDataInit;
 
+    @Autowired
+    private SurveyRepository surveyRepository;
+    @Autowired
+    private AccessRepository accessRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @AfterEach
+    void cleanUp() {
+        surveyRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     public void 로그인페이지_로딩_성공() throws Exception {
@@ -54,8 +69,8 @@ public class UserIndexControllerTest {
     @Test
     public void 로그인_요청_성공() {
         //given
-        User user = dummyDataInit.userInit();
-        Access access = dummyDataInit.accessInit(user);
+        User user = dummyDataInit.userInit(userRepository);
+        Access access = dummyDataInit.accessInit(accessRepository ,user);
         LoginRequestDto loginRequestDto = LoginRequestDto.builder().userId(access.getUserId()).password(access.getPassword()).build();
 
 
