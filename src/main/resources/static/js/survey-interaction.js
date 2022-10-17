@@ -39,12 +39,12 @@ $(document).ready(function () {
                     "                      객관식 타입의 선택지를 설정해주세요 (최대 5개)\n" +
                     "                    </div>\n" +
                     '                    <div class="input-group mb-3">\n' +
-                    '                      <span class="input-group-text" id="basic-addon1">A.</span>\n' +
+                    '                      <span class="input-group-text">A.</span>\n' +
                     '                      <input type="text" class="form-control underline" name="distractor" placeholder="선택지를 입력하세요."\n' +
                     '                        aria-label="Username" aria-describedby="basic-addon1">\n' +
                     "                    </div>\n" +
                     '                    <div class="input-group mb-3">\n' +
-                    '                      <span class="input-group-text" id="basic-addon1">A.</span>\n' +
+                    '                      <span class="input-group-text">A.</span>\n' +
                     '                      <input type="text" class="form-control underline" name="distractor" placeholder="선택지를 입력하세요."\n' +
                     '                        aria-label="Username" aria-describedby="basic-addon1">\n' +
                     "                    </div>\n" +
@@ -66,7 +66,7 @@ $(document).ready(function () {
         if (index < 5) {
             $(this).before(
                 '<div class="input-group mb-3">\n' +
-                '                      <span class="input-group-text" id="basic-addon1">A.</span>\n' +
+                '                      <span class="input-group-text">A.</span>\n' +
                 '                      <input type="text" class="form-control underline" name="distractor" placeholder="선택지를 입력하세요."\n' +
                 '                        aria-label="Username" aria-describedby="basic-addon1">\n' +
                 "\n" +

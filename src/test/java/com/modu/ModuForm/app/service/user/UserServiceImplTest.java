@@ -15,27 +15,6 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class UserServiceImplTest {
-    private User userRegist() {
-        return User.builder()
-                .birth(19980112L)
-                .phone(1234L)
-                .email("asdfasdf@vccoom")
-                .name("기우")
-                .role(Role.USER)
-                .build();
-    }
-
-    private Survey surveyRegist(User user, List<SurveyQuestion> surveyQuestions){
-        return Survey.builder()
-                .user(user)
-                .title("참여조사")
-                .description("회식에 참여할지에 대한 여론 조사입니다.")
-                .postDate(LocalDateTime.now())
-                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
-                .maximumAnswer(200)
-                .surveyQuestionList(surveyQuestions)
-                .build();
-    }
 
     @Test
     void login() {

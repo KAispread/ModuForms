@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.domain.surbay;
 
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,6 +71,19 @@ public class Survey {
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
     }
+
+    public void update(SurveySaveDto surveySaveDto) {
+        this.answers  = new ArrayList<>();
+        this.title = surveySaveDto.getTitle();
+        this.description = surveySaveDto.getDescription();
+        this.email = surveySaveDto.getEmail();
+        this.maximumAnswer = surveySaveDto.getMaximumAnswer();
+        this.surveyQuestionList.clear();
+        this.surveyQuestionList = surveySaveDto.getSurveyQuestionList();
+        this.deadLine = surveySaveDto.getDeadLineLocalDateTime();
+
+        this.answers.clear();
+    };
 
     public void updateQuestion(List<SurveyQuestion> newSurveyQuestionList) {
         surveyQuestionList = newSurveyQuestionList;

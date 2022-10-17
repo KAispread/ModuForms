@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.service.survey;
 
+import com.modu.ModuForm.app.DummyDataInit;
 import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
@@ -34,26 +35,19 @@ public class SurveyServiceImplTest {
     @Autowired
     private SurveyServiceImpl surveyService;
 
+    @Autowired
+    private DummyDataInit dummyData;
+
     @AfterEach
     void cleanUp() {
         surveyRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
-    private User userRegist() {
-        return User.builder()
-                .birth(19980112L)
-                .phone(1234L)
-                .email("asdfasdf@vccoom")
-                .nickName("Kai")
-                .name("기우")
-                .role(Role.USER)
-                .build();
-    }
 
     @Test
-    @Transactional(noRollbackFor = IllegalAccessException.class)
+    @Transactional
     public void 설문이_등록() {
-
         //given
         List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
         surveyQuestionList.add(SurveyQuestion.builder()
@@ -85,16 +79,5 @@ public class SurveyServiceImplTest {
         assertThat(survey.getTitle()).isEqualTo("회식 참여 조사");
         assertThat(survey.getSurveyQuestionList().get(0).getQuestion()).isEqualTo("회식에 참여하십니까?");
         assertThat(user.getSurveyList()).contains(survey);
-    }
-
-    @Test
-    public void test1(){
-        String date = "2022-10-06-15-30";
-        String[] split = date.split("-");
-        assertThat(split[0]).isEqualTo("2022");
-        assertThat(split[1]).isEqualTo("10");
-        assertThat(split[2]).isEqualTo("06");
-        assertThat(split[3]).isEqualTo("15");
-        assertThat(split[4]).isEqualTo("30");
     }
 }

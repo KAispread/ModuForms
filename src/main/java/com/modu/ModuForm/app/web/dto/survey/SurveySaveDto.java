@@ -33,13 +33,12 @@ public class SurveySaveDto {
     }
 
     public Survey toSurveyEntity(User user) {
-        toDeadLineObject(this.deadLine);
         Survey survey = Survey.builder()
                 .title(title)
                 .description(description)
                 .email(email)
                 .postDate(LocalDateTime.now())
-                .deadLine(toDeadLineObject(deadLine))
+                .deadLine(getDeadLineLocalDateTime())
                 .surveyQuestionList(surveyQuestionList)
                 .maximumAnswer(maximumAnswer)
                 .build();
@@ -47,11 +46,11 @@ public class SurveySaveDto {
         return survey;
     }
 
-    public LocalDateTime toDeadLineObject(String deadLine) {
-        if (deadLine == null) {
+    public LocalDateTime getDeadLineLocalDateTime() {
+        if (this.deadLine == null) {
             return null;
         }
-        String[] split = deadLine.split("-|:");
+        String[] split = this.deadLine.split("-|:");
         for(int i = 0; i < 5; i++) {
             DATE_TIME[i] = Integer.parseInt(split[i]);
         }
