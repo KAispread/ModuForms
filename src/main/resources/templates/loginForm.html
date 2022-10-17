@@ -4,13 +4,12 @@
 
     <title>로그인</title>
     <link href="/css/signin.css" rel="stylesheet">
-    <link href="/css/bootstrap_base.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
 <body class="text-center">
 <main class="form-signin">
-    <form action="/login" method="post">
-        <h1 style="font-family: 'Pacifico', cursive" class="logo_icon">Modu Form</h1>
+    <form action="/users/login" method="post">
+        <h1 th:replace="~{layout/header :: logo_h1}">logo</h1>
         <h3 class="h5 mb-3 fw-normal">로그인이 필요합니다.</h3>
 
         <div class="form-floating">
@@ -27,11 +26,11 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" id="btn-login" type="submit">로그인</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
         <hr class="my-4">
         <div>
             ModuForm에 처음이세요?
-            <span><a href="/register">회원가입하기</a></span>
+            <span><a href="/users/register">회원가입하기</a></span>
         </div>
         <p class="mt-5 mb-3 text-muted">&copy; 2022~</p>
     </form>

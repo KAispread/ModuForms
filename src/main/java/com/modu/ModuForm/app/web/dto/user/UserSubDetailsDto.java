@@ -42,6 +42,7 @@ public class UserSubDetailsDto {
     public void createSurveyPreview(List<Survey> surveyList) {
         for (Survey survey : surveyList) {
             surveyPreviewList.add(SurveyPreview.builder()
+                    .author(survey.getUser().getNickName())
                     .id(survey.getId())
                     .title(survey.getTitle())
                     .description(survey.getDescription())

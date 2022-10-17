@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -18,7 +19,7 @@ public class SurveyCheckDto {
     private LocalDateTime deadLine;
     private String email;
     private Integer maximumAnswer;
-    private List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
+    private List<SurveyQuestionCheck> surveyQuestionList = new ArrayList<>();
 
     @Builder
     public SurveyCheckDto(Survey survey) {
@@ -27,6 +28,12 @@ public class SurveyCheckDto {
         this.deadLine = survey.getDeadLine();
         this.email = survey.getEmail();
         this.maximumAnswer = survey.getMaximumAnswer();
-        this.surveyQuestionList = survey.getSurveyQuestionList();
+        convertSurveyQuestionCheck(survey.getSurveyQuestionList());
+    }
+
+    public void convertSurveyQuestionCheck(List<SurveyQuestion> surveyQuestions) {
+        surveyQuestionList = surveyQuestions.stream()
+                .map(SurveyQuestionCheck::new)
+                .collect(Collectors.toList());
     }
 }

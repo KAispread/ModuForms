@@ -3,12 +3,15 @@ package com.modu.ModuForm.app.web.controller.survey;
 import com.modu.ModuForm.app.service.survey.AnswerServiceImpl;
 import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
 import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Api(tags = "Answer DATA handling API")
 @RequiredArgsConstructor
 @RestController
 public class AnswerApiController {
@@ -20,13 +23,13 @@ public class AnswerApiController {
         return answerService.save(answerRequestDto, surveyId);
     }
 
-    // 선택한 설문 보기
+    // 선택한 응답 보기
     @GetMapping("/app/survey/{id}")
     public AnswerResponseDto findById(@PathVariable Long id){
         return answerService.findById();
     }
 
-    // 선택한 설문 수정
+    // 선택한 응답 수정
     @PutMapping("app/survey/{id}")
     public Long update(@PathVariable Long id) {
         return answerService.update();

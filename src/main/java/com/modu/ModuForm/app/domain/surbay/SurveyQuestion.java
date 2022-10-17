@@ -15,8 +15,10 @@ public class SurveyQuestion {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String question;
+    @Lob
     private String distractor;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private QuesType questionType;
 
     @Builder
@@ -32,7 +34,7 @@ public class SurveyQuestion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SurveyQuestion that = (SurveyQuestion) o;
-        return number == that.number && question.equals(that.question);
+        return number.equals(that.number) && question.equals(that.question);
     }
 
     @Override
