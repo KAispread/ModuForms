@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.web.dto;
 
+import com.modu.ModuForm.app.domain.surbay.Survey;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -7,22 +8,21 @@ import java.time.LocalDateTime;
 
 @Getter
 public class SurveyPreview {
-    private String author;
-    private Long id;
-    private String title;
-    private String description;
-    private LocalDateTime deadLine;
-    private LocalDateTime postDate;
-    private Integer answersCount;
+    private final String author;
+    private final Long id;
+    private final String title;
+    private final String description;
+    private final LocalDateTime deadLine;
+    private final LocalDateTime createdDate;
+    private final Integer answersCount;
 
-    @Builder
-    public SurveyPreview(String author, Long id, String title, String description, LocalDateTime deadLine, LocalDateTime postDate, Integer answersCount) {
-        this.author = author;
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.deadLine = deadLine;
-        this.postDate = postDate;
-        this.answersCount = answersCount;
+    public SurveyPreview(Survey survey) {
+        this.author = survey.getUser().getNickName();
+        this.id = survey.getId();
+        this.title = survey.getTitle();
+        this.description = survey.getDescription();
+        this.deadLine = survey.getDeadLine();
+        this.createdDate = survey.getCreatedDate();
+        this.answersCount = survey.getAnswers().size();
     }
 }

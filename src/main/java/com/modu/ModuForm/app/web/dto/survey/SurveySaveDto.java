@@ -37,7 +37,6 @@ public class SurveySaveDto {
                 .title(title)
                 .description(description)
                 .email(email)
-                .postDate(LocalDateTime.now())
                 .deadLine(getDeadLineLocalDateTime())
                 .surveyQuestionList(surveyQuestionList)
                 .maximumAnswer(maximumAnswer)

@@ -7,14 +7,17 @@ import java.time.LocalDateTime;
 
 @Getter
 public class AnswerPreview {
-    private String surveyTitle;
-    private String description;
-    private LocalDateTime answerDate;
+    private final String surveyTitle;
+    private final String description;
+    private final LocalDateTime answerDate;
+    private final LocalDateTime modifiedDate;
 
     @Builder
-    public AnswerPreview(String surveyTitle, String description, LocalDateTime answerDate) {
+    public AnswerPreview(String surveyTitle, String description, LocalDateTime answerDate, LocalDateTime modifiedDate) {
         this.surveyTitle = surveyTitle;
         this.description = description;
         this.answerDate = answerDate;
+        this.modifiedDate = modifiedDate;
     }
+
 }

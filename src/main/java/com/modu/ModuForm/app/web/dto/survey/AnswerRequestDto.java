@@ -27,7 +27,6 @@ public class AnswerRequestDto {
 
     public Answer toEntity(Survey survey, User user) {
         Answer ans = Answer.builder()
-                .answerDate(LocalDateTime.now())
                 .answerDataList(convertAnswerData(answerQuestion))
                 .user(user)
                 .build();

@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.domain.surbay;
 
+import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
@@ -16,7 +17,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Survey {
+public class Survey extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SURVEY_ID")
     private Long id;
@@ -41,8 +42,6 @@ public class Survey {
     )
     private List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
 
-    @Column(name = "POSTDATE", nullable = false)
-    private LocalDateTime postDate;
 
     @Column(name = "DEADLINE")
     private LocalDateTime deadLine;
@@ -51,13 +50,12 @@ public class Survey {
     private Integer maximumAnswer;
 
     @Builder
-    public Survey(User user, String email, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime postDate, LocalDateTime deadLine, Integer maximumAnswer) {
+    public Survey(User user, String email, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime deadLine, Integer maximumAnswer) {
         this.user = user;
         this.answers = answers;
         this.title = title;
         this.description = description;
         this.surveyQuestionList = surveyQuestionList;
-        this.postDate = postDate;
         this.deadLine = deadLine;
         this.email = email;
         this.maximumAnswer = maximumAnswer;
@@ -94,11 +92,11 @@ public class Survey {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Survey survey = (Survey) o;
-        return getMaximumAnswer() == survey.getMaximumAnswer() && Objects.equals(getId(), survey.getId()) && Objects.equals(getUser(), survey.getUser()) && Objects.equals(getAnswers(), survey.getAnswers()) && Objects.equals(getTitle(), survey.getTitle()) && Objects.equals(getDescription(), survey.getDescription()) && Objects.equals(getSurveyQuestionList(), survey.getSurveyQuestionList()) && Objects.equals(getPostDate(), survey.getPostDate()) && Objects.equals(getDeadLine(), survey.getDeadLine());
+        return Objects.equals(getId(), survey.getId()) && Objects.equals(getUser(), survey.getUser()) && Objects.equals(getAnswers(), survey.getAnswers()) && Objects.equals(getTitle(), survey.getTitle()) && Objects.equals(getEmail(), survey.getEmail()) && Objects.equals(getDescription(), survey.getDescription()) && Objects.equals(getSurveyQuestionList(), survey.getSurveyQuestionList()) && Objects.equals(getDeadLine(), survey.getDeadLine()) && Objects.equals(getMaximumAnswer(), survey.getMaximumAnswer());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getAnswers(), getTitle(), getDescription(), getSurveyQuestionList(), getPostDate(), getDeadLine(), getMaximumAnswer());
+        return Objects.hash(getId(), getUser(), getAnswers(), getTitle(), getEmail(), getDescription(), getSurveyQuestionList(), getDeadLine(), getMaximumAnswer());
     }
 }

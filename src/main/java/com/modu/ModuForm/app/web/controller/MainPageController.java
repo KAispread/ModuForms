@@ -28,7 +28,7 @@ public class MainPageController {
             return "redirect:/users/login";
         }
 
-        model.addAttribute("userSubDetails", userService.getUserSubDetails(userPk));
+        model.addAttribute("userFormDetails", userService.getUserFormDetails(userPk));
         return "userMain";
     }
 }
