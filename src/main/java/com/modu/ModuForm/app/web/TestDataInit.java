@@ -30,7 +30,7 @@ public class TestDataInit {
                 .birth(19980101L)
                 .gender(Gender.MAN)
                 .email("asdf1234@naver.com")
-                .phone(17635081L)
+                .phone("01055501341")
                 .role(Role.USER)
                 .company("AnyangUniv")
                 .build());
@@ -38,6 +38,22 @@ public class TestDataInit {
                 .user(user)
                 .userId("ppap012")
                 .password("love112")
+                .build());
+
+        User user2 = userRepository.save(User.builder()
+                .name("예진")
+                .nickName("Rachel")
+                .birth(19940101L)
+                .gender(Gender.WOMAN)
+                .email("eoo123@naver.com")
+                .phone("01763501341")
+                .role(Role.USER)
+                .company("AnyangUniv")
+                .build());
+        accessRepository.save(Access.builder()
+                .user(user2)
+                .userId("pppp1234")
+                .password("qwe123")
                 .build());
 
         List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
@@ -55,6 +71,7 @@ public class TestDataInit {
 
         SurveySaveDto saveDto = SurveySaveDto.builder()
                 .title("회식 참여 조사")
+                .email("Esdf@mane.com")
                 .description("회식 참여 조사를 위한 설문입니다.")
                 .deadLine("2022-10-06-15-30")
                 .maximumAnswer(200)

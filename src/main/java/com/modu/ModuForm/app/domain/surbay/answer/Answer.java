@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.domain.surbay.answer;
 
+import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Answer {
+public class Answer extends BaseTimeEntity {
     @Column(name = "ANSWER_ID")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,8 +27,6 @@ public class Answer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SURVEY_ID")
     private Survey survey;
-
-    private LocalDateTime answerDate;
 
     @ElementCollection
     @CollectionTable(name = "ANSWER_DATA",
@@ -49,10 +48,9 @@ public class Answer {
     }
 
     @Builder
-    public Answer(User user,Survey survey, LocalDateTime answerDate, List<AnswerData> answerDataList) {
+    public Answer(User user, Survey survey, List<AnswerData> answerDataList) {
         this.user = user;
         this.survey = survey;
-        this.answerDate = answerDate;
         this.answerDataList = answerDataList;
     }
 
@@ -61,11 +59,11 @@ public class Answer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Answer answer = (Answer) o;
-        return Objects.equals(getId(), answer.getId()) && Objects.equals(getSurvey(), answer.getSurvey()) && Objects.equals(getAnswerDate(), answer.getAnswerDate()) && Objects.equals(getAnswerDataList(), answer.getAnswerDataList());
+        return Objects.equals(getId(), answer.getId()) && Objects.equals(getUser(), answer.getUser()) && Objects.equals(getSurvey(), answer.getSurvey()) && Objects.equals(getAnswerDataList(), answer.getAnswerDataList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getSurvey(), getAnswerDate(), getAnswerDataList());
+        return Objects.hash(getId(), getUser(), getSurvey(), getAnswerDataList());
     }
 }

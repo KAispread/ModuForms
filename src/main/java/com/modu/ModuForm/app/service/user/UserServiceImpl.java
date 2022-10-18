@@ -43,11 +43,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserSubDetailsDto getUserSubDetails(Long id) {
+    public UserFormDetailsDto getUserFormDetails(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
         List<Answer> answerList = answerRepository.findAnswersByUser(user);
         List<Survey> surveyList = surveyRepository.findSurveysByUser(user);
-        return new UserSubDetailsDto(user, answerList, surveyList);
+        return new UserFormDetailsDto(user, answerList, surveyList);
     }
 
     @Override

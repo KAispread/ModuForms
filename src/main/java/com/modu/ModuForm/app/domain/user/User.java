@@ -1,5 +1,7 @@
 package com.modu.ModuForm.app.domain.user;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
+import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
     private Long id;
@@ -27,7 +29,7 @@ public class User {
     @Column
     private String email;
     @Column(nullable = false, unique = true)
-    private Long phone;
+    private String phone;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -38,7 +40,7 @@ public class User {
     private List<Survey> surveyList = new ArrayList<>();
 
     @Builder
-    public User(String name, String nickName, Long birth, Gender gender, String email, Long phone, Role role, String company) {
+    public User(String name, String nickName, Long birth, Gender gender, String email, String phone, Role role, String company) {
         this.name = name;
         this.nickName = nickName;
         this.birth = birth;
