@@ -7,7 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Api(tags = "Survey TEMPLATE handling")
 @RequestMapping("/surveys")
@@ -35,5 +37,18 @@ public class SurveyIndexController {
         SurveyCheckDto surveyCheckDto = surveyService.getSurveyCheckDto(id);
         model.addAttribute("surveyCheck", surveyCheckDto);
         return "/survey/form-edit";
+    }
+
+    @GetMapping("/list")
+    public String formList(Model model) {
+        model.addAttribute("surveyPreviewList", surveyService.findAllOrderBy());
+        return "/survey/formList";
+    }
+
+    @GetMapping("/{id}/answer")
+    public String answerForm(@PathVariable Long id, Model model) {
+        SurveyCheckDto surveyCheckDto = surveyService.getSurveyCheckDto(id);
+        model.addAttribute("surveyCheck", surveyCheckDto);
+        return "/survey/form-answer";
     }
 }

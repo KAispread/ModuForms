@@ -1,11 +1,15 @@
 package com.modu.ModuForm.app.service.survey;
 
+import com.modu.ModuForm.app.web.dto.SurveyPreview;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 
+import java.util.List;
+
 public interface SurveyService {
-    public Long save(SurveySaveDto surveySaveDto, String nickName);
-    public Long update(Long id, SurveySaveDto surveySaveDto);
-    public Long delete(Long id);
-    public SurveyCheckDto getSurveyCheckDto(Long id);
+    Long save(SurveySaveDto surveySaveDto, String nickName);
+    Long update(Long id, SurveySaveDto surveySaveDto);
+    Long delete(Long id);
+    List<SurveyPreview> findAllOrderBy();
+    SurveyCheckDto getSurveyCheckDto(Long id);
 }

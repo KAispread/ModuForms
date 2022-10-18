@@ -15,13 +15,14 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light gowun-font-ko" th:text="|${session.userNickName}님 안녕하세요!!|"></h1>
+                <h1 class="fw-light gowun-font-ko" th:text="|다른 설문들을 확인해보세요!!|">모든 설문들에
+                    답변해보세요!!!</h1>
                 <p class="lead text-muted">
-                    여러분의 설문을 등록하세요
+                    설문 목록 페이지입니다.
                 </p>
                 <p>
                     <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
-                    <a href="/surveys/list" class="btn btn-secondary my-2">다른 설문 보기</a>
+                    <a href="/" class="btn btn-secondary my-2">메인 페이지</a>
                 </p>
             </div>
         </div>
@@ -29,16 +30,23 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-            <h4 class="gowun-font-ko">내가 작성한 설문</h4>
+            <h4 class="gowun-font-ko">모든 설문 목록</h4>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div th:each="surveyPreview : ${userFormDetails.surveyPreviewList}" class="col">
+                <div th:each="surveyPreview : ${surveyPreviewList}" class="col">
                     <div class="card shadow-sm">
-                        <svg style="cursor: pointer"
+                        <svg th:if="${surveyPreview.author} == ${session.userNickName}" style="cursor: pointer"
                              th:onclick="|location.href='@{/surveys/{id} (id=${surveyPreview.getId()})}'|"
-                             class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
+                             class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>설문으로 이동</title>
+                            <rect width="100%" height="100%" fill="#55595c"/>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${surveyPreview.title}">Thumbnail
+                            </text>
+                        </svg>
+
+                        <svg th:unless="${surveyPreview.author} == ${session.userNickName}" style="cursor: pointer"
+                             th:onclick="|location.href='@{/surveys/{id}/answer (id=${surveyPreview.getId()})}'|"
+                             class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
                             <title>설문으로 이동</title>
                             <rect width="100%" height="100%" fill="#55595c"/>
                             <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${surveyPreview.title}">Thumbnail
@@ -52,14 +60,15 @@
                             <p th:text="${surveyPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
+                                    <a th:if="${surveyPreview.author} == ${session.userNickName}" th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
+                                       class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a th:unless="${surveyPreview.author} == ${session.userNickName}" th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
                                        class="btn btn-sm btn-outline-secondary">View</a>
                                 </div>
                                 <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>
                             </div>
                             <br>
                             <div class="d-flex justify-content-between align-items-center">
-
                                 <small th:text="|작성일 : ${#temporals.format(surveyPreview.createdDate, 'MM-dd HH:mm:ss')}|"
                                        class="text-muted"></small>
                                 <small th:text="|마감일 : ${#temporals.format(surveyPreview.deadLine, 'MM-dd HH:mm:ss')}|"
@@ -72,46 +81,6 @@
             </div>
         </div>
     </div>
-
-    <div class="album py-5 bg-white">
-        <div class="container">
-            <h4 class="gowun-font-ko">응답한 설문</h4>
-
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                <div th:each="answerPreview : ${userFormDetails.answerPreviewList}" class="col">
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"/>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${answerPreview.surveyTitle}">
-                                Thumbnail
-                            </text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p th:text="${answerPreview.description}" class="card-text"></p>
-                            <div>
-                                <small th:text="|작성일 :${#temporals.format(answerPreview.answerDate, 'MM-dd HH:mm:ss')}|"
-                                       class="text-muted"></small>
-                                <p th:text="|응답일 : ${#temporals.format(answerPreview.answerDate , 'MM-dd HH:mm:ss')}|"></p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 </main>
 
 <footer class="text-muted py-5">

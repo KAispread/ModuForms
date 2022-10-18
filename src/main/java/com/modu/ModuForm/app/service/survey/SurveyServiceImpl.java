@@ -5,12 +5,16 @@ import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.web.dto.SurveyPreview;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +42,13 @@ public class SurveyServiceImpl implements SurveyService{
         survey.update(surveySaveDto);
 
         return survey.getId();
+    }
+
+    @Override
+    public List<SurveyPreview> findAllOrderBy() {
+        return surveyRepository.findAllByOrderByCreatedDateDesc().stream()
+                .map(SurveyPreview::new)
+                .collect(Collectors.toList());
     }
 
     @Override
