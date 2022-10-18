@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @NoArgsConstructor
 @Getter
 public class UserRegisterDto {
@@ -20,12 +18,12 @@ public class UserRegisterDto {
     private Long birth;
     private String gender;
     private String email;
-    private Long phone;
+    private String phone;
     private Gender userGender;
     private String company;
 
     @Builder
-    public UserRegisterDto(String id, String pwd, String username, String nickname, Long birth, String gender, String email, Long phone, Gender userGender, String company) {
+    public UserRegisterDto(String id, String pwd, String username, String nickname, Long birth, String gender, String email, String phone, Gender userGender, String company) {
         this.id = id;
         this.pwd = pwd;
         this.username = username;
