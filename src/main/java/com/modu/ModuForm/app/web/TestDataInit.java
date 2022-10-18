@@ -77,7 +77,30 @@ public class TestDataInit {
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestionList)
                 .build();
-
         surveyRepository.save(saveDto.toSurveyEntity(user));
+
+        List<SurveyQuestion> surveyQuestionList2 = new ArrayList<>();
+        surveyQuestionList2.add(SurveyQuestion.builder()
+                .number(0)
+                .question("회식에 참여하십니까?")
+                .questionType(QuesType.SHORT)
+                .build());
+        surveyQuestionList2.add(SurveyQuestion.builder()
+                .number(1)
+                .question("어떤 음식을 선호하십니까?")
+                .questionType(QuesType.MULTIPLE)
+                .distractor("회|곱창|고기|치킨|육회")
+                .build());
+
+        SurveySaveDto saveDto2 = SurveySaveDto.builder()
+                .title("회식 참여 조사")
+                .email("Esdf@mane.com")
+                .description("회식 참여 조사를 위한 설문입니다.")
+                .deadLine("2022-10-06-15-30")
+                .maximumAnswer(200)
+                .surveyQuestionList(surveyQuestionList2)
+                .build();
+
+        surveyRepository.save(saveDto2.toSurveyEntity(user));
     }
 }
