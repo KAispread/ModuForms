@@ -5,6 +5,7 @@ import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.SurveyPreview;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
@@ -24,18 +25,19 @@ public class SurveyServiceImpl implements SurveyService{
     private final UserRepository userRepository;
     private final AnswerRepository answerRepository;
 
+    @PerfLog
     @Override
     @Transactional
     public Long save(SurveySaveDto surveySaveDto, String nickName) {
         User user = userRepository.findByNickName(nickName).orElseThrow(() -> new IllegalArgumentException("일치하는 사용자가 없습니다."));
         Survey survey = surveyRepository.save(surveySaveDto.toSurveyEntity(user));
 
-        log.info("{}: saved survey = {}", user.getNickName(), survey.getTitle());
         return survey.getId();
     }
 
-    @Transactional
+    @PerfLog
     @Override
+    @Transactional
     public Long update(Long id, SurveySaveDto surveySaveDto) {
         Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         answerRepository.deleteAllBySurvey(survey);
@@ -44,19 +46,24 @@ public class SurveyServiceImpl implements SurveyService{
         return survey.getId();
     }
 
+    @PerfLog
     @Override
+    @Transactional(readOnly = true)
     public List<SurveyPreview> findAllOrderBy() {
         return surveyRepository.findAllByOrderByCreatedDateDesc().stream()
                 .map(SurveyPreview::new)
                 .collect(Collectors.toList());
     }
 
+    @PerfLog
     @Override
+    @Transactional(readOnly = true)
     public SurveyCheckDto getSurveyCheckDto(Long id) {
         Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         return new SurveyCheckDto(survey);
     }
 
+    @PerfLog
     @Transactional
     @Override
     public Long delete(Long id) {

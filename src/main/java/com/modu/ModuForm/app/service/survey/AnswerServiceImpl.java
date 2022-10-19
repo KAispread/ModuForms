@@ -5,6 +5,7 @@ import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyListResponseDto;
 import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
@@ -23,6 +24,7 @@ public class AnswerServiceImpl implements AnswerService{
     private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
 
+    @PerfLog
     @Override
     @Transactional
     public Long save(AnswerRequestDto answerRequestDto, Long surveyId) {
@@ -47,6 +49,7 @@ public class AnswerServiceImpl implements AnswerService{
         return null;
     }
 
+    @PerfLog
     @Override
     @Transactional
     public Long delete(Long id) {
