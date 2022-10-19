@@ -61,16 +61,14 @@
                                 <label class="form-label">Question </label>
                                 <select class="form-select form-select-sm" name="question_type">
                                     <option selected>질문 유형 선택</option>
-                                    <option value="SHORT" th:selected="${question.questionType.name() == 'SHORT'}">단답형
-                                    </option>
-                                    <option value="MULTIPLE" th:selected="${question.questionType.name() == 'MULTIPLE'}">
-                                        객관식
-                                    </option>
+                                    <option th:each="quesType : ${quesTypes}"
+                                            th:value="${quesType.name()}"
+                                            th:selected="${question.questionType.name() == quesType.name()}"
+                                            th:text="${quesType.description}"></option>
                                 </select>
                                 <input type="text" class="form-control" name="question" placeholder="질문을 입력하세요."
                                        th:value="${question.question}" required>
 
-                                <!-- d-->
                                 <th:block th:if="${question.questionType.name()} == 'MULTIPLE'">
                                     <div class="multiple_box">
                                         <div style="margin-top: 15px; text-align: center;" id="passwordHelpBlock"

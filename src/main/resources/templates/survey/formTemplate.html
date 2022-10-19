@@ -65,8 +65,11 @@
                                 <label class="form-label">Question </label>
                                 <select class="form-select form-select-sm" name="question_type">
                                     <option selected>질문 유형 선택</option>
-                                    <option value="SHORT">단답형</option>
-                                    <option value="MULTIPLE">객관식</option>
+                                    <option th:each="quesType : ${quesTypes}"
+                                            th:value="${quesType.name()}"
+                                            th:text="${quesType.description}"></option>
+<!--                                    <option value="SHORT">단답형</option>-->
+<!--                                    <option value="MULTIPLE">객관식</option>-->
                                 </select>
                                 <input type="text" class="form-control" name="question" placeholder="질문을 입력하세요."
                                        value="" required>

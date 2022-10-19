@@ -34,6 +34,9 @@ public class Answer extends BaseTimeEntity {
     )
     private List<AnswerData> answerDataList = new ArrayList<>();
 
+    @Column(nullable = false)
+    private Boolean anonymousFlag;
+
     public void setAnswerDataList(List<AnswerData> answerDataList) {
         this.answerDataList = answerDataList;
     }

@@ -7,8 +7,10 @@ import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
+@Setter
 @Getter
 public class UserRegisterDto {
     private String id;
@@ -16,14 +18,13 @@ public class UserRegisterDto {
     private String username;
     private String nickname;
     private Long birth;
-    private String gender;
+    private Gender gender;
     private String email;
     private String phone;
-    private Gender userGender;
     private String company;
 
     @Builder
-    public UserRegisterDto(String id, String pwd, String username, String nickname, Long birth, String gender, String email, String phone, Gender userGender, String company) {
+    public UserRegisterDto(String id, String pwd, String username, String nickname, Long birth, Gender gender, String email, String phone, String company) {
         this.id = id;
         this.pwd = pwd;
         this.username = username;
@@ -32,23 +33,15 @@ public class UserRegisterDto {
         this.gender = gender;
         this.email = email;
         this.phone = phone;
-        this.userGender = userGender;
         this.company = company;
     }
 
     public User toUserEntity() {
-        if (gender.equals(Gender.MAN.getTitle())) {
-            userGender = Gender.MAN;
-        } else if (gender.equals(Gender.WOMAN.getTitle())){
-            userGender = Gender.WOMAN;
-        } else {
-            userGender = null;
-        }
         return User.builder()
                 .name(username)
                 .nickName(nickname)
                 .birth(birth)
-                .gender(userGender)
+                .gender(gender)
                 .email(email)
                 .phone(phone)
                 .role(Role.USER)
