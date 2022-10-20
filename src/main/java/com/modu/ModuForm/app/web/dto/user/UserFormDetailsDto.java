@@ -17,8 +17,8 @@ public class UserFormDetailsDto {
     private final String name;
     private final String nickName;
     private final Role role;
-    private List<AnswerPreview> answerPreviewList = new ArrayList<>();
-    private List<SurveyPreview> surveyPreviewList = new ArrayList<>();
+    private final List<AnswerPreview> answerPreviewList = new ArrayList<>();
+    private final List<SurveyPreview> surveyPreviewList = new ArrayList<>();
 
     public UserFormDetailsDto(User user, List<Answer> answerList, List<Survey> surveyList) {
         this.id = user.getId();
