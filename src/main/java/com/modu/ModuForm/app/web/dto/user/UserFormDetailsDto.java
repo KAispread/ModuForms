@@ -8,7 +8,6 @@ import com.modu.ModuForm.app.web.dto.AnswerPreview;
 import com.modu.ModuForm.app.web.dto.SurveyPreview;
 import lombok.Getter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,7 @@ public class UserFormDetailsDto {
                     .description(answer.getSurvey().getDescription())
                     .answerDate(answer.getCreatedDate())
                     .modifiedDate(answer.getModifiedDate())
+                    .surveyEndDate(answer.getSurvey().getDeadLine())
                     .build());
         }
     }
