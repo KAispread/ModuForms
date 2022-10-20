@@ -6,7 +6,7 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
-import com.modu.ModuForm.app.web.dto.survey.AnswerRequestDto;
+import com.modu.ModuForm.app.web.dto.survey.AnswerSaveDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyListResponseDto;
 import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ public class AnswerServiceImpl implements AnswerService{
     @PerfLog
     @Override
     @Transactional
-    public Long save(AnswerRequestDto answerRequestDto, Long surveyId) {
-        User user = userRepository.getReferenceById(answerRequestDto.getUserId());
+    public Long save(AnswerSaveDto answerSaveDto, Long surveyId, Long userPk) {
+        User user = userRepository.getReferenceById(userPk);
         Survey survey = surveyRepository.getReferenceById(surveyId);
 
-        return answerRepository.save(answerRequestDto.toEntity(survey, user)).getId();
+        return answerRepository.save(answerSaveDto.toEntity(survey, user)).getId();
     }
 
     @Override

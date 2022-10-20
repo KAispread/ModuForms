@@ -10,68 +10,70 @@
 <header th:replace="~{layout/header :: body-header-main}">
 </header>
 <div class="container">
-  <main class="form-regist">
+  <main>
     <div class="py-5 text-center">
-      <h1 id="logo_icon" class="gowun-font-ko">설문 정보</h1>
+      <h2 style="font-weight: bolder" th:text="${surveyCheck.title}" class="gowun-font-ko">설문 제목</h2>
+      <p th:text="${surveyCheck.description}" class="lead">설문 설명</p>
     </div>
 
-    <div class="col-md-10 container-md">
-      <form class="needs-validation">
-        <div class="row g-3">
-          <div class="col-12">
-            <label for="survey_title" class="form-label">제목</label>
-            <input type="text" class="form-control" id="survey_title"
-                   th:value="${surveyCheck.title}" disabled
-                   required>
-          </div>
-          <div class="input-group">
-            <span class="input-group-text">설명</span>
-            <textarea class="form-control" id="survey_description" aria-label="With textarea"
-                      th:value="${surveyCheck.description}" disabled
-                      required>[[${surveyCheck.description}]]</textarea>
-          </div>
-          <div class="col-12">
-            <label for="survey_email" class="form-label">관리자 이메일</label>
-            <input type="text" class="form-control" id="survey_email"
-                   th:value="${surveyCheck.email}" disabled>
-          </div>
-
-          <label class="form-label">마감 날짜</label>
-          <div class="input-group mb-3">
-            <input type="date" class="form-control" id="date" disabled
-                   th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
-            <span class="input-group-text">&</span>
-            <input type="time" class="form-control" id="time" disabled
-                   th:value="${#temporals.format(surveyCheck.deadLine, 'HH:mm')}">
-          </div>
-          <hr class="my-4">
-
-          <h4 class="md-3 gowun-font-ko">질문에 응답해주세요</h4>
-
-          <div class="col-12" th:each="question : ${surveyCheck.surveyQuestionList}">
-            <label class="form-label" th:text="|Question ${questionStat.count}.|"></label>
-            <span th:if="${question.questionType.name()} == 'SHORT'" style="float: right;"><p>단답형</p></span>
-            <span th:if="${question.questionType.name()} == 'MULTIPLE'"
-                  style="float: right;"><p>객관식</p></span>
-            <input style="margin-bottom: 10px" type="text" class="form-control" name="question" disabled
-                   th:value="${question.question}"/>
-            <div class="form-check" th:each="selectOption : ${question.distractor}">
-              <input class="form-check-input" type="checkbox" value="" disabled>
-              <label class="form-check-label" th:text="${selectOption}"></label>
-            </div>
-          </div>
-
-          <hr class="my-4">
-
-          <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
-                    id="btn-survey-edit" class="btn btn-primary">수정하기</button>
-            <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
-                    id="btn-survey-delete" class="btn btn-dark">삭제하기</button>
-            <button type="button" th:onclick="|location.href='@{/}'|" class="btn btn-secondary">돌아가기</button>
-          </div>
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <div class="col-12">
+          <label for="survey_email" class="form-label">관리자 이메일</label>
+          <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_email"
+                 th:value="${surveyCheck.email}" disabled>
         </div>
-      </form>
+
+        <label for="survey_deadline" class="form-label">마감 날짜</label>
+        <div class="input-group mb-3">
+          <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_deadline"
+                 th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd HH:mm:ss')}" disabled>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3 gowun-font-ko">설문 응답</h4>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" name="anonymous_flag" id="anonymous_flag" value="on">
+          <label class="form-check-label" for="anonymous_flag">익명 응답</label>
+          <div id="emailHelp" class="form-text">체크 박스에 체크하시면 설문 제공자에게 프로필이 노출되지 않습니다.</div>
+        </div>
+        <hr class="my-4">
+        <form>
+          <div class="col-12 question_wrapper" th:each="question : ${surveyCheck.surveyQuestionList}">
+            <label style="font-weight: bold; color: darkgreen;" class="form-label" th:text="|Question ${questionStat.count}.|"></label>
+            <span th:switch="${question.questionType.name()}" style="float: right;">
+              <th:block th:case="'SHORT'">
+                <input name="que_type" type="hidden" value="short">
+                <p>단답형</p>
+              </th:block>
+              <th:block th:case="'MULTIPLE'">
+                <input name="que_type" type="hidden" value="multiple">
+                <p>객관식</p>
+              </th:block>
+            </span>
+            <p th:text="${question.question}" style="margin: 0; padding: 0;" class="lead mb-sm-2">질문</p>
+            <div th:if="${question.questionType.name() =='SHORT'}" class="form-floating short_answer">
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" th:field="${answer.answer}" required></textarea>
+              <label for="floatingTextarea">Answer</label>
+            </div>
+            <div th:if="${question.questionType.name() == 'MULTIPLE'}" class="form-check multiple_answer" th:each="selectOption : ${question.distractor}">
+              <input class="form-check-input" th:value="${selectOption}" name="answer" type="radio" th:field="${answer.answer}">
+              <label class="form-check-label" th:for="${#ids.prev('answer')}" th:text="${selectOption}"></label>
+            </div>
+            <div style="margin-bottom: 35px"></div>
+          </div>
+        </form>
+
+        <hr class="my-4">
+
+        <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
+          <button type="button" id="btn-answer-save" class="btn btn-primary">응답 제출하기</button>
+          <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기</button>
+        </div>
+      </div>
     </div>
   </main>
 </div>
@@ -81,7 +83,7 @@
 </footer>
 
 <th:block th:replace="~{layout/footer :: common_footer}"/>
-<script src="/js/survey.js"></script>
+<script src="/js/answer.js"></script>
 </body>
 
 </html>

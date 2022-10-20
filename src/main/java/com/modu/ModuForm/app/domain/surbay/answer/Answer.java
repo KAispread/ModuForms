@@ -51,10 +51,11 @@ public class Answer extends BaseTimeEntity {
     }
 
     @Builder
-    public Answer(User user, Survey survey, List<AnswerData> answerDataList) {
+    public Answer(User user, Survey survey, List<AnswerData> answerDataList, Boolean anonymousFlag) {
         this.user = user;
         this.survey = survey;
         this.answerDataList = answerDataList;
+        this.anonymousFlag = anonymousFlag;
     }
 
     @Override
@@ -62,11 +63,11 @@ public class Answer extends BaseTimeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Answer answer = (Answer) o;
-        return Objects.equals(getId(), answer.getId()) && Objects.equals(getUser(), answer.getUser()) && Objects.equals(getSurvey(), answer.getSurvey()) && Objects.equals(getAnswerDataList(), answer.getAnswerDataList());
+        return Objects.equals(getId(), answer.getId()) && Objects.equals(getUser(), answer.getUser()) && Objects.equals(getSurvey(), answer.getSurvey()) && Objects.equals(getAnswerDataList(), answer.getAnswerDataList()) && Objects.equals(getAnonymousFlag(), answer.getAnonymousFlag());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getSurvey(), getAnswerDataList());
+        return Objects.hash(getId(), getUser(), getSurvey(), getAnswerDataList(), getAnonymousFlag());
     }
 }

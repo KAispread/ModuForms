@@ -8,42 +8,41 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @NoArgsConstructor
 @Getter
-public class AnswerRequestDto {
-    private Long userId;
-    private List<String> answerQuestion;
+public class AnswerSaveDto {
+    private Boolean anonymousFlag;
+    private List<String> answerList;
 
     @Builder
-    public AnswerRequestDto(List<String> answerQuestion, Long userId) {
-        this.userId = userId;
-        this.answerQuestion = answerQuestion;
+    public AnswerSaveDto(Boolean anonymousFlag, List<String> answerList) {
+        this.anonymousFlag = anonymousFlag;
+        this.answerList = answerList;
     }
+
 
     public Answer toEntity(Survey survey, User user) {
-        Answer ans = Answer.builder()
-                .answerDataList(convertAnswerData(answerQuestion))
+        return Answer.builder()
+                .answerDataList(convertAnswerData())
                 .user(user)
+                .survey(survey)
+                .anonymousFlag(anonymousFlag)
                 .build();
-        ans.setSurveyRef(survey);
-        return ans;
     }
 
-    public List<AnswerData> convertAnswerData(List<String> answerQuestion){
+    public List<AnswerData> convertAnswerData(){
         List<AnswerData> answerData = new ArrayList<>();
         int num = 0;
 
-        for (String ans : answerQuestion) {
-            num += 1;
+        for (String ans : this.answerList) {
             answerData.add(AnswerData.builder()
                     .number(num)
                     .answer(ans)
                     .build());
+            num += 1;
         }
         return answerData;
     }
