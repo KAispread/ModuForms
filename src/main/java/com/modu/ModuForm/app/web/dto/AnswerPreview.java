@@ -11,13 +11,14 @@ public class AnswerPreview {
     private final String description;
     private final LocalDateTime answerDate;
     private final LocalDateTime modifiedDate;
+    private final LocalDateTime surveyEndDate;
 
     @Builder
-    public AnswerPreview(String surveyTitle, String description, LocalDateTime answerDate, LocalDateTime modifiedDate) {
+    public AnswerPreview(String surveyTitle, String description, LocalDateTime answerDate, LocalDateTime modifiedDate, LocalDateTime surveyEndDate) {
         this.surveyTitle = surveyTitle;
         this.description = description;
         this.answerDate = answerDate;
         this.modifiedDate = modifiedDate;
+        this.surveyEndDate = surveyEndDate;
     }
-
 }
