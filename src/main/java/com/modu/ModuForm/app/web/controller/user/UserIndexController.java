@@ -67,4 +67,9 @@ public class UserIndexController {
 
         return "userDetail";
     }
+
+    @GetMapping("/logout")
+    public String reLogin() {
+        return "redirect:/users/login";
+    }
 }
