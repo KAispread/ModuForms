@@ -122,7 +122,7 @@
                         <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
                                 id="btn-survey-edit-save" class="btn btn-primary">저장하기
                         </button>
-                        <button type="button" th:onclick="|location.href='@{/}'|" class="btn btn-secondary">돌아가기
+                        <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기
                         </button>
                     </div>
                 </div>

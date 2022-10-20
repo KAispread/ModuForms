@@ -76,7 +76,7 @@
                            id="btn-survey-edit" class="btn btn-primary">수정하기</button>
                         <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
                            id="btn-survey-delete" class="btn btn-dark">삭제하기</button>
-                        <button type="button" th:onclick="|location.href='@{/}'|" class="btn btn-secondary">돌아가기</button>
+                        <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기</button>
                     </div>
                 </div>
             </form>

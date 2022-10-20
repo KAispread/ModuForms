@@ -38,7 +38,7 @@
                 <div>
                     <a id="btn-logout" href="/users/logout" class="btn btn-outline-light logout-btn">Logout</a>
                     <a class="user_link" th:href="@{/users/${session.userNickName}}">
-                        <h4 id="user_detail" th:text="${session.userName}"></h4>
+                        <h5 id="user_detail" class="gowun-font-ko" th:text="${session.userNickName}"></h5>
                     </a>
                 </div>
             </div>

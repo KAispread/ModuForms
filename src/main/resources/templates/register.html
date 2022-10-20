@@ -16,76 +16,56 @@
 
         <div class="col-md-10 container-md">
             <h4 class="mb-3">회원 정보 입력</h4>
-            <form class="needs-validation" novalidate>
+            <form th:object="${userRegisterDto}" class="needs-validation was-validated">
                 <div class="row g-3">
                     <div class="col-12">
-                        <label for="input_id" class="form-label">아이디</label>
-                        <input type="text" class="form-control" id="input_id" placeholder="아이디를 입력하세요." value="" required>
-                        <div class="invalid-feedback">
-                            아이디는 필수 입니다.
-                        </div>
+                        <label for="id" class="form-label">아이디</label>
+                        <input type="text" th:field="*{id}" class="form-control" id="id" placeholder="아이디를 입력하세요." required>
                     </div>
 
                     <div class="col-12">
-                        <label for="input_pwd" class="form-label">비밀번호</label>
-                        <input type="password" class="form-control" id="input_pwd" placeholder="비밀번호를 입력하세요." value="" required>
-                        <div class="invalid-feedback">
-                            비밀번호는 필수 입니다.
-                        </div>
+                        <label for="pwd" class="form-label">비밀번호</label>
+                        <input type="password" th:field="*{pwd}" class="form-control" id="pwd" placeholder="비밀번호를 입력하세요." required>
                     </div>
 
                     <div class="col-12">
                         <label for="username" class="form-label">이름</label>
-                        <input type="text" class="form-control" id="username" placeholder="" value="" required>
-                        <div class="invalid-feedback">
-                            이름을 입력해주세요.
-                        </div>
+                        <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="" required>
                     </div>
 
                     <div class="col-12">
-                        <label for="nickname" class="form-label">닉네임 <span class="text-muted">(영문)</span></label>
-                        <input type="text" class="form-control" id="nickname" placeholder="사용할 닉네임을 입력해주세요." value="" required>
-                        <div class="invalid-feedback">
-                            사용할 닉네임을 입력해주세요. (영문만 가능)
-                        </div>
+                        <label for="nickname" class="form-label">닉네임 <span class="text-muted">(영문 닉네임을 입력해주세요)</span></label>
+                        <input type="text" th:field="*{nickname}" class="form-control" id="nickname" placeholder="사용할 닉네임을 입력해주세요." required>
                     </div>
 
                     <div class="col-12">
                         <label for="birth" class="form-label">생년월일 <span class="text-muted">(YYYY/MM/DD)</span></label>
-                        <input type="number" class="form-control" id="birth" placeholder="Ex) 19980101" value="" required>
-                        <div class="invalid-feedback">
-                            생년월일을 입력해주세요.
-                        </div>
+                        <input type="number" th:field="*{birth}" class="form-control" id="birth" placeholder="Ex) 19980101" required>
                     </div>
 
                     <div class="col-12">
                         <label for="gender" class="form-label">성별</label>
-                        <select class="form-select" id="gender">
-                            <option value="null">성별</option>
-                            <option value="남자">남자</option>
-                            <option value="여자">여자</option>
+                        <select class="form-select" th:field="*{gender}" id="gender" required>
+                            <option value="">=== 성별 선택 ===</option>
+                            <option th:each="gender : ${genders}"
+                                    th:value="${gender.name()}"
+                                    th:text="${gender.title}"></option>
                         </select>
                     </div>
 
                     <div class="col-12">
                         <label for="email" class="form-label">이메일 <span class="text-muted">(선택)</span></label>
-                        <input type="email" class="form-control" id="email" placeholder="your@example.com" value="">
-                        <div class="invalid-feedback">
-                            올바른 이메일을 입력해주세요.
-                        </div>
+                        <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="your@example.com">
                     </div>
 
                     <div class="col-12">
                         <label for="phone" class="form-label">휴대전화 <span class="text-muted">('-' 기호를 빼고 입력해주세요.)</span></label>
-                        <input type="number" class="form-control" id="phone" placeholder="0102345xxxx" value="" required>
-                        <div class="invalid-feedback">
-                            올바른 전화번호를 입력해주세요.
-                        </div>
+                        <input type="number" th:field="*{phone}" class="form-control" id="phone" placeholder="0102345xxxx" required>
                     </div>
 
                     <div class="col-12">
                         <label for="company" class="form-label">소속 <span class="text-muted">(선택)</span></label>
-                        <input type="text" class="form-control" id="company" placeholder="소속을 입력해주세요" value="">
+                        <input type="text" th:field="*{company}" class="form-control" id="company" placeholder="소속을 입력해주세요">
                     </div>
                 </div>
                 <hr class="my-4">
