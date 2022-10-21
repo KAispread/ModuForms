@@ -19,6 +19,18 @@
     font-family: 'Gowun Dodum', sans-serif !important;
 }
 
+#main_cover {
+    color: antiquewhite;
+    background: url(image/Gradation2.png) no-repeat center;
+    background-size: 100% 100%;
+}
+
+#list_cover {
+    color: antiquewhite;
+    background: url(image/Grad2.png) no-repeat center;
+    background-size: 100% 130%;
+}
+
 h1 .logo_icon {
     font-family: 'Caveat', cursive;
     font-size: 70px;
