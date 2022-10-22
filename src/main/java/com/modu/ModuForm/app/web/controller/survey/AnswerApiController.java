@@ -2,42 +2,39 @@ package com.modu.ModuForm.app.web.controller.survey;
 
 import com.modu.ModuForm.app.service.survey.AnswerServiceImpl;
 import com.modu.ModuForm.app.web.config.SessionManager;
-import com.modu.ModuForm.app.web.dto.survey.AnswerSaveDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
 import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Api(tags = "Answer DATA handling API")
 @RequiredArgsConstructor
-@RequestMapping("/app")
+@RequestMapping("/app/answers")
 @RestController
 public class AnswerApiController {
     private final AnswerServiceImpl answerService;
     private final SessionManager sessionManager;
 
-    // 설문 응답 제출
-    @PostMapping("/{surveyId}/answer")
-    public Long save(@RequestBody AnswerSaveDto answerSaveDto, @PathVariable Long surveyId, HttpServletRequest request) {
+    @Operation(summary = "응답 저장 API", description = "응답 저장 요청을 처리합니다.")
+    @PostMapping
+    public Long save(@RequestBody AnswerSaveDto answerSaveDto, @RequestParam Long surveyId, HttpServletRequest request) {
         Long userPk = sessionManager.getUserPk(request);
         return answerService.save(answerSaveDto, surveyId, userPk);
     }
 
-    // 선택한 응답 수정
-    @PutMapping("/{surveyId}/answer")
-    public Long update(@PathVariable Long surveyId) {
-        return answerService.update();
+    @Operation(summary = "응답 수정 API", description = "응답 수정 요청을 처리합니다.")
+    @PutMapping("/{answerId}")
+    public Long update(@RequestBody AnswerSaveDto answerSaveDto, @PathVariable Long answerId) {
+        return answerService.update(answerId, answerSaveDto);
     }
 
-    // 선택한 응답 삭제
-    @DeleteMapping
-    public Long delete(@PathVariable Long id) {
-        return answerService.delete(id);
+    @Operation(summary = "응답 삭제 API", description = "응답 삭제 요청을 처리합니다.")
+    @DeleteMapping("/{answerId}")
+    public Long delete(@PathVariable Long answerId) {
+        return answerService.delete(answerId);
     }
-
 }

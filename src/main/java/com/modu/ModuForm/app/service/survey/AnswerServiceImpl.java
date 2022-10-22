@@ -2,19 +2,18 @@ package com.modu.ModuForm.app.service.survey;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
+import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
-import com.modu.ModuForm.app.web.dto.survey.AnswerSaveDto;
-import com.modu.ModuForm.app.web.dto.survey.SurveyListResponseDto;
-import com.modu.ModuForm.app.web.dto.user.AnswerResponseDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerCheckDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerResponseDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,24 +34,28 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public Long update() {
-        return null;
+    public Long update(Long answerId, AnswerSaveDto answerSaveDto) {
+        Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다."));
+        answer.update(answerSaveDto);
+        return answer.getId();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public AnswerResponseDto findById() {
-        return null;
+    public AnswerResponseDto getAnswerDto(Long id) {
+        Answer answer = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다."));
+        return AnswerResponseDto.builder()
+                .answerId(answer.getId())
+                .answerCheckDto(new AnswerCheckDto(answer.getSurvey(), answer.getAnswerDataList()))
+                .anonymousFlag(answer.getAnonymousFlag())
+                .build();
     }
 
-    @Override
-    public List<SurveyListResponseDto> findAll() {
-        return null;
-    }
-
-    @PerfLog
     @Override
     @Transactional
-    public Long delete(Long id) {
-        return id;
+    public Long delete(Long answerId) {
+        answerRepository.delete(answerRepository.findById(answerId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다.")));
+        return answerId;
     }
 }
