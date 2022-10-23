@@ -3,12 +3,12 @@ package com.modu.ModuForm.app.domain.surbay.answer;
 import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,15 +41,6 @@ public class Answer extends BaseTimeEntity {
         this.answerDataList = answerDataList;
     }
 
-    public void setSurvey(Survey servey) {
-        this.survey = servey;
-        servey.addAnswer(this);
-    }
-
-    public void setSurveyRef(Survey survey) {
-        this.survey = survey;
-    }
-
     @Builder
     public Answer(User user, Survey survey, List<AnswerData> answerDataList, Boolean anonymousFlag) {
         this.user = user;
@@ -69,5 +60,16 @@ public class Answer extends BaseTimeEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getUser(), getSurvey(), getAnswerDataList(), getAnonymousFlag());
+    }
+
+    public void setSurvey(Survey servey) {
+        this.survey = servey;
+        servey.addAnswer(this);
+    }
+
+    public void update(AnswerSaveDto answerSaveDto) {
+        this.anonymousFlag = answerSaveDto.getAnonymousFlag();
+        this.answerDataList.clear();
+        this.answerDataList = answerSaveDto.convertAnswerData();
     }
 }
