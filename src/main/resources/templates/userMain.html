@@ -54,7 +54,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
-                                       class="btn btn-sm btn-outline-secondary">보기</a>
+                                       class="btn btn-sm btn-outline-primary">보기</a>
+                                    <a th:href="@{/surveys/{id}/edit (id=${surveyPreview.getId()})}"
+                                       class="btn btn-sm btn-outline-success">수정하기</a>
                                 </div>
                                 <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>
                             </div>
@@ -96,8 +98,10 @@
                             <p th:text="${answerPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <a th:href="@{/answers/{id} (id=${answerPreview.getId()})}"
+                                       class="btn btn-sm btn-outline-primary">보기</a>
+                                    <a th:href="@{/answers/{id}/edit (id=${answerPreview.getId()})}"
+                                       class="btn btn-sm btn-outline-success">수정하기</a>
                                 </div>
                             </div>
                             <div>

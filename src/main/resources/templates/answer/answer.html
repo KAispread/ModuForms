@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
-  <title>설문 확인</title>
+  <title>설문 응답</title>
   <link href="/css/form-validation.css" rel="stylesheet">
   <meta name="theme-color" content="#7952b3">
 </head>
@@ -19,7 +19,12 @@
     <div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">
         <div class="col-12">
-          <label for="survey_email" class="form-label">관리자 이메일</label>
+          <label for="survey_user_nickname" class="form-label">설문 제공자 닉네임</label>
+          <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_user_nickname"
+                 th:value="${surveyCheck.user.nickName}" disabled>
+        </div>
+        <div class="col-12">
+          <label for="survey_email" class="form-label">설문 제공자 이메일</label>
           <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_email"
                  th:value="${surveyCheck.email}" disabled>
         </div>

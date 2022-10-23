@@ -9,10 +9,8 @@
 <body class="bg-light">
 <header th:replace="~{layout/header :: body-header-main}">
 </header>
-
 <input id="userNickName" type="hidden" th:value="${session.userNickName}">
-<div class="container">
-    <main class="form-regist">
+    <main class="container">
         <div class="py-5 text-center">
             <h1 class="fw-light gowun-font-ko">설문 등록</h1>
         </div>
@@ -85,8 +83,6 @@
             </form>
         </div>
     </main>
-</div>
-
 <footer class="my-5 pt-5 text-muted text-center text-small">
     <p class="mb-1">&copy; 2022~ Modu Form</p>
 </footer>

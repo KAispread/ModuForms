@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
-    <title>설문 확인</title>
+    <title>설문 수정</title>
     <link href="/css/form-validation.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
@@ -120,7 +120,7 @@
                     <hr class="my-4">
                     <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
-                                id="btn-survey-edit-save" class="btn btn-primary">저장하기
+                                id="btn-survey-edit-save" class="btn btn-success">수정하기
                         </button>
                         <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기
                         </button>
