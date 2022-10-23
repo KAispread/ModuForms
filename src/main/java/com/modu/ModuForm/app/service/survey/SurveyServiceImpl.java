@@ -2,11 +2,13 @@ package com.modu.ModuForm.app.service.survey;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
+import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.SurveyPreview;
+import com.modu.ModuForm.app.web.dto.survey.SurveyAnswerCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,7 @@ public class SurveyServiceImpl implements SurveyService{
     @Override
     @Transactional
     public Long update(Long id, SurveySaveDto surveySaveDto) {
-        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
         answerRepository.deleteAllBySurvey(survey);
         survey.update(surveySaveDto);
 
@@ -59,7 +61,7 @@ public class SurveyServiceImpl implements SurveyService{
     @Override
     @Transactional(readOnly = true)
     public SurveyCheckDto getSurveyCheckDto(Long id) {
-        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
         return new SurveyCheckDto(survey);
     }
 
@@ -67,8 +69,17 @@ public class SurveyServiceImpl implements SurveyService{
     @Transactional
     @Override
     public Long delete(Long id) {
-        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
         surveyRepository.delete(survey);
         return id;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public SurveyAnswerCheckDto getSurveyAnswerCheckDto(Long surveyId) {
+        Survey survey = surveyRepository.findById(surveyId).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
+        List<Answer> allAnswer = answerRepository.findAllBySurvey(survey);
+
+        return new SurveyAnswerCheckDto(survey, allAnswer);
     }
 }
