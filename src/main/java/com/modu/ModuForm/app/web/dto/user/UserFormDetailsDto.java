@@ -32,6 +32,7 @@ public class UserFormDetailsDto {
     public void createAnswerPreview(List<Answer> answerList) {
         for (Answer answer : answerList) {
             answerPreviewList.add(AnswerPreview.builder()
+                    .id(answer.getId())
                     .surveyTitle(answer.getSurvey().getTitle())
                     .description(answer.getSurvey().getDescription())
                     .answerDate(answer.getCreatedDate())

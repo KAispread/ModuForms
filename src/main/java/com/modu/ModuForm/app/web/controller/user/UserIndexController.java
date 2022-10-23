@@ -30,7 +30,7 @@ public class UserIndexController {
     private final SessionManager sessionManager;
     private final Gender[] genders = Gender.values();
 
-    @Operation(summary = "로그인 페이지", description = "로그인 템플릿을 반환합니다.")
+    @Operation(summary = "로그인 페이지", description = "로그인 페이지를 반환합니다.")
     @GetMapping("/login")
     public String userLogin() {
         return "loginForm";
@@ -60,10 +60,10 @@ public class UserIndexController {
         return "register";
     }
 
-    @Operation(summary = "프로필 조회", description = "로그인 템플릿을 반환합니다.")
+    @Operation(summary = "프로필 조회", description = "선택한 유저의 프로필 페이지를 반환합니다.")
     @GetMapping("/{nickName}")
-    public String detail(@PathVariable Long id) {
-        userService.getUserDetails(id);
+    public String detail(@PathVariable Long nickName) {
+        userService.getUserDetails(nickName);
 
         return "userDetail";
     }
