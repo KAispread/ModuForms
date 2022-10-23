@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.dto.survey;
+package com.modu.ModuForm.app.web.dto.answer;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;

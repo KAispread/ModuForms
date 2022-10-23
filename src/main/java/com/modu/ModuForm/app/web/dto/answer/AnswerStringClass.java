@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.dto.survey;
+package com.modu.ModuForm.app.web.dto.answer;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
