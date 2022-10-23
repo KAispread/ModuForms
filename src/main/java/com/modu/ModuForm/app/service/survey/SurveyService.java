@@ -1,6 +1,7 @@
 package com.modu.ModuForm.app.service.survey;
 
 import com.modu.ModuForm.app.web.dto.SurveyPreview;
+import com.modu.ModuForm.app.web.dto.survey.SurveyAnswerCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 
@@ -12,4 +13,5 @@ public interface SurveyService {
     Long delete(Long id);
     List<SurveyPreview> findAllOrderBy();
     SurveyCheckDto getSurveyCheckDto(Long id);
+    SurveyAnswerCheckDto getSurveyAnswerCheckDto(Long surveyId);
 }
