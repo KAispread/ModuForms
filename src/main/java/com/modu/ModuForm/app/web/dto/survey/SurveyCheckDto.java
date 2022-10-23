@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 public class SurveyCheckDto {
+    private Long surveyId;
     private User user;
     private String title;
     private String description;
@@ -25,6 +26,7 @@ public class SurveyCheckDto {
 
     @Builder
     public SurveyCheckDto(Survey survey) {
+        this.surveyId = survey.getId();
         this.title = survey.getTitle();
         this.description = survey.getDescription();
         this.deadLine = survey.getDeadLine();
