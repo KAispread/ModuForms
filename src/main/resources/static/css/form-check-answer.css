@@ -2,6 +2,75 @@
     background-color: #6f42c1;
 }
 
+#progress {
+    appearance: none;
+}
+
+#progress::-webkit-progress-bar {
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+
+.progress_low::-webkit-progress-value {
+    border-radius: 10px;
+    background: darkorange;
+    background: -webkit-linear-gradient(to right, #FFAB91, #FF5722);
+    background: linear-gradient(to right, #FFAB91, #FF5722);
+}
+
+.progress_middle::-webkit-progress-value {
+    border-radius: 10px;
+    background: darkorange;
+    background: -webkit-linear-gradient(to right, #ffcc80, #ff9800);
+    background: linear-gradient(to right, #ffcc80, #ff9800);
+}
+
+.progress_high::-webkit-progress-value {
+    border-radius: 10px;
+    background: darkorange;
+    background: -webkit-linear-gradient(to right, #A5D6A7, #4CAF50);
+    background: linear-gradient(to right, #A5D6A7, #4CAF50);
+}
+.column-th3-usr {
+    width: 34%;
+    color: coral;
+}
+
+.column-th4-usr {
+    width: 20%;
+    color: coral;
+}
+
+.column-th2 {
+    width: 33%;
+    color: olivedrab;
+}
+
+.column-th3 {
+    width: 22%;
+    color: olivedrab;
+}
+
+.column-th4 {
+    width: 20%;
+    color: olivedrab;
+}
+
+.column-th5 {
+    width: 16%;
+    color: olivedrab;
+}
+
+.column-short-usr {
+    width: 34%;
+    color: coral;
+}
+
+.column-short {
+    width: 65%;
+    color:olivedrab;
+}
 
 @media (max-width: 991.98px) {
     .offcanvas-collapse {

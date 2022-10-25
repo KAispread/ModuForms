@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
-    <title>설문 확인</title>
+    <title>설문 응답 확인</title>
     <link href="/css/form-validation.css" rel="stylesheet">
     <link href="/css/form-check-answer.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
@@ -33,8 +33,7 @@
             <strong style="color:antiquewhite;">ModuForm</strong>
         </a>
         <div class="lh-1">
-            <h1 class="h6 mb-0 text-white lh-1" th:text="${queAnsList.surveyTitle}">설문 제목</h1>
-            <small>응답 확인 페이지</small>
+            <h1 class="h6 mb-0 text-white lh-1 gowun-font-ko" th:text="${queAnsList.surveyTitle}">설문 제목</h1>
         </div>
         <span style="display: flex; margin-left: auto;">
         <a href="#" class="navbar-brand d-flex align-items-center">
@@ -49,25 +48,26 @@
             응답한
             사용자
         </h5>
-
         <details>
             <summary class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">목록 보기</summary>
             <div class="table-responsive">
                 <table class="table text-center" style="text-align: center; width: 90%; margin: auto;">
                     <thead>
                     <tr>
-                        <th style="width: 25%; color: coral;">응답자 닉네임</th>
+                        <th style="width: 25%; color: coral;">닉네임</th>
                         <th style="width: 70%; color:olivedrab;">이메일</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     <tr th:each="user : ${queAnsList.userList}">
-                        <th style="margin: auto;" scope="row" class="text-start">
-                            <a href="#" class="btn btn-secondary" th:text="${user.userNickname}">사용자 닉네임</a>
+                        <th style="margin: auto; text-align: center" scope="row" class="text-start">
+                            <p th:if="${user.anonymousFlag}" class="form-text">익명</p>
+                            <a th:unless="${user.anonymousFlag}" href="#" class="btn btn-secondary" th:text="${user.userNickname}">사용자 닉네임</a>
                         </th>
                         <td>
-                            <input class="form-control" type="text" th:value="${user.email}"
+                            <p th:if="${user.anonymousFlag}" style="text-align: center" class="form-text">"BLIND"</p>
+                            <input th:unless="${user.anonymousFlag}"  style="text-align: center" class="form-control" type="text" th:value="${user.email}"
                                    aria-label="Disabled input example" disabled readonly>
                         </td>
                     </tr>
@@ -83,219 +83,86 @@
         <h5 style="text-align: center; font-size: 1.25rem;"
             class="border-bottom pb-2 mb-0 form-text"
             th:text="|Question ${questionStat.count}. ${question.question}|">
-            Question 1. 개선해야할
-            부분은?
+            Question
         </h5>
 
-        <div style="margin-bottom: 40px; width: 100%;">
+        <th:block th:if="${question.questionType.name() == 'MULTIPLE'}">
+            <div th:each="distractor : ${question.distractor}" style="margin-bottom: 40px; width: 100%;">
+                <div th:with="percentage = ${distractor.percentage}" style="display:inline-block; width: 100%;">
+                    <div style="padding-left: 1.5rem;" class="d-flex text-muted pt-3">
 
-            <div style="display:inline-block; width: 32%;">
-                <div class="d-flex text-muted pt-3">
-                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32">
-                        <title>Placeholder</title>
-                    </svg>
+                        <div style="display: flex;justify-content: space-between; align-items: center;padding: 8px 12px;"
+                             class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div style="">
+                                <span class="d-flex">
+                                  <h5 style=" color: darkcyan; display: block;" th:text="|ㆍ${distractor.distractor}|">선택지</h5>
+                                </span>
+                                <strong class="text-gray-dark" th:text="|응답 수 : ${distractor.count} / |">응답 수</strong>
+                                <strong class="text-gray-dark" th:text="'비율 : ' + (${distractor.count == 0} ? 0 : (${percentage})) + '%'">비율</strong>
+                            </div>
 
-                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-              <span class="d-block">
-                <h5 style=" color: darkcyan; font-weight: bold;">ㆍ인터페이스가 좋아용</h5>
-              </span>
-                        <strong style="display: block;" class="text-gray-dark">응답 수 : 200</strong>
-                        <strong style="display: block;" class="text-gray-dark">비율 : 16%</strong>
-                    </div>
-
-                </div>
-            </div>
-
-            <div style="display:inline-block; width: 32%;">
-                <div class="d-flex text-muted pt-3">
-                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32">
-                        <title>Placeholder</title>
-                    </svg>
-
-                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-              <span class="d-block">
-                <h6 style="font-size: 1.5rem; color:darkcyan;">ㆍUI </h6>
-              </span>
-
-
-                        <strong style="display: block;" class="text-gray-dark">응답 수 : 200</strong>
-                        <strong style="display: block;" class="text-gray-dark">비율 : 16%</strong>
-
+                            <progress th:classappend="${percentage < 30} ? (${percentage < 15}? 'progress_low' : 'progress_middle') : 'progress_high'"
+                                      style="display: inline-flex; width: 70%; justify-content: center; text-align: center;"
+                                      id="progress" th:value="${distractor.count}" min="0" th:max="${queAnsList.answerCount}"></progress>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div style="display:inline-block; width: 32%;">
-                <div class="d-flex text-muted pt-3">
-                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32">
-                        <title>Placeholder</title>
-                    </svg>
-
-                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-              <span class="d-block">
-                <h6 style="font-size: 1.5rem; color: darkcyan;">ㆍ이름 </h6>
-              </span>
-
-
-                        <strong style="display: block;" class="text-gray-dark">응답 수 : 200</strong>
-                        <strong style="display: block;" class="text-gray-dark">비율 : 16%</strong>
-
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
+        </th:block>
 
         <details style="text-align: center;">
-            <summary class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">자세히 보기</summary>
-            <div class="table-responsive">
-                <table class="table text-center">
+            <summary class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">자세히 보기
+            </summary>
+            <div th:if="${question.questionType.name() == 'MULTIPLE'}" class="table-responsive">
+                <table style="margin-top: 1.5rem" class="table text-center">
                     <thead style="text-align: center;">
                     <tr>
-                        <th style="width: 34%; color: coral;">User nickname</th>
-                        <th style="width: 22%; color:olivedrab;">인터페이스</th>
-                        <th style="width: 22%; color:olivedrab;">UI</th>
-                        <th style="width: 22%; color:olivedrab;">이름</th>
+                        <th th:classappend="${question.distractor.size() < 4 } ? 'column-th3-usr': 'column-th4-usr'">User nickname</th>
+
+                        <th th:classappend="${question.distractor.size() <= 2} ? 'column-th2':
+                        (${question.distractor.size() <= 3 } ? 'column-th3':
+                        (${question.distractor.size() <= 4 } ? 'column-th4':
+                        (${question.distractor.size() <= 5 } ? 'column-th5')))"
+                            th:each="dist : ${question.distractor}"
+                            th:text="${dist.distractor}">선택지</th>
                     </tr>
                     </thead>
                     <tbody>
+                        <tr th:each="answerUser : ${question.answerUser}">
+                            <th th:if="${answerUser.anonymousFlag}" scope="row" class="text-start">익명</th>
+                            <th th:unless="${answerUser.anonymousFlag}" th:text="${answerUser.user.nickName}" scope="row" class="text-start">User nickname</th>
+                            <td th:each="dist: ${question.distractor}">
+                                <svg th:if="${answerUser.answer.equals(dist.distractor)}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-check-lg" viewBox="0 0 16 16">
+                                    <path
+                                            d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${question.questionType.name() == 'SHORT'}" class="table-responsive">
+                <table style="margin-top: 1.5rem" class="table text-center">
+                    <thead style="text-align: center;">
                     <tr>
-                        <th scope="row" class="text-start">Public</th>
-                        <td>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-check-lg" viewBox="0 0 16 16">
-                                <path
-                                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                            </svg>
-                        </td>
-                        <td></td>
-                        <td></td>
+                        <th class="column-short-usr">User nickname</th>
+                        <th class="column-short">Response</th>
                     </tr>
-
-
-                    <tr>
-                        <th scope="row" class="text-start">Private</th>
-                        <td></td>
+                    </thead>
+                    <tbody>
+                    <tr th:each="answerUser : ${question.answerUser}">
+                        <th th:if="${answerUser.anonymousFlag}" th:text="${answerUser.user.nickName}" scope="row" class="text-start">익명</th>
+                        <th th:unless="${answerUser.anonymousFlag}" th:text="${answerUser.user.nickName}" scope="row" class="text-start">User nickname</th>
                         <td>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-check-lg" viewBox="0 0 16 16">
-                                <path
-                                        d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                            </svg>
-                        </td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <th scope="row" class="text-start">Permissions</th>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-start">Sharing</th>
-                        <td></td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-start">Unlimited members</th>
-                        <td></td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-start">Extra security</th>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
+                            <div th:text="${answerUser.answer}" class="form-text">Response</div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-        </details>
-    </div>
-
-
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h5 style="text-align: center; font-size: 1.25rem;" class="border-bottom pb-2 mb-0 form-text">Question 2. 골라주세요
-        </h5>
-
-        <details>
-            <summary class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">자세히</summary>
-            <div class="table-responsive">
-                <table class="table text-center">
-                    <thead>
-                    <tr>
-                        <th style="width: 34%; color: coral;">User nickname</th>
-                        <th style="width: 65%; color:olivedrab;">응답</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row" class="text-start">Rachel</th>
-                        <td>
-                            <div class="form-text">체크 박스에 체크하시면 설문 제공자에게 프로필이 노출되지 않습니다.</div>
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <th scope="row" class="text-start">Kaispread</th>
-                        <td class="form-text">
-                            그렇습니다.
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row" class="text-start">Rachel</th>
-                        <td class="form-text">
-                            좋아요
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
         </details>
     </div>
 </main>
