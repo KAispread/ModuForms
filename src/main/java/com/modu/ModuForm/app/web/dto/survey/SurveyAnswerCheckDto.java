@@ -37,6 +37,7 @@ public class SurveyAnswerCheckDto {
             this.userList.add(UserDetailsForAnswer.builder()
                     .userNickname(answer.getUser().getNickName())
                     .email(answer.getUser().getEmail())
+                    .anonymousFlag(answer.getAnonymousFlag())
                     .build());
         }
     }

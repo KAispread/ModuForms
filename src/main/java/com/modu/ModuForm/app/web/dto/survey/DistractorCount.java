@@ -5,14 +5,18 @@ import lombok.Getter;
 @Getter
 public class DistractorCount {
     private final String distractor;
-    private int count;
+    private final int count;
+    private final double total;
+    private double percentage;
 
-    public DistractorCount(String distractor) {
+    public DistractorCount(String distractor, int count, int total) {
         this.distractor = distractor;
-        this.count = 0;
+        this.count = count;
+        this.total = total;
+        setPercentage();
     }
 
-    public void countAdd() {
-        count += 1;
+    private void setPercentage() {
+        percentage = Math.floor(count / total * 100);
     }
 }

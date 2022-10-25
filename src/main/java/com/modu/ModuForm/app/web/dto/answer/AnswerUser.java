@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 public class AnswerUser {
     private String answer;
     private User user;
+    private Boolean anonymousFlag;
 
     @Builder
-    public AnswerUser(String answer, User user) {
+    public AnswerUser(String answer, User user, Boolean anonymousFlag) {
         this.answer = answer;
         this.user = user;
+        this.anonymousFlag = anonymousFlag;
     }
 }
