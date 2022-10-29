@@ -10,9 +10,11 @@ import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.SurveyPreview;
 import com.modu.ModuForm.app.web.dto.survey.SurveyAnswerCheckDto;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
+import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +59,11 @@ public class SurveyServiceImpl implements SurveyService{
                 .collect(Collectors.toList());
     }
 
+    public SurveyPage findAllPages(Integer page){
+        PageRequest pageRequest = PageRequest.of((page * 9) -9, 9);
+        return new SurveyPage(surveyRepository.findAllByOrderByCreatedDateDesc(pageRequest), page);
+    }
+
     @PerfLog
     @Override
     @Transactional(readOnly = true)
@@ -82,4 +89,5 @@ public class SurveyServiceImpl implements SurveyService{
 
         return new SurveyAnswerCheckDto(survey, allAnswer);
     }
+
 }

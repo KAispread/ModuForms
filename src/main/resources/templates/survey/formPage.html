@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
+  <title>Modu Form - 모두를 위한 설문</title>
+  <link href="/css/form-page.css" rel="stylesheet">
+  <meta name="theme-color" content="#7952b3">
+</head>
+<body>
+
+<header th:replace="~{layout/header :: body-header-main}">
+</header>
+
+<main>
+  <div id="list_cover">
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light gowun-font-ko" th:text="|다른 설문들을 확인해보세요!!|">모든 설문들에
+            답변해보세요!!!</h1>
+          <p class="lead text-muted">
+            설문 목록 페이지입니다.
+          </p>
+          <p>
+            <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
+            <a href="/" class="btn btn-secondary my-2">메인 페이지</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <h4 class="gowun-font-ko">모든 설문 목록</h4>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div th:each="surveyPreview : ${surveyPage.surveyPreviews}" class="col">
+          <div class="card shadow-sm">
+            <svg th:if="${surveyPreview.author} == ${session.userNickName}" style="cursor: pointer"
+                 th:onclick="|location.href='@{/surveys/{id} (id=${surveyPreview.getId()})}'|"
+                 class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>설문으로 이동</title>
+              <rect width="100%" height="100%" fill="#293757"/>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${surveyPreview.title}">Thumbnail
+              </text>
+            </svg>
+
+            <svg th:unless="${surveyPreview.author} == ${session.userNickName}" style="cursor: pointer"
+                 th:onclick="|location.href='@{/surveys/{id}/answer (id=${surveyPreview.getId()})}'|"
+                 class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>설문으로 이동</title>
+              <rect width="100%" height="100%" fill="#293757"/>
+              <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${surveyPreview.title}">Thumbnail
+              </text>
+            </svg>
+
+            <div class="card-body">
+              <div>
+                <small style="font-weight: bold" th:text="|설문 작성자 : ${surveyPreview.author}|" class="text-muted"/>
+              </div>
+              <div id="emailHelp" th:text="${surveyPreview.description}" class="form-text">설문 설명</div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a th:if="${surveyPreview.author} == ${session.userNickName}" th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
+                     class="btn btn-sm btn-outline-primary">보기</a>
+                  <a th:unless="${surveyPreview.author} == ${session.userNickName}" th:href="@{/answers (surveyId=${surveyPreview.getId()})}"
+                     class="btn btn-sm btn-outline-success">응답하기</a>
+                </div>
+                <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>
+              </div>
+              <br>
+              <div class="d-flex justify-content-between align-items-center">
+                <small th:text="|작성일 : ${#temporals.format(surveyPreview.createdDate, 'MM-dd HH:mm')}|"
+                       class="text-muted"></small>
+                <small th:text="|마감일 : ${#temporals.format(surveyPreview.deadLine, 'MM-dd HH:mm')}|"
+                       class="text-muted"></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-control">
+        <ul class="nav_item" th:object="${surveyPage}">
+          <li>
+            <a th:if="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}"
+                 th:href="@{/surveys/lists (sp=${surveyPage.startPage - 1})}">
+            < 이전
+            </a>
+            <a th:unless="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}">< 이전</a>
+          </li>
+          <li th:each="num : ${#numbers.sequence(1,5)}"
+              th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''">
+            <a th:href="@{/surveys/lists (sp=(${surveyPage.startPage} + ${num - 1}))}"
+               th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''"
+               th:text="${surveyPage.startPage} + ${num - 1}"></a>
+          </li>
+          <li>
+            <a th:if="${surveyPage.endPage} <= ${surveyPage.totalPages}"
+               th:href="@{/surveys/lists (sp=${surveyPage.endPage + 1})}">다음 >
+            </a>
+            <a th:unless="${surveyPage.endPage} <= ${surveyPage.totalPages}">다음 ></a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#">Back to top</a>
+    </p>
+    <p class="mb-1">KAispread's first toy project!!</p>
+    <p class="mb-0">Click the following link to view the code for this project →
+      <a href="https://github.com/KAispread/ModuForms">Github Repo</a></p>
+  </div>
+</footer>
+
+<th:block th:replace="~{layout/footer :: common_footer}"/>
+
+</body>
+</html>

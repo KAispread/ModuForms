@@ -37,9 +37,7 @@ public class UserController {
         }
 
         Long userPk = (Long) session.getAttribute("userPk");
-        log.info("{}: logout application", session.getAttribute("userNickName"));
         session.invalidate();
-
         return userPk;
     }
 

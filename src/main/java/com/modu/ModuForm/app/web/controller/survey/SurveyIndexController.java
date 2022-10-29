@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "Survey TEMPLATE handling")
 @RequestMapping("/surveys")
@@ -50,6 +47,13 @@ public class SurveyIndexController {
     public String formList(Model model) {
         model.addAttribute("surveyPreviewList", surveyService.findAllOrderBy());
         return "/survey/formList";
+    }
+
+    @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
+    @GetMapping("/lists")
+    public String formList(Model model, @RequestParam(name = "sp", defaultValue = "1") Integer page) {
+        model.addAttribute("surveyPage", surveyService.findAllPages(page));
+        return "/survey/formPage";
     }
 
     @Operation(summary = "설문 응답 확인 페이지", description = "선택한 설문에 대한 응답을 확인하는 페이지를 반환합니다.")

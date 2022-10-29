@@ -16,6 +16,7 @@ public class SurveyPreview {
     private final LocalDateTime createdDate;
     private final Integer answersCount;
 
+    @Builder
     public SurveyPreview(Survey survey) {
         this.author = survey.getUser().getNickName();
         this.id = survey.getId();
