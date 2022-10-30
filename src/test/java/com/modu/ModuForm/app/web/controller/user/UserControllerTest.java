@@ -1,18 +1,17 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import com.modu.ModuForm.app.domain.user.*;
+import com.modu.ModuForm.app.domain.user.AccessRepository;
+import com.modu.ModuForm.app.domain.user.Gender;
+import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,9 +39,9 @@ public class UserControllerTest {
                 .nickname(nickname)
                 .username("기우")
                 .birth(19980112L)
-                .gender("남자")
+                .gender(Gender.MAN)
                 .email("asdfa@comg.com")
-                .phone(19980112L)
+                .phone("0123123123")
                 .build();
 
         //when
@@ -54,6 +53,7 @@ public class UserControllerTest {
                 .block();
 
         //then
+        assert responseEntity != null;
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
