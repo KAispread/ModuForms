@@ -104,7 +104,7 @@ let survey = {
         let path_name = $(location).attr('pathname').substr(9);
         path_name = path_name.substring(0, path_name.length - 5);
 
-        if (window.confirm('설문 내용을 저장하시겠습니까?'))
+        if (window.confirm('설문을 수정하시면 기존 응답 데이터는 삭제됩니다. 설문을 수정하시겠습니까?'))
         {
             $.ajax({
                 type: 'PUT',
@@ -114,7 +114,7 @@ let survey = {
                 data: JSON.stringify(data)
             }).done(function () {
                 alert('설문이 수정되었습니다.');
-                window.location.href = '/';
+                window.location.href = '/surveys/' + path_name;
             }).fail(function () {
                 alert('양식에 맞게 설문을 작성해주세요');
             })

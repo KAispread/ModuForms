@@ -6,33 +6,42 @@
     <meta name="theme-color" content="#7952b3">
 </head>
 <body class="text-center">
-<main class="form-signin">
-    <form action="/users/login" method="post">
-        <h1 th:replace="~{layout/header :: logo_h1}">logo</h1>
-        <h3 class="h5 mb-3 fw-normal">로그인이 필요합니다.</h3>
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center text-lg-start">
+            <!-- h1 로고 -->
+            <h1 class="logo_icon display-4 fw-bold lh-1 mb-3" style="font-family: 'Yellowtail', cursive;"
+                th:fragment="logo_h1">Modu Form</h1>
+            <p class="col-lg-10 fs-4 gowun-font-ko">ModuForm에 방문해주셔서 감사합니다. <br>
+                로그인 후 ModuForm의 모든 기능을 이용해보세요!<br>
+            </p>
+        </div>
+        <div class="col-md-10 mx-auto col-lg-5">
+            <form action="/users/login" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+                <div class="form-floating mb-3">
+                    <input name="userId" type="text" class="form-control" id="userId" placeholder="ID">
+                    <label for="userId">아이디</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                    <label for="password">비밀번호</label>
+                </div>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+                <hr class="my-4">
+                <div>
+                    <small class="text-muted">ModuForm에 처음이세요?</small>
+                    <span><a href="/users/register">회원가입하기</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-        <div class="form-floating">
-            <input name="userId" type="text" class="form-control" id="userId" placeholder="ID">
-            <label for="userId">아이디</label>
-        </div>
-        <div class="form-floating">
-            <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-            <label for="password">비밀번호</label>
-        </div>
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-        <hr class="my-4">
-        <div>
-            ModuForm에 처음이세요?
-            <span><a href="/users/register">회원가입하기</a></span>
-        </div>
-        <p class="mt-5 mb-3 text-muted">&copy; 2022~</p>
-    </form>
 </main>
 <th:block th:replace="~{layout/footer :: common_footer}"/>
 </body>

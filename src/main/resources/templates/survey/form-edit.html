@@ -9,127 +9,125 @@
 <body class="bg-light">
 <header th:replace="~{layout/header :: body-header-main}">
 </header>
-<div class="container">
-    <main class="form-regist">
-        <div class="py-5 text-center">
-            <h1 id="logo_icon" class="gowun-font-ko">설문 수정</h1>
-        </div>
+<main class="container">
+    <div class="py-5 text-center">
+        <h1 id="logo_icon" class="gowun-font-ko">설문 수정</h1>
+    </div>
 
-        <div class="col-md-10 container-md">
-            <form class="needs-validation">
-                <div class="row g-3">
-                    <div class="col-12">
-                        <label for="survey_title" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
-                               th:value="${surveyCheck.title}" required>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">설명</span>
-                        <textarea class="form-control" id="survey_description" aria-label="With textarea"
-                                  th:value="${surveyCheck.description}"
-                                  required>[[${surveyCheck.description}]]</textarea>
-                    </div>
-                    <div class="col-12">
-                        <label for="survey_email" class="form-label">관리자 이메일</label>
-                        <input type="text" class="form-control" id="survey_email" placeholder="유효한 이메일 주소를 입력하세요."
-                               th:value="${surveyCheck.email}">
-                    </div>
+    <div class="col-md-10 container-md">
+        <form class="needs-validation">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="survey_title" class="form-label">제목</label>
+                    <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
+                           th:value="${surveyCheck.title}" required>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text">설명</span>
+                    <textarea class="form-control" id="survey_description" aria-label="With textarea"
+                              th:value="${surveyCheck.description}"
+                              required>[[${surveyCheck.description}]]</textarea>
+                </div>
+                <div class="col-12">
+                    <label for="survey_email" class="form-label">관리자 이메일</label>
+                    <input type="text" class="form-control" id="survey_email" placeholder="유효한 이메일 주소를 입력하세요."
+                           th:value="${surveyCheck.email}">
+                </div>
 
-                    <label class="form-label">마감 날짜</label>
-                    <div class="input-group mb-3">
-                        <input type="date" class="form-control" id="date" required
-                               th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
-                        <span class="input-group-text">&</span>
-                        <input type="time" class="form-control" id="time" required
-                               th:value="${#temporals.format(surveyCheck.deadLine, 'HH:mm')}">
-                    </div>
+                <label class="form-label">마감 날짜</label>
+                <div class="input-group mb-3">
+                    <input type="date" class="form-control" id="date" required
+                           th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
+                    <span class="input-group-text">&</span>
+                    <input type="time" class="form-control" id="time" required
+                           th:value="${#temporals.format(surveyCheck.deadLine, 'HH:mm')}">
+                </div>
 
 
-                    <div class="col-12">
-                        <label class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
-                        <input type="text" class="form-control" id="survey_max"
-                               th:value="${surveyCheck.maximumAnswer}"
-                               value="">
-                    </div>
-                    <hr class="my-4">
+                <div class="col-12">
+                    <label class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
+                    <input type="text" class="form-control" id="survey_max"
+                           th:value="${surveyCheck.maximumAnswer}"
+                           value="">
+                </div>
+                <hr class="my-4">
 
-                    <h4 class="md-3 gowun-font-ko">질문 등록</h4>
+                <h4 class="md-3 gowun-font-ko">질문 등록</h4>
 
-                    <div id="question_box">
-                        <div class="question_root" th:each="question : ${surveyCheck.surveyQuestionList}">
-                            <div class="col-12 question_wrapper">
-                                <label class="form-label">Question </label>
-                                <select class="form-select form-select-sm" name="question_type">
-                                    <option selected>질문 유형 선택</option>
-                                    <option th:each="quesType : ${quesTypes}"
-                                            th:value="${quesType.name()}"
-                                            th:selected="${question.questionType.name() == quesType.name()}"
-                                            th:text="${quesType.description}"></option>
-                                </select>
-                                <input type="text" class="form-control" name="question" placeholder="질문을 입력하세요."
-                                       th:value="${question.question}" required>
+                <div id="question_box">
+                    <div class="question_root" th:each="question : ${surveyCheck.surveyQuestionList}">
+                        <div class="col-12 question_wrapper">
+                            <label class="form-label">Question </label>
+                            <select class="form-select form-select-sm" name="question_type">
+                                <option selected>질문 유형 선택</option>
+                                <option th:each="quesType : ${quesTypes}"
+                                        th:value="${quesType.name()}"
+                                        th:selected="${question.questionType.name() == quesType.name()}"
+                                        th:text="${quesType.description}"></option>
+                            </select>
+                            <input type="text" class="form-control" name="question" placeholder="질문을 입력하세요."
+                                   th:value="${question.question}" required>
 
-                                <th:block th:if="${question.questionType.name()} == 'MULTIPLE'">
-                                    <div class="multiple_box">
-                                        <div style="margin-top: 15px; text-align: center;" id="passwordHelpBlock"
-                                             class="form-text">
-                                            객관식 타입의 선택지를 설정해주세요 (최대 5개)
-                                        </div>
-                                        <th:block th:each="distractor : ${question.distractor}">
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text">A.</span>
-                                                <input type="text" class="form-control underline"
-                                                       th:value="${distractor}"
-                                                       name="distractor" placeholder="선택지를 입력하세요." required>
-                                                <svg th:if="${distractorStat.count > 2}"
-                                                     style="margin-left: 10px; margin-top: 10px; font-size: larger;"
-                                                     xmlns="http://www.w3.org/2000/svg" width="16"
-                                                     height="16" fill="currentColor" class="bi bi-x-octagon bi-close"
-                                                     viewBox="0 0 16 16">
-                                                    <path
-                                                            d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
-                                                    <path
-                                                            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                                </svg>
-
-                                            </div>
-                                        </th:block>
-                                        <input class="option_index" type="hidden"
-                                               th:value="${question.distractor.size()}">
-                                        <button type="button" class="btn btn-success bth-add-multiple-option">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor"
-                                                 class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
-                                                <path
-                                                        d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                                            </svg>
-                                            선택지 추가
-                                        </button>
+                            <th:block th:if="${question.questionType.name()} == 'MULTIPLE'">
+                                <div class="multiple_box">
+                                    <div style="margin-top: 15px; text-align: center;" id="passwordHelpBlock"
+                                         class="form-text">
+                                        객관식 타입의 선택지를 설정해주세요 (최대 5개)
                                     </div>
-                                </th:block>
+                                    <th:block th:each="distractor : ${question.distractor}">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">A.</span>
+                                            <input type="text" class="form-control underline"
+                                                   th:value="${distractor}"
+                                                   name="distractor" placeholder="선택지를 입력하세요." required>
+                                            <svg th:if="${distractorStat.count > 2}"
+                                                 style="margin-left: 10px; margin-top: 10px; font-size: larger;"
+                                                 xmlns="http://www.w3.org/2000/svg" width="16"
+                                                 height="16" fill="currentColor" class="bi bi-x-octagon bi-close"
+                                                 viewBox="0 0 16 16">
+                                                <path
+                                                        d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
+                                                <path
+                                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>
+
+                                        </div>
+                                    </th:block>
+                                    <input class="option_index" type="hidden"
+                                           th:value="${question.distractor.size()}">
+                                    <button type="button" class="btn btn-success bth-add-multiple-option">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor"
+                                             class="bi bi-plus-square-dotted" viewBox="0 0 16 16">
+                                            <path
+                                                    d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                        </svg>
+                                        선택지 추가
+                                    </button>
+                                </div>
+                            </th:block>
 
 
-                            </div>
-                            <hr th:if="${questionStat.count == 1}" class="my-4">
                         </div>
-                    </div>
-
-                    <hr class="my-4">
-                    <button type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
-
-                    <hr class="my-4">
-                    <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
-                                id="btn-survey-edit-save" class="btn btn-success">수정하기
-                        </button>
-                        <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기
-                        </button>
+                        <hr th:if="${questionStat.count == 1}" class="my-4">
                     </div>
                 </div>
-            </form>
-        </div>
-    </main>
-</div>
+
+                <hr class="my-4">
+                <button type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
+
+                <hr class="my-4">
+                <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
+                            id="btn-survey-edit-save" class="btn btn-success">수정하기
+                    </button>
+                    <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
 
 <footer class="my-5 pt-5 text-muted text-center text-small">
     <p class="mb-1">&copy; 2022~ Modu Form</p>

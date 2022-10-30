@@ -98,7 +98,7 @@ let answer = {
                 data: JSON.stringify(data)
             }).done(function () {
                 alert('응답이 수정되었습니다.');
-                window.location.href = '/';
+                window.location.href = '/answers/' + path_name;
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             })
