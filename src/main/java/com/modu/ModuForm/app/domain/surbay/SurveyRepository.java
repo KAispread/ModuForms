@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SurveyRepository extends JpaRepository<Survey, Long> {
     List<Survey> findSurveysByUser(User user);
+    Page<Survey> findAllByUser(User user, Pageable pageable);
     List<Survey> findAllByOrderByCreatedDateDesc();
-    Page<Survey> findAllByOrderByCreatedDateDesc(Pageable pageable);
 }

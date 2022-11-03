@@ -2,9 +2,12 @@ package com.modu.ModuForm.app.web.controller.survey;
 
 import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.service.survey.SurveyService;
+import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +55,10 @@ public class SurveyIndexController {
     @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
     @GetMapping("/lists")
     public String formList(Model model, @RequestParam(name = "sp", defaultValue = "1") Integer page) {
-        model.addAttribute("surveyPage", surveyService.findAllPages(page));
+        PageRequest pageRequest = PageRequest.of(page - 1, 9, Sort.by("createdDate").descending());
+        SurveyPage surveyPages = surveyService.findAllPages(pageRequest, page);
+
+        model.addAttribute("surveyPage", surveyPages);
         return "/survey/formPage";
     }
 

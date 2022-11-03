@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.web.dto;
 
+import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,12 +16,12 @@ public class AnswerPreview {
     private final LocalDateTime surveyEndDate;
 
     @Builder
-    public AnswerPreview(Long id, String surveyTitle, String description, LocalDateTime answerDate, LocalDateTime modifiedDate, LocalDateTime surveyEndDate) {
-        this.id = id;
-        this.surveyTitle = surveyTitle;
-        this.description = description;
-        this.answerDate = answerDate;
-        this.modifiedDate = modifiedDate;
-        this.surveyEndDate = surveyEndDate;
+    public AnswerPreview(Answer answer) {
+        this.id = answer.getId();
+        this.surveyTitle = answer.getSurvey().getTitle();
+        this.description = answer.getSurvey().getDescription();
+        this.surveyEndDate = answer.getSurvey().getDeadLine();
+        this.answerDate = answer.getCreatedDate();
+        this.modifiedDate = answer.getModifiedDate();
     }
 }

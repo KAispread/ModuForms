@@ -81,7 +81,7 @@
       </div>
 
       <div class="page-control">
-        <ul class="nav_item" th:object="${surveyPage}">
+        <ul class="nav_item">
           <li>
             <a th:if="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}"
                  th:href="@{/surveys/lists (sp=${surveyPage.startPage - 1})}">
@@ -91,15 +91,16 @@
           </li>
           <li th:each="num : ${#numbers.sequence(1,5)}"
               th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''">
-            <a th:href="@{/surveys/lists (sp=(${surveyPage.startPage} + ${num - 1}))}"
+            <a th:if="${surveyPage.startPage} + ${num - 1} <= ${surveyPage.totalPages} "
+               th:href="@{/surveys/lists (sp=(${surveyPage.startPage} + ${num - 1}))}"
                th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''"
                th:text="${surveyPage.startPage} + ${num - 1}"></a>
           </li>
           <li>
-            <a th:if="${surveyPage.endPage} <= ${surveyPage.totalPages}"
+            <a th:if="${surveyPage.endPage} < ${surveyPage.totalPages}"
                th:href="@{/surveys/lists (sp=${surveyPage.endPage + 1})}">다음 >
             </a>
-            <a th:unless="${surveyPage.endPage} <= ${surveyPage.totalPages}">다음 ></a>
+            <a th:unless="${surveyPage.endPage} < ${surveyPage.totalPages}">다음 ></a>
           </li>
         </ul>
       </div>

@@ -9,13 +9,16 @@ import com.modu.ModuForm.app.domain.user.AccessRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
-import com.modu.ModuForm.app.web.dto.user.*;
+import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
+import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
+import com.modu.ModuForm.app.web.dto.user.UserFormDetailsDto;
+import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,11 +50,12 @@ public class UserServiceImpl implements UserService{
     @PerfLog
     @Override
     @Transactional(readOnly = true)
-    public UserFormDetailsDto getUserFormDetails(Long id) {
+    public UserFormDetailsDto getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage, Pageable answerPage, Integer currentAnswerPage, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
-        List<Answer> answerList = answerRepository.findAnswersByUser(user);
-        List<Survey> surveyList = surveyRepository.findSurveysByUser(user);
-        return new UserFormDetailsDto(user, answerList, surveyList);
+        Page<Survey> surveyPageList = surveyRepository.findAllByUser(user, surveyPage);
+        Page<Answer> answerPageList = answerRepository.findAllByUser(user, answerPage);
+
+        return new UserFormDetailsDto(user, surveyPageList, currentSurveyPage, answerPageList, currentAnswerPage);
     }
 
     @Override

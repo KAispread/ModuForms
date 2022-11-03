@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
     <title>Modu Form - 모두를 위한 설문</title>
-    <link>
+    <link href="/css/form-page.css" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
 </head>
 <body>
@@ -12,27 +12,27 @@
 
 <main>
     <div id="main_cover">
-    <section class="py-5 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light gowun-font-ko" th:text="|${session.userNickName}님 안녕하세요!!|"></h1>
-                <p class="lead text-muted">
-                    여러분의 설문을 등록하세요
-                </p>
-                <p>
-                    <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
-                    <a href="/surveys/lists" class="btn btn-secondary my-2">다른 설문 보기</a>
-                </p>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light gowun-font-ko" th:text="|${session.userNickName}님 안녕하세요!!|"></h1>
+                    <p class="lead text-muted">
+                        여러분의 설문을 등록하세요
+                    </p>
+                    <p>
+                        <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
+                        <a href="/surveys/lists" class="btn btn-secondary my-2">다른 설문 보기</a>
+                    </p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     </div>
     <div class="album py-5 bg-light">
         <div class="container">
             <h4 style="font-weight: bold" class="gowun-font-ko">작성한 설문</h4>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div th:each="surveyPreview : ${userFormDetails.surveyPreviewList}" class="col">
+                <div th:each="surveyPreview : ${userFormDetails.surveyPage.surveyPreviews}" class="col">
                     <div class="card shadow-sm">
                         <svg style="cursor: pointer"
                              th:onclick="|location.href='@{/surveys/{id} (id=${surveyPreview.getId()})}'|"
@@ -69,10 +69,35 @@
                                        class="text-muted"></small>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+            <div class="page-control">
+                <ul class="nav_item" th:with="surveyPage=${userFormDetails.surveyPage}">
+                    <li>
+                        <a th:if="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}"
+                           th:href="@{/ (sp=${surveyPage.startPage - 1}, ap=${param.ap})}">
+                            < 이전
+                        </a>
+                        <a th:unless="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}">< 이전</a>
+                    </li>
+                    <li th:each="num : ${#numbers.sequence(1,5)}"
+                        th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''">
+                        <a th:if="${surveyPage.startPage} + ${num - 1} <= ${surveyPage.totalPages} "
+                           th:href="@{/ (sp=(${surveyPage.startPage} + ${num - 1}), ap=${param.ap})}"
+                           th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''"
+                           th:text="${surveyPage.startPage} + ${num - 1}"></a>
+                    </li>
+                    <li>
+                        <a th:if="${surveyPage.endPage} < ${surveyPage.totalPages}"
+                           th:href="@{/ (sp=${surveyPage.endPage + 1}, ap=${param.ap})}">다음 >
+                        </a>
+                        <a th:unless="${surveyPage.endPage} < ${surveyPage.totalPages}">다음 ></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
@@ -84,7 +109,7 @@
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-                <div th:each="answerPreview : ${userFormDetails.answerPreviewList}" class="col">
+                <div th:each="answerPreview : ${userFormDetails.answerPage.answerPreviews}" class="col">
                     <div class="card shadow-sm">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                              xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
@@ -117,8 +142,33 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <div class="page-control">
+                <ul class="nav_item" th:with="answerPage=${userFormDetails.answerPage}">
+                    <li>
+                        <a th:if="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}"
+                           th:href="@{/ (ap=${answerPage.startPage - 1}, sp=${param.sp})}">
+                            < 이전
+                        </a>
+                        <a th:unless="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}">< 이전</a>
+                    </li>
+                    <li th:each="num : ${#numbers.sequence(1,5)}"
+                        th:classappend="((${answerPage.startPage} + ${num - 1}) == ${answerPage.currentPage}) ? 'on' : ''">
+                        <a th:if="${answerPage.startPage} + ${num - 1} <= ${answerPage.totalPages} "
+                           th:href="@{/ (ap=(${answerPage.startPage} + ${num - 1}), sp=${param.sp})}"
+                           th:classappend="((${answerPage.startPage} + ${num - 1}) == ${answerPage.currentPage}) ? 'on' : ''"
+                           th:text="${answerPage.startPage} + ${num - 1}"></a>
+                    </li>
+                    <li>
+                        <a th:if="${answerPage.endPage} < ${answerPage.totalPages}"
+                           th:href="@{/ (ap=${answerPage.endPage + 1}, sp=${param.sp})}">다음 >
+                        </a>
+                        <a th:unless="${answerPage.endPage} < ${answerPage.totalPages}">다음 ></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 

@@ -46,10 +46,10 @@ public class SurveySaveDto {
     }
 
     public LocalDateTime getDeadLineLocalDateTime() {
-        if (this.deadLine == null) {
+        if (deadLine == null || this.deadLine.equals("null") || this.deadLine.length() == 0) {
             return null;
         }
-        String[] split = this.deadLine.split("-|:");
+        String[] split = this.deadLine.split("-:");
         for(int i = 0; i < 5; i++) {
             DATE_TIME[i] = Integer.parseInt(split[i]);
         }

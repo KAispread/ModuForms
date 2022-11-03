@@ -14,6 +14,7 @@ import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,9 +60,11 @@ public class SurveyServiceImpl implements SurveyService{
                 .collect(Collectors.toList());
     }
 
-    public SurveyPage findAllPages(Integer page){
-        PageRequest pageRequest = PageRequest.of((page * 9) -9, 9);
-        return new SurveyPage(surveyRepository.findAllByOrderByCreatedDateDesc(pageRequest), page);
+    @Override
+    @Transactional(readOnly = true)
+    public SurveyPage findAllPages(PageRequest pageable, Integer page){
+        Page<Survey> surveyPage = surveyRepository.findAll(pageable);
+        return new SurveyPage(surveyPage, page);
     }
 
     @PerfLog

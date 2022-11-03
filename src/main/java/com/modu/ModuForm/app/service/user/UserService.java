@@ -2,12 +2,13 @@ package com.modu.ModuForm.app.service.user;
 
 import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.web.dto.user.*;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
-    public Access login(LoginRequestDto loginRequestDto);
-    public Long register(UserRegisterDto userRequestDto);
-    public UserFormDetailsDto getUserFormDetails(Long id);
-    public Long updateUser(Long id, UserRegisterDto userRequestDto);
-    public UserDetailsDto getUserDetails(Long id);
-    public Long getUserPk(String nickName);
+    Access login(LoginRequestDto loginRequestDto);
+    Long register(UserRegisterDto userRequestDto);
+    UserFormDetailsDto getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage, Pageable answerPage, Integer currentAnswerPage, Long id);
+    Long updateUser(Long id, UserRegisterDto userRequestDto);
+    UserDetailsDto getUserDetails(Long id);
+    Long getUserPk(String nickName);
 }
