@@ -1,16 +1,16 @@
 package com.modu.ModuForm.app.domain.surbay.answer;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Lob;
 import java.util.Objects;
 
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class AnswerData {
     @Column(nullable = false)

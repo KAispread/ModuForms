@@ -4,6 +4,7 @@ import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Survey extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,8 @@
 package com.modu.ModuForm.app.domain.user;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "USERS")
 public class User extends BaseTimeEntity {
