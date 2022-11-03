@@ -6,6 +6,7 @@ import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class AnswerApiController {
     private final SessionManager sessionManager;
 
     @Operation(summary = "응답 저장 API", description = "응답 저장 요청을 처리합니다.")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Long save(@RequestBody AnswerSaveDto answerSaveDto, @RequestParam Long surveyId, HttpServletRequest request) {
         Long userPk = sessionManager.getUserPk(request);
