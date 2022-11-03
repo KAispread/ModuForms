@@ -4,12 +4,10 @@ import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.user.Role;
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.dto.AnswerPreview;
-import com.modu.ModuForm.app.web.dto.SurveyPreview;
+import com.modu.ModuForm.app.web.dto.answer.AnswerPage;
+import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 @Getter
 public class UserFormDetailsDto {
@@ -17,34 +15,15 @@ public class UserFormDetailsDto {
     private final String name;
     private final String nickName;
     private final Role role;
-    private final List<AnswerPreview> answerPreviewList = new ArrayList<>();
-    private final List<SurveyPreview> surveyPreviewList = new ArrayList<>();
+    private final SurveyPage surveyPage;
+    private final AnswerPage answerPage;
 
-    public UserFormDetailsDto(User user, List<Answer> answerList, List<Survey> surveyList) {
+    public UserFormDetailsDto(User user, Page<Survey> surveyPageList, Integer currentSurveyPage, Page<Answer> answerPageList, Integer currentAnswerPage) {
         this.id = user.getId();
         this.name = user.getName();
         this.role = user.getRole();
         this.nickName = user.getNickName();
-        createAnswerPreview(answerList);
-        createSurveyPreview(surveyList);
-    }
-
-    public void createAnswerPreview(List<Answer> answerList) {
-        for (Answer answer : answerList) {
-            answerPreviewList.add(AnswerPreview.builder()
-                    .id(answer.getId())
-                    .surveyTitle(answer.getSurvey().getTitle())
-                    .description(answer.getSurvey().getDescription())
-                    .answerDate(answer.getCreatedDate())
-                    .modifiedDate(answer.getModifiedDate())
-                    .surveyEndDate(answer.getSurvey().getDeadLine())
-                    .build());
-        }
-    }
-
-    public void createSurveyPreview(List<Survey> surveyList) {
-        for (Survey survey : surveyList) {
-            surveyPreviewList.add(new SurveyPreview(survey));
-        }
+        this.surveyPage = new SurveyPage(surveyPageList, currentSurveyPage);
+        this.answerPage = new AnswerPage(answerPageList, currentAnswerPage);
     }
 }
