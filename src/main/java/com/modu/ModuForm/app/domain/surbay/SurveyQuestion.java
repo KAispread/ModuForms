@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.domain.surbay;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class SurveyQuestion {
     private Integer number;
