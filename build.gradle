@@ -37,6 +37,6 @@ dependencies {
 	testImplementation group: 'org.junit.platform', name: 'junit-platform-runner'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
