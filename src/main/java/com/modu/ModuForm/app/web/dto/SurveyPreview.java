@@ -24,6 +24,15 @@ public class SurveyPreview {
         this.description = survey.getDescription();
         this.deadLine = survey.getDeadLine();
         this.createdDate = survey.getCreatedDate();
-        this.answersCount = survey.getAnswers().size();
+        this.answersCount = setAnswerCount(survey);
+    }
+
+    private boolean hasNoAnswer(Survey survey) {
+        return survey.getAnswers() == null;
+    }
+
+    private int setAnswerCount(Survey survey) {
+        if (hasNoAnswer(survey)) return 0;
+        return survey.getAnswers().size();
     }
 }
