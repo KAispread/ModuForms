@@ -1,42 +1,37 @@
 package com.modu.ModuForm.app.service.survey;
 
-import com.modu.ModuForm.app.DummyDataInit;
 import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
-import com.modu.ModuForm.app.domain.user.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
-import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class SurveyServiceImplTest {
     @Autowired
-    private SurveyRepository surveyRepository;
+    SurveyRepository surveyRepository;
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
     @Autowired
-    private SurveyServiceImpl surveyService;
-
-    @Autowired
-    private DummyDataInit dummyData;
+    SurveyServiceImpl surveyService;
 
     @AfterEach
     void cleanUp() {
@@ -44,10 +39,8 @@ public class SurveyServiceImplTest {
         userRepository.deleteAll();
     }
 
-
     @Test
-    @Transactional
-    public void 설문이_등록() {
+    public void 설문이_등록된다() {
         //given
         List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
         surveyQuestionList.add(SurveyQuestion.builder()
@@ -79,5 +72,84 @@ public class SurveyServiceImplTest {
         assertThat(survey.getTitle()).isEqualTo("회식 참여 조사");
         assertThat(survey.getSurveyQuestionList().get(0).getQuestion()).isEqualTo("회식에 참여하십니까?");
         assertThat(user.getSurveyList()).contains(survey);
+    }
+
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @Nested
+    public class FindAllPage {
+        @BeforeAll
+        void setUpData() {
+            //given
+            for (int i = 0; i < 91; i++) {
+                List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
+                surveyQuestionList.add(SurveyQuestion.builder()
+                        .number(1)
+                        .question("회식에 참여하십니까?")
+                        .questionType(QuesType.SHORT)
+                        .build());
+                surveyQuestionList.add(SurveyQuestion.builder()
+                        .number(2)
+                        .question("참여자의 성함을 입력해주세요")
+                        .questionType(QuesType.SHORT)
+                        .build());
+
+                SurveySaveDto saveDto = SurveySaveDto.builder()
+                        .title("회식 참여 조사" + i)
+                        .description("회식 참여 조사를 위한 설문입니다." + i)
+                        .deadLine("2022-10-06-15-30")
+                        .maximumAnswer(2000 + i)
+                        .surveyQuestionList(surveyQuestionList)
+                        .build();
+
+                Long saved = surveyService.save(saveDto, "Kai");
+            }
+        }
+
+        @DisplayName("페이지의 정보가 반환된다.")
+        @Test
+        public void case1() {
+            // when
+            PageRequest maximumAnswer = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
+            SurveyPage allPages = surveyService.findAllPages(maximumAnswer, 1);
+
+            //then
+            assertThat(allPages.getCurrentPage()).isEqualTo(1);
+            assertThat(allPages.getStartPage()).isEqualTo(1);
+        }
+
+        @Transactional
+        @DisplayName("페이지별로 데이터가 반환된다.")
+        @Test
+        public void case2() {
+            // when
+            PageRequest maximumAnswer1 = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
+            SurveyPage page1 = surveyService.findAllPages(maximumAnswer1, 1);
+
+            PageRequest maximumAnswer2 = PageRequest.of(1, 9, Sort.by("maximumAnswer").descending());
+            SurveyPage page2 = surveyService.findAllPages(maximumAnswer2, 1);
+
+            //then
+            assertThat(page1.getSurveyPreviews().get(0).getTitle()).isEqualTo("회식 참여 조사90");
+            assertThat(page2.getSurveyPreviews().get(0).getTitle()).isEqualTo("회식 참여 조사81");
+        }
+
+        @Transactional
+        @DisplayName("sp(현재 페이지 파라미터)에 전체 페이지보다 큰 값을 넣으면 예외가 발생한다.")
+        @Test
+        public void case3() {
+            // when
+            PageRequest maximumAnswer = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
+            SurveyPage allPages = surveyService.findAllPages(maximumAnswer, 1);
+            int illegalPage = allPages.getTotalPages() + 1;
+
+            PageRequest pr = PageRequest.of(illegalPage, 9, Sort.by("maximumAnswer").descending());
+
+            //then
+            try {
+                surveyService.findAllPages(pr, illegalPage);
+            } catch (Exception e) {
+                assertThat(e.getMessage()).contains("java.");
+            }
+        }
     }
 }
