@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +39,7 @@ public class UserIndexController {
 
     @Operation(summary = "로그인 요청 처리", description = "로그인 요청을 처리합니다.")
     @PostMapping("/login")
-    public String login(LoginRequestDto loginRequestDto, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@Validated LoginRequestDto loginRequestDto, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "loginForm";
         }

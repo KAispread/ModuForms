@@ -8,18 +8,29 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @Setter
 @Getter
 public class UserRegisterDto {
+    @Length(min = 5, max = 16 , message = "아이디는 5자 이상 16자 미만으로 입력하세요.")
     private String id;
+    @Length(min = 5, max = 16 , message = "비밀 번호는 5자 이상 16자 미만으로 입력하세요.")
     private String pwd;
+    @NotBlank
     private String username;
+    @NotBlank
     private String nickname;
+    @Positive
     private Long birth;
+    @NotNull
     private Gender gender;
+    @Email
     private String email;
+    @Min(10)
     private String phone;
     private String company;
 

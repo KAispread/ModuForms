@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class UserController {
     @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long register(@RequestBody UserRegisterDto userRegisterDto) {
+    public Long register(@Validated @RequestBody UserRegisterDto userRegisterDto) {
         return userService.register(userRegisterDto);
     }
 
@@ -44,7 +45,7 @@ public class UserController {
     // 회원 정보 수정
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
     @PatchMapping("/{nickname}")
-    public Long update(@PathVariable String nickname, @RequestBody UserRegisterDto userRequestDto) {
+    public Long update(@Validated @RequestBody UserRegisterDto userRequestDto, @PathVariable String nickname) {
         return null;
     }
 

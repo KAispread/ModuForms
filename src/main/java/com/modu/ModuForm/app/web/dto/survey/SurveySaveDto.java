@@ -6,7 +6,10 @@ import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +17,15 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class SurveySaveDto {
+    @Length(min = 2, max = 30, message = "제목은 2자 이상, 30자 미만으로 입력하세요.")
     private String title;
+    @Length(min = 2, message = "설명은 2자 이상으로 입력하세요.")
     private String description;
     private String deadLine;
+    @Email
     private String email;
     private Integer maximumAnswer;
+    @NotEmpty
     private List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
     private int[] DATE_TIME = new int[5];
 
@@ -49,7 +56,7 @@ public class SurveySaveDto {
         if (deadLine == null || this.deadLine.equals("null") || this.deadLine.length() == 0) {
             return null;
         }
-        String[] split = this.deadLine.split("-:");
+        String[] split = this.deadLine.split("-|:");
         for(int i = 0; i < 5; i++) {
             DATE_TIME[i] = Integer.parseInt(split[i]);
         }

@@ -8,13 +8,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
 public class AnswerSaveDto {
+    @NotNull
     private Boolean anonymousFlag;
+    @NotEmpty
     private List<String> answerList;
 
     @Builder
