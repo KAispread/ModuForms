@@ -21,10 +21,10 @@ public class AnswerIndexController {
 
     @Operation(summary = "설문 응답 페이지", description = "선택한 설문에 대해 응답하는 페이지을 반환합니다")
     @GetMapping
-    public String answerForm(@RequestParam Long surveyId, Model model) {
+    public String answer(@RequestParam Long surveyId, Model model) {
         model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(surveyId));
         model.addAttribute("answer", new AnswerStringClass());
-        return "/answer/answer";
+        return "/answer/answer-form";
     }
 
     @Operation(summary = "응답 확인 페이지", description = "선택한 응답을 확인하는 페이지를 반환합니다.")
