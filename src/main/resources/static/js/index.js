@@ -38,9 +38,8 @@ let index = {
         if (window.confirm('로그아웃 하시겠습니까?'))
         {
             $.ajax({
-                type: 'POST',
-                url: '/app/users/logout',
-                dataType: 'json',
+                type: 'GET',
+                url: '/logout',
             }).done(function (){
                 alert('로그아웃 했습니다.');
                 window.location.href = '/users/login';

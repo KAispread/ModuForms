@@ -36,14 +36,14 @@
                     <h3 class="logo_icon" style="font-family: 'Yellowtail', cursive;">ModuForm</h3>
                 </a>
                 <div>
-                    <a id="btn-logout" href="/users/logout" class="btn btn-outline-light logout-btn">Logout</a>
-                    <a class="user_link" th:href="@{/users/${session.userNickName}}">
-                        <h5 id="user_detail" class="gowun-font-ko" th:text="${session.userNickName}"></h5>
+                    <a id="btn-logout" class="btn btn-outline-light logout-btn">Logout</a>
+                    <a class="user_link" th:href="@{/users/${session.user.nickname}}">
+                        <h5 id="user_detail" class="gowun-font-ko" th:text="${session.user.nickname}"></h5>
                     </a>
                 </div>
             </div>
         </div>
-        <input id="userNickName" type="hidden" th:value="${session.userNickName}">
+        <input id="userNickName" type="hidden" th:value="${session.user.nickname}">
     </header>
 
 </body>
