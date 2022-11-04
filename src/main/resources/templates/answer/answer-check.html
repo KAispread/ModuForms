@@ -85,7 +85,7 @@
                 <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <a th:href="@{/answers/{id}/edit (id=${answerDto.getAnswerId()})}" class="btn btn-primary">수정하기</a>
                     <button type="button" id="btn-answer-delete" class="btn btn-dark">삭제하기</button>
-                    <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기</button>
+                    <a th:href="@{/}" class="btn btn-secondary">돌아가기</a>
                 </div>
             </div>
         </div>

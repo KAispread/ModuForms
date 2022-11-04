@@ -92,7 +92,7 @@
                            class="btn btn-primary">수정하기</a>
                         <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
                            id="btn-survey-delete" class="btn btn-dark">삭제하기</button>
-                        <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기</button>
+                        <a th:href="@{/}" class="btn btn-secondary">돌아가기</a>
                     </div>
                 </div>
             </form>

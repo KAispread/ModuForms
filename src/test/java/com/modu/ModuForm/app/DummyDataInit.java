@@ -17,9 +17,6 @@ import java.util.List;
 
 @Component
 public class DummyDataInit {
-
-
-
     public User userInit(UserRepository userRepository) {
         User user = userRepository.save(User.builder()
                 .name("예진")
@@ -27,7 +24,7 @@ public class DummyDataInit {
                 .birth(19940101L)
                 .gender(Gender.WOMAN)
                 .email("asdf1234@naver.com")
-                .phone(01032111L)
+                .phone("012312123")
                 .role(Role.USER)
                 .company("AnyangUniv")
                 .build());
@@ -57,7 +54,6 @@ public class DummyDataInit {
         Survey newSurvey = Survey.builder()
                 .user(user)
                 .title("참여 조사")
-                .postDate(LocalDateTime.now())
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestionList)
