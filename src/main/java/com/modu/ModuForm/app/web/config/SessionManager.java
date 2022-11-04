@@ -1,6 +1,7 @@
 package com.modu.ModuForm.app.web.config;
 
 import com.modu.ModuForm.app.domain.user.Access;
+import com.modu.ModuForm.config.auth.dto.SessionUser;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +22,7 @@ public class SessionManager {
 
         session.setAttribute(SESSION_CONST, userPk);
 
-        session.setAttribute("userNickName", nickname);
-        session.setAttribute("userName", access.getUser().getName());
-        session.setAttribute("userPk", access.getUser().getId());
+        session.setAttribute("user" , new SessionUser(access.getUser()));
         return nickname;
     }
 
