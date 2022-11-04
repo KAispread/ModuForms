@@ -28,7 +28,7 @@ public class User extends BaseTimeEntity {
     private Gender gender;
     @Column
     private String email;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String phone;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -37,7 +37,7 @@ public class User extends BaseTimeEntity {
     private String company;
 
     @OneToMany(mappedBy = "user")
-    private List<Survey> surveyList = new ArrayList<>();
+    private final List<Survey> surveyList = new ArrayList<>();
 
     @Builder
     public User(String name, String nickName, Long birth, Gender gender, String email, String phone, Role role, String company) {
