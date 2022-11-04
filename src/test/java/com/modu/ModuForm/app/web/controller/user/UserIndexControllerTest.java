@@ -1,61 +1,69 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import com.modu.ModuForm.app.DummyDataInit;
-import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
-import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.domain.user.AccessRepository;
-import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
-import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.runner.RunWith;
+import com.modu.ModuForm.app.service.survey.SurveyService;
+import com.modu.ModuForm.app.service.user.UserService;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+
+@Transactional
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class UserIndexControllerTest {
+    private MockMvc mvc;
     private WebClient webClient = WebClient.create("http://localhost:" + 8080);
 
     @Autowired
-    private DummyDataInit dummyDataInit;
-
+    private SurveyService surveyService;
     @Autowired
-    private SurveyRepository surveyRepository;
+    private UserService userService;
     @Autowired
-    private AccessRepository accessRepository;
+    private WebApplicationContext context;
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AccessRepository accessRepository;
 
-    @AfterEach
-    void cleanUp() {
-        surveyRepository.deleteAll();
-        userRepository.deleteAll();
+    @BeforeEach
+    public void setup(){
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
     }
 
+    @DisplayName("로그인 페이지 로딩")
     @Test
-    public void 로그인페이지_로딩_성공() throws Exception {
+    public void loadLoginPage() throws Exception {
         //when
         ResponseEntity<String> responseEntity = webClient.get().uri("/users/login").retrieve().toEntity(String.class).block();
 
         //then
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).contains("로그인이 필요합니다.");
+        assertThat(responseEntity.getBody()).contains("로그인 후 ModuForm의 모든 기능을 이용해보세요!");
     }
 
+    @DisplayName("회원가입 페이지 로딩에 성공한다")
     @Test
-    public void 회원가입페이지_로딩_성공() {
+    public void loadRegist() throws Exception {
         //when
         ResponseEntity<String> responseEntity = webClient.get().uri("/users/register").retrieve().toEntity(String.class).block();
 
@@ -66,23 +74,18 @@ public class UserIndexControllerTest {
         assertThat(responseEntity.getBody()).contains("가입 하기");
     }
 
-    @Test
-    public void 로그인_요청_성공() {
-        //given
-        User user = dummyDataInit.userInit(userRepository);
-        Access access = dummyDataInit.accessInit(accessRepository ,user);
-        LoginRequestDto loginRequestDto = LoginRequestDto.builder().userId(access.getUserId()).password(access.getPassword()).build();
+    @TestInstance(PER_CLASS)
+    @DisplayName("로그인 동작 테스트")
+    @Nested
+    @Transactional
+    class LoginUser {
+        @BeforeEach
+        void initUser() {
 
+        }
+        @Test
+        void success() {
 
-        //when
-        ResponseEntity<String> block = webClient.post().uri("/users/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(loginRequestDto)
-                .retrieve()
-                .toEntity(String.class)
-                .block();
-
-        //then
-        assertThat(block).isNotNull();
+        }
     }
 }
