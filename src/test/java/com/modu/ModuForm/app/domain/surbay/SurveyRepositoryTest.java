@@ -3,13 +3,10 @@ package com.modu.ModuForm.app.domain.surbay;
 import com.modu.ModuForm.app.DummyDataInit;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@Transactional
 @SpringBootTest
 public class SurveyRepositoryTest {
     @Autowired
@@ -29,16 +26,15 @@ public class SurveyRepositoryTest {
     DummyDataInit dummyData;
 
 
-    @AfterEach
-    public void cleanUp(){
-        surveyRepository.deleteAll();
-        userRepository.deleteAll();
-    }
+//    @AfterEach
+//    public void cleanUp(){
+//        surveyRepository.deleteAll();
+//        userRepository.deleteAll();
+//    }
 
     @Test
     @DisplayName(value = "설문이_등록된다.")
-    @Transactional
-    public void 설문이_등록된다() {
+    public void post() {
         //given
         User user = dummyData.userInit(userRepository);
         List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
@@ -54,8 +50,7 @@ public class SurveyRepositoryTest {
 
     @Test
     @DisplayName(value = "설문이 수정된다.")
-    @Transactional
-    public void 설문이_수정된다(){
+    public void edit(){
         //given
         User user = dummyData.userInit(userRepository);
         List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
@@ -76,8 +71,7 @@ public class SurveyRepositoryTest {
 
     @Test
     @DisplayName(value = "설문이 삭제된다.")
-    @Transactional
-    public void 설문이_삭제된다(){
+    public void delete(){
         //given
         User user = dummyData.userInit(userRepository);
         List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();

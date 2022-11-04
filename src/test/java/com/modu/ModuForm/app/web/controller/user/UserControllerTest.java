@@ -5,21 +5,19 @@ import com.modu.ModuForm.app.domain.user.Gender;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserControllerTest {
-    private WebClient webClient = WebClient.create("http://localhost:" + 8080);
+    private final WebClient webClient = WebClient.create("http://localhost:" + 8080);
     @Autowired
     private UserRepository userRepository;
 
@@ -29,8 +27,9 @@ public class UserControllerTest {
     @Autowired
     private UserController userController;
 
+    @DisplayName("회원 가입에 성공한다")
     @Test
-    public void Register_성공한다() {
+    public void register() {
         //given
         String nickname = "Kasper";
         UserRegisterDto registerDto = UserRegisterDto.builder()
@@ -62,8 +61,9 @@ public class UserControllerTest {
         assertThat(Kasper.getBirth()).isEqualTo(19980112L);
     }
 
+    @DisplayName("로그아웃에 성공한다.")
     @Test
-    public void 로그아웃_성공한다() {
+    public void logout() {
         //
     }
 }

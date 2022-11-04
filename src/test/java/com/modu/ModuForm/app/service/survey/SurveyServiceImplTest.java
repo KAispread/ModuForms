@@ -9,12 +9,10 @@ import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
 import org.junit.jupiter.api.*;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
 public class SurveyServiceImplTest {
@@ -39,8 +36,9 @@ public class SurveyServiceImplTest {
         userRepository.deleteAll();
     }
 
+    @DisplayName("설문이 등록된다")
     @Test
-    public void 설문이_등록된다() {
+    public void post() {
         //given
         List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
         surveyQuestionList.add(SurveyQuestion.builder()
@@ -69,12 +67,15 @@ public class SurveyServiceImplTest {
         User user = userRepository.findByNickName("Kai").orElse(null);
 
         //then
+        assert survey != null;
         assertThat(survey.getTitle()).isEqualTo("회식 참여 조사");
         assertThat(survey.getSurveyQuestionList().get(0).getQuestion()).isEqualTo("회식에 참여하십니까?");
+        assert user != null;
         assertThat(user.getSurveyList()).contains(survey);
     }
 
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @DisplayName("페이징 API 테스트")
     @Nested
     public class FindAllPage {
         @BeforeAll
@@ -101,7 +102,7 @@ public class SurveyServiceImplTest {
                         .surveyQuestionList(surveyQuestionList)
                         .build();
 
-                Long saved = surveyService.save(saveDto, "Kai");
+                surveyService.save(saveDto, "Kai");
             }
         }
 
