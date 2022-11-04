@@ -46,13 +46,6 @@ public class SurveyIndexController {
     }
 
     @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
-    @GetMapping("/list")
-    public String formList(Model model) {
-        model.addAttribute("surveyPreviewList", surveyService.findAllOrderBy());
-        return "/survey/formList";
-    }
-
-    @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
     @GetMapping("/lists")
     public String formList(Model model, @RequestParam(name = "sp", defaultValue = "1") Integer page) {
         PageRequest pageRequest = PageRequest.of(page - 1, 9, Sort.by("createdDate").descending());

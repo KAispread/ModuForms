@@ -51,15 +51,6 @@ public class SurveyServiceImpl implements SurveyService{
         return survey.getId();
     }
 
-    @PerfLog
-    @Override
-    @Transactional(readOnly = true)
-    public List<SurveyPreview> findAllOrderBy() {
-        return surveyRepository.findAllByOrderByCreatedDateDesc().stream()
-                .map(SurveyPreview::new)
-                .collect(Collectors.toList());
-    }
-
     @Override
     @Transactional(readOnly = true)
     public SurveyPage findAllPages(PageRequest pageable, Integer page){

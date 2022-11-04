@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Long updateUser(Long id, UserRegisterDto userRequestDto) {
+    public Long update(Long id, UserRegisterDto userRequestDto) {
         return null;
     }
 

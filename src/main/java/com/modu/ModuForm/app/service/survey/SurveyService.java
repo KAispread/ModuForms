@@ -13,7 +13,6 @@ public interface SurveyService {
     Long save(SurveySaveDto surveySaveDto, String nickName);
     Long update(Long id, SurveySaveDto surveySaveDto);
     Long delete(Long id);
-    List<SurveyPreview> findAllOrderBy();
     SurveyPage findAllPages(PageRequest pageable , Integer page);
     SurveyCheckDto getSurveyCheckDto(Long id);
     SurveyAnswerCheckDto getSurveyAnswerCheckDto(Long surveyId);
