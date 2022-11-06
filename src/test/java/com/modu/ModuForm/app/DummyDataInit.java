@@ -4,12 +4,9 @@ import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
-import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.*;
-import com.modu.ModuForm.app.service.survey.AnswerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,26 +14,63 @@ import java.util.List;
 
 @Component
 public class DummyDataInit {
-    public User userInit(UserRepository userRepository) {
-        User user = userRepository.save(User.builder()
-                .name("예진")
-                .nickName("Rachel")
+    private final UserRepository userRepository;
+    private final AccessRepository accessRepository;
+    private final SurveyRepository surveyRepository;
+
+    @Autowired
+    public DummyDataInit(UserRepository userRepository, AccessRepository accessRepository, SurveyRepository surveyRepository) {
+        this.userRepository = userRepository;
+        this.accessRepository = accessRepository;
+        this.surveyRepository = surveyRepository;
+    }
+
+    private final String USER_ID = "mine1234";
+    private final String PASSWORD = "qwer1234";
+    private final String NAME = "강훈";
+    private final String NICKNAME = "Tom";
+    private final String SURVEY_TITLE = "테스트 설문";
+    private User user;
+
+    public String getUSER_ID() {
+        return USER_ID;
+    }
+
+    public String getPASSWORD() {
+        return PASSWORD;
+    }
+
+    public String getSURVEY_TITLE() {
+        return SURVEY_TITLE;
+    }
+
+    public String getNAME() {
+        return NAME;
+    }
+
+    public String getNICKNAME() {
+        return NICKNAME;
+    }
+
+    public User userInit() {
+        user = userRepository.save(User.builder()
+                .name(NAME)
+                .nickName(NICKNAME)
                 .birth(19940101L)
-                .gender(Gender.WOMAN)
+                .gender(Gender.MAN)
                 .email("asdf1234@naver.com")
-                .phone("012312123")
+                .phone("01093129311")
                 .role(Role.USER)
                 .company("AnyangUniv")
                 .build());
-        userRepository.save(user);
         return user;
     }
 
-    public Access accessInit(AccessRepository accessRepository ,User user) {
+    public Access accessInit() {
         Access access = Access.builder()
                 .user(user)
-                .userId("pppp1234")
-                .password("qwe123")
+                .userId(USER_ID)
+                .password(PASSWORD)
                 .build();
         accessRepository.save(access);
         return access;
@@ -50,19 +84,6 @@ public class DummyDataInit {
         surveyQuestions.add(buildQuestion(2, "주소를 입력해주세요", null ,QuesType.SHORT));
         return surveyQuestions;
     }
-    public Survey surveyInit(SurveyRepository surveyRepository ,User user, List<SurveyQuestion> surveyQuestionList) {
-        Survey newSurvey = Survey.builder()
-                .user(user)
-                .title("참여 조사")
-                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
-                .maximumAnswer(200)
-                .surveyQuestionList(surveyQuestionList)
-                .build();
-
-        newSurvey.setUser(user);
-        surveyRepository.save(newSurvey);
-        return newSurvey;
-    }
 
     public SurveyQuestion buildQuestion(Integer count, String question, String distractor, QuesType quesType) {
         return SurveyQuestion.builder()
@@ -71,5 +92,47 @@ public class DummyDataInit {
                 .question(question)
                 .distractor(distractor)
                 .build();
+    }
+
+    public Survey surveyInit() {
+        Survey newSurvey = Survey.builder()
+                .user(user)
+                .title(SURVEY_TITLE)
+                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
+                .maximumAnswer(200)
+                .surveyQuestionList(surveyQuestionInit())
+                .build();
+
+        newSurvey.setUser(user);
+        surveyRepository.save(newSurvey);
+        return newSurvey;
+    }
+
+    public Survey surveyInit(User targetUser) {
+        Survey newSurvey = Survey.builder()
+                .user(targetUser)
+                .title(SURVEY_TITLE)
+                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
+                .maximumAnswer(200)
+                .surveyQuestionList(surveyQuestionInit())
+                .build();
+
+        newSurvey.setUser(user);
+        surveyRepository.save(newSurvey);
+        return newSurvey;
+    }
+
+    public Survey surveyInit(List<SurveyQuestion> surveyQuestionList) {
+        Survey newSurvey = Survey.builder()
+                .user(user)
+                .title(SURVEY_TITLE)
+                .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
+                .maximumAnswer(200)
+                .surveyQuestionList(surveyQuestionList)
+                .build();
+
+        newSurvey.setUser(user);
+        surveyRepository.save(newSurvey);
+        return newSurvey;
     }
 }

@@ -25,36 +25,27 @@ public class SurveyRepositoryTest {
     @Autowired
     DummyDataInit dummyData;
 
-
-//    @AfterEach
-//    public void cleanUp(){
-//        surveyRepository.deleteAll();
-//        userRepository.deleteAll();
-//    }
-
     @Test
     @DisplayName(value = "설문이_등록된다.")
     public void post() {
         //given
-        User user = dummyData.userInit(userRepository);
-        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
-        Survey survey1 = dummyData.surveyInit(surveyRepository ,user, surveyQuestionList);
+        User user = dummyData.userInit();
+        dummyData.surveyInit();
 
         //when
         Survey survey = surveyRepository.findSurveysByUser(user).get(0);
 
         //then
         assertThat(survey.getMaximumAnswer()).isEqualTo(200);
-        assertThat(survey.getTitle()).isEqualTo("참여 조사");
+        assertThat(survey.getTitle()).isEqualTo(dummyData.getSURVEY_TITLE());
     }
 
     @Test
     @DisplayName(value = "설문이 수정된다.")
     public void edit(){
         //given
-        User user = dummyData.userInit(userRepository);
-        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
-        Survey survey = dummyData.surveyInit(surveyRepository, user, surveyQuestionList);
+        User user = dummyData.userInit();
+        Survey survey = dummyData.surveyInit();
 
         // 질문 수정
         List<SurveyQuestion> newSurveyQuestions = new ArrayList<>();
@@ -73,9 +64,8 @@ public class SurveyRepositoryTest {
     @DisplayName(value = "설문이 삭제된다.")
     public void delete(){
         //given
-        User user = dummyData.userInit(userRepository);
-        List<SurveyQuestion> surveyQuestionList = dummyData.surveyQuestionInit();
-        Survey survey = dummyData.surveyInit(surveyRepository, user, surveyQuestionList);
+        dummyData.userInit();
+        Survey survey = dummyData.surveyInit();
 
         //when
         surveyRepository.delete(survey);

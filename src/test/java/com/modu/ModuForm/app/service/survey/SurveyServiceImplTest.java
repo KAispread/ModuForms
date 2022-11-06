@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
-@SpringBootTest
 @Transactional
+@SpringBootTest
 public class SurveyServiceImplTest {
     @Autowired
     SurveyRepository surveyRepository;
@@ -29,12 +30,6 @@ public class SurveyServiceImplTest {
     UserRepository userRepository;
     @Autowired
     SurveyServiceImpl surveyService;
-
-    @AfterEach
-    void cleanUp() {
-        surveyRepository.deleteAll();
-        userRepository.deleteAll();
-    }
 
     @DisplayName("설문이 등록된다")
     @Test
@@ -74,7 +69,7 @@ public class SurveyServiceImplTest {
         assertThat(user.getSurveyList()).contains(survey);
     }
 
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestInstance(PER_CLASS)
     @DisplayName("페이징 API 테스트")
     @Nested
     public class FindAllPage {
