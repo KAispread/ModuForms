@@ -50,17 +50,13 @@ public class UserServiceImpl implements UserService{
     @PerfLog
     @Override
     @Transactional(readOnly = true)
-    public UserFormDetailsDto getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage, Pageable answerPage, Integer currentAnswerPage, Long id) {
+    public UserFormDetailsDto getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage,
+                                                 Pageable answerPage, Integer currentAnswerPage, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
         Page<Survey> surveyPageList = surveyRepository.findAllByUser(user, surveyPage);
         Page<Answer> answerPageList = answerRepository.findAllByUser(user, answerPage);
 
         return new UserFormDetailsDto(user, surveyPageList, currentSurveyPage, answerPageList, currentAnswerPage);
-    }
-
-    @Override
-    public Long update(Long id, UserRegisterDto userRequestDto) {
-        return null;
     }
 
     @Override

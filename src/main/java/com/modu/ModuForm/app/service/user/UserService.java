@@ -8,7 +8,6 @@ public interface UserService {
     Access login(LoginRequestDto loginRequestDto);
     Long register(UserRegisterDto userRequestDto);
     UserFormDetailsDto getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage, Pageable answerPage, Integer currentAnswerPage, Long id);
-    Long update(Long id, UserRegisterDto userRequestDto);
     UserDetailsDto getUserDetails(Long id);
     Long getUserPk(String nickName);
 }
