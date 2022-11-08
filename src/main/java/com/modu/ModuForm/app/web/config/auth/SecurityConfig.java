@@ -1,4 +1,4 @@
-package com.modu.ModuForm.config.auth;
+package com.modu.ModuForm.app.web.config.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

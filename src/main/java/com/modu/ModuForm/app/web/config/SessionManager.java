@@ -1,7 +1,7 @@
 package com.modu.ModuForm.app.web.config;
 
 import com.modu.ModuForm.app.domain.user.Access;
-import com.modu.ModuForm.config.auth.dto.SessionUser;
+import com.modu.ModuForm.app.web.config.auth.dto.SessionUser;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;

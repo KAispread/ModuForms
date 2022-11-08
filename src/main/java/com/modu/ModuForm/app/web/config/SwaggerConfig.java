@@ -1,4 +1,4 @@
-package com.modu.ModuForm.config;
+package com.modu.ModuForm.app.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

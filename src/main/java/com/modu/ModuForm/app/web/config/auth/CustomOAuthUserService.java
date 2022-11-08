@@ -1,9 +1,9 @@
-package com.modu.ModuForm.config.auth;
+package com.modu.ModuForm.app.web.config.auth;
 
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
-import com.modu.ModuForm.config.auth.dto.OAuthAttributes;
-import com.modu.ModuForm.config.auth.dto.SessionUser;
+import com.modu.ModuForm.app.web.config.auth.dto.OAuthAttributes;
+import com.modu.ModuForm.app.web.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
