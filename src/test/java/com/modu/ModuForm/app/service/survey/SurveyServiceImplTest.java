@@ -69,6 +69,7 @@ public class SurveyServiceImplTest {
         assertThat(user.getSurveyList()).contains(survey);
     }
 
+    @Transactional
     @TestInstance(PER_CLASS)
     @DisplayName("페이징 API 테스트")
     @Nested
@@ -113,7 +114,6 @@ public class SurveyServiceImplTest {
             assertThat(allPages.getStartPage()).isEqualTo(1);
         }
 
-        @Transactional
         @DisplayName("페이지별로 데이터가 반환된다.")
         @Test
         public void case2() {
@@ -129,7 +129,6 @@ public class SurveyServiceImplTest {
             assertThat(page2.getSurveyPreviews().get(0).getTitle()).isEqualTo("회식 참여 조사81");
         }
 
-        @Transactional
         @DisplayName("sp(현재 페이지 파라미터)에 전체 페이지보다 큰 값을 넣으면 예외가 발생한다.")
         @Test
         public void case3() {

@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.config.auth;
+package com.modu.ModuForm.app.web.config.auth.OAuth;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;

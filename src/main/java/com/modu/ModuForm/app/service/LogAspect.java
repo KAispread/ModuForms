@@ -19,12 +19,4 @@ public class LogAspect {
         log.info("Business Logic : " + pjp.getSignature());
         return retVal;
     }
-
-//    @AfterThrowing(
-//            pointcut = "execution(* com.modu.ModuForm.app.service.*())",
-//            throwing = "exception"
-//    )
-//    public void logException(Exception exception) {
-//      log.error("Exception : " + exception);
-//    }
 }
