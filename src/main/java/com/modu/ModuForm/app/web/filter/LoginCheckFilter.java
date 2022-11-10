@@ -11,7 +11,11 @@ import java.io.IOException;
 
 @Slf4j
 public class LoginCheckFilter implements Filter {
-    private static final String[] whitelist = {"/users/login*", "/users/register*", "/app/users/login*", "/app/users/logout*", "/css/*", "/js/*", "/fonts/*"};
+    private static final String[] whitelist = {
+                    "/users/login*", "/users/register*",
+                    "/app/users", "/app/users/login*", "/app/users/logout*",
+                    "/css/*", "/js/*", "/fonts/*"
+            };
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
