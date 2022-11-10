@@ -23,7 +23,13 @@
 .nav_item>li a {
     display: block;
     text-decoration: none;
-    color: navy;
+    color: black;
+}
+
+.nav_item>li a:hover{
+    display: block;
+    text-decoration: none;
+    color: coral;
 }
 
 .nav_item>li.on {
