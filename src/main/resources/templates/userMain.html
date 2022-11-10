@@ -144,7 +144,7 @@
                 </div>
             </div>
 
-            <div th:if="!${userFormDetails.surveyPage.totalPages < 1}" class="page-control">
+            <div th:if="!${userFormDetails.answerPage.totalPages < 1}" class="page-control">
                 <ul class="nav_item" th:with="answerPage=${userFormDetails.answerPage}">
                     <li>
                         <a th:if="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}"
