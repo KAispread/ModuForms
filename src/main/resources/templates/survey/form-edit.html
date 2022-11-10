@@ -118,7 +118,7 @@
 
                 <hr class="my-4">
                 <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button th:if="${surveyCheck.user.id == session.userPk}" type="button"
+                    <button th:if="${surveyCheck.user.id == session.user.id}" type="button"
                             id="btn-survey-edit-save" class="btn btn-success">수정하기
                     </button>
                     <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기

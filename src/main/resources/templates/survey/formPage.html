@@ -36,7 +36,7 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div th:each="surveyPreview : ${surveyPage.surveyPreviews}" class="col">
           <div class="card shadow-sm">
-            <svg th:if="${surveyPreview.author} == ${session.userNickName}" style="cursor: pointer"
+            <svg th:if="${surveyPreview.author} == ${session.user.nickname}" style="cursor: pointer"
                  th:onclick="|location.href='@{/surveys/{id} (id=${surveyPreview.getId()})}'|"
                  class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <title>설문으로 이동</title>
@@ -45,7 +45,7 @@
               </text>
             </svg>
 
-            <svg th:unless="${surveyPreview.author} == ${session.userNickName}" style="cursor: pointer"
+            <svg th:unless="${surveyPreview.author} == ${session.user.nickname}" style="cursor: pointer"
                  th:onclick="|location.href='@{/surveys/{id}/answer (id=${surveyPreview.getId()})}'|"
                  class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
               <title>설문으로 이동</title>
@@ -61,9 +61,9 @@
               <div id="emailHelp" th:text="${surveyPreview.description}" class="form-text">설문 설명</div>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a th:if="${surveyPreview.author} == ${session.userNickName}" th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
+                  <a th:if="${surveyPreview.author} == ${session.user.nickname}" th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
                      class="btn btn-sm btn-outline-primary">보기</a>
-                  <a th:unless="${surveyPreview.author} == ${session.userNickName}" th:href="@{/answers (surveyId=${surveyPreview.getId()})}"
+                  <a th:unless="${surveyPreview.author} == ${session.user.nickname}" th:href="@{/answers (surveyId=${surveyPreview.getId()})}"
                      class="btn btn-sm btn-outline-success">응답하기</a>
                 </div>
                 <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <div class="page-control">
+      <div th:if="!${surveyPage.totalPages < 1}" class="page-control">
         <ul class="nav_item">
           <li>
             <a th:if="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}"
