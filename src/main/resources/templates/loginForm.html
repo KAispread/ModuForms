@@ -17,7 +17,7 @@
             </p>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-            <form action="/users/login" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+            <form th:action="@{/app/users/login (redirectURL=${param.redirectURL})}" action="/app/users/login" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
                 <div class="form-floating mb-3">
                     <input name="userId" type="text" class="form-control" id="userId" placeholder="ID">
                     <label for="userId">아이디</label>
