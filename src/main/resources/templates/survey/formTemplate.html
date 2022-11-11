@@ -9,7 +9,7 @@
 <body class="bg-light">
 <header th:replace="~{layout/header :: body-header-main}">
 </header>
-<input id="userNickName" type="hidden" th:value="${session.user.nickname}">
+<input id="userNickName" type="hidden" th:value="${user.nickname}">
     <main class="container">
         <div class="py-5 text-center">
             <h1 class="fw-light gowun-font-ko">설문 등록</h1>

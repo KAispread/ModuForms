@@ -37,13 +37,13 @@
                 </a>
                 <div>
                     <a id="btn-logout" class="btn btn-outline-light logout-btn">Logout</a>
-                    <a class="user_link" th:href="@{/users/${session.user.nickname}}">
-                        <h5 id="user_detail" class="gowun-font-ko" th:text="${session.user.nickname}"></h5>
+                    <a class="user_link" th:href="@{/users/${user.nickname}}">
+                        <h5 id="user_detail" class="gowun-font-ko" th:text="${user.nickname}"></h5>
                     </a>
                 </div>
             </div>
         </div>
-        <input id="userNickName" type="hidden" th:value="${session.user.nickname}">
+        <input id="userNickName" type="hidden" th:value="${user.nickname}">
     </header>
 
 </body>
