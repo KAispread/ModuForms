@@ -1,13 +1,17 @@
 package com.modu.ModuForm.app.web.filter;
 
+import com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
 
 @Slf4j
 public class LoginCheckFilter implements Filter {
@@ -20,22 +24,21 @@ public class LoginCheckFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String requestURI = httpRequest.getRequestURI();
-
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        String requestURI = httpRequest.getRequestURI() + "?" + httpRequest.getQueryString();
+        Cookie[] cookies = httpRequest.getCookies();
         try {
             if (isLoginCheckPath(requestURI)) {
                 log.info("AUTHORIZE CHECK [{}]", requestURI);
                 HttpSession session = httpRequest.getSession(false);
 
-                if (session == null || session.getAttribute("user") == null) {
+                if (!validateJwt(cookies)) {
                     log.warn("UNAUTHORIZED [{}]", requestURI);
                     httpResponse.sendRedirect("/users/login?redirectURL=" + requestURI);
                     return;
                 }
             }
-
             chain.doFilter(request, response);
         } catch (Exception e) {
             log.error("AUTHORIZE ERROR : {}", e.getMessage());
@@ -47,5 +50,17 @@ public class LoginCheckFilter implements Filter {
     * */
     private boolean isLoginCheckPath(String requestURI) {
         return !PatternMatchUtils.simpleMatch(whitelist, requestURI);
+    }
+
+    private boolean validateJwt(Cookie[] cookies) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(ENCRYPT.getCookieName())) {
+                    log.info("COOKIE : {}", cookie.getValue());
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
