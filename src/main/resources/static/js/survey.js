@@ -10,6 +10,9 @@ let survey = {
         $('#btn-survey-delete').on('click', function () {
             _this.survey_delete();
         });
+        $('#btn-copy-url').on('click', function () {
+            _this.copy_answer_url();
+        });
     },
     survey_save : function () {
         let number_of_question = $('input[name=question]').length;
@@ -135,6 +138,21 @@ let survey = {
                 alert('삭제 권한이 없습니다.');
             })
         }
+    },
+    copy_answer_url: function () {
+        let path_name = $(location).attr('pathname').substr(9);
+
+        let textarea = document.createElement("textarea");
+        //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
+
+        document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
+        textarea.value = "http://localhost:8080/answers" + "?surveyId=" + path_name;
+        textarea.select();  //textarea를 설정
+
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        alert("응답 URL 이 복사되었습니다.")  // 알림창
     }
 }
 

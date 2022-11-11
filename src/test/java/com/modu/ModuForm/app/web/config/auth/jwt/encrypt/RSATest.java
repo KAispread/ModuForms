@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 
+@DisplayName("RSA 테스트")
 class RSATest {
     final String plainText = "And for that reason no regime has ever loved great writers,only minor ones.";
 
@@ -30,12 +31,6 @@ class RSATest {
         long before = System.currentTimeMillis();
 
         encrypted = RSA.encryptRSA(plainText, publicKey);;
-
-        for (int i = 0; i < 100000; i++) {
-            RSA.encryptRSA(plainText, publicKey);
-            RSA.decryptRSA(encrypted, privateKey);
-        }
-
         decrypted = RSA.decryptRSA(encrypted, privateKey);
 
         long after = System.currentTimeMillis();

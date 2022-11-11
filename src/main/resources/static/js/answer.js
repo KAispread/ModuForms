@@ -7,11 +7,11 @@ let answer = {
         $('#btn-answer-edit').on('click', function () {
             _this.answer_edit();
         });
-        // $('#answer-edit-form').on('click', function () {
-        //     _this.answer_edit_form();
-        // });
         $('#btn-answer-delete').on('click', function () {
             _this.answer_delete();
+        });
+        $('#btn-copy-url').on('click', function () {
+            _this.copy_answer_url();
         });
     },
     answer_save: function () {
@@ -104,13 +104,6 @@ let answer = {
             })
         }
     },
-    // answer_edit_form: function () {
-    //     let path_name = $(location).attr('pathname').substr(9);
-    //     if (window.confirm('응답을 수정하시겠습니까?'))
-    //     {
-    //         window.location.href = '/answers/' + path_name + '/edit';
-    //     }
-    // },
     answer_delete: function (){
         let path_name = $(location).attr('pathname').substr(9);
         if (window.confirm('응답을 삭제하시겠습니까?'))
@@ -126,6 +119,21 @@ let answer = {
                 alert('삭제 권한이 없습니다.');
             })
         }
+    },
+    copy_answer_url: function () {
+        let path_name = $(location).attr('pathname').substr(9);
+
+        let textarea = document.createElement("textarea");
+        //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
+
+        document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
+        textarea.value = "http://localhost:8080/answers" + "?surveyId=" + path_name;
+        textarea.select();  //textarea를 설정
+
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        alert("응답 URL 이 복사되었습니다.")  // 알림창
     }
 }
 

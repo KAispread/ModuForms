@@ -34,6 +34,11 @@
         <div class="col-md-10 container-md">
             <form class="needs-validation">
                 <div class="row g-3">
+                    <div class="text-end">
+                        <p class="form-text">버튼을 클릭하고 설문을 공유해보세요!!</p>
+                        <a id="btn-copy-url"
+                           class="btn btn-sm btn-warning">응답 URL 복사</a>
+                    </div>
                     <div class="col-12">
                         <label for="survey_title" class="form-label">제목</label>
                         <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
@@ -88,9 +93,9 @@
                     <hr class="my-4">
 
                     <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a th:href="@{/surveys/{id}/edit (id=${surveyCheck.getSurveyId()})}" th:if="${surveyCheck.user.id == session.user.id}"
+                        <a th:href="@{/surveys/{id}/edit (id=${surveyCheck.getSurveyId()})}" th:if="${surveyCheck.user.id == user.id}"
                            class="btn btn-primary">수정하기</a>
-                        <button th:if="${surveyCheck.user.id == session.user.id}" type="button"
+                        <button th:if="${surveyCheck.user.id == user.id}" type="button"
                            id="btn-survey-delete" class="btn btn-dark">삭제하기</button>
                         <a th:href="@{/}" class="btn btn-secondary">돌아가기</a>
                     </div>

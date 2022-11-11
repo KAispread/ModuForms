@@ -24,6 +24,6 @@ public class SessionUser implements Serializable {
         if (nickname == null || nickname.isBlank()) {
             return user.getName();
         }
-        return user.getNickName();
+        return nickname;
     }
 }
