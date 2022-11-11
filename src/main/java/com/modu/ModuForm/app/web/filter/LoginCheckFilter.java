@@ -17,7 +17,7 @@ import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
 public class LoginCheckFilter implements Filter {
     private static final String[] whitelist = {
                     "/users/login*", "/users/register*",
-                    "/app/users", "/app/users/login*", "/app/users/logout*",
+                    "/app/users*", "/app/users/login*", "/app/users/logout*",
                     "/css/*", "/js/*", "/fonts/*"
             };
 
