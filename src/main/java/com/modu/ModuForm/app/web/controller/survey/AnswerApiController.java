@@ -1,8 +1,8 @@
 package com.modu.ModuForm.app.web.controller.survey;
 
 import com.modu.ModuForm.app.service.survey.AnswerServiceImpl;
-import com.modu.ModuForm.app.web.config.auth.LoginUser;
-import com.modu.ModuForm.app.web.config.auth.dto.SessionUser;
+import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Api(tags = "Answer DATA handling API")
 @RequiredArgsConstructor
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AnswerApiController {
     private final AnswerServiceImpl answerService;
+    private final JwtHandler jwtHandler;
 
     @Operation(summary = "응답 저장 API", description = "응답 저장 요청을 처리합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long save(@Validated @RequestBody AnswerSaveDto answerSaveDto, @RequestParam Long surveyId, @LoginUser SessionUser user) {
+    public Long save(HttpServletRequest request, @Validated @RequestBody AnswerSaveDto answerSaveDto, @RequestParam Long surveyId) {
+        JwtUser user = jwtHandler.getJwtUser(request);
         Long userId = user.getId();
         return answerService.save(answerSaveDto, surveyId, userId);
     }
