@@ -145,7 +145,7 @@ let survey = {
         let textarea = document.createElement("textarea");
 
         document.body.appendChild(textarea);
-        textarea.value = "http://3.36.156.200:8080/answers" + "?surveyId=" + path_name;
+        textarea.value = "http://ec2-3-36-156-200.ap-northeast-2.compute.amazonaws.com:8080/" + "?surveyId=" + path_name;
         textarea.select();  //textarea를 설정
 
         document.execCommand("copy");
