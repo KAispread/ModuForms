@@ -127,7 +127,7 @@ let answer = {
         //url 변수 생성 후, textarea라는 변수에 textarea의 요소를 생성
 
         document.body.appendChild(textarea); //</body> 바로 위에 textarea를 추가(임시 공간이라 위치는 상관 없음)
-        textarea.value = "http://localhost:8080/answers" + "?surveyId=" + path_name;
+        textarea.value = "http://3.36.156.200:8080/answers" + "?surveyId=" + path_name;
         textarea.select();  //textarea를 설정
 
         document.execCommand("copy");
