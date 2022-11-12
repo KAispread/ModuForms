@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
+@Table(name = "ANSWER_DATA")
 public class AnswerData {
     @Column(nullable = false)
    private int number;

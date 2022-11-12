@@ -25,7 +25,6 @@ public class TestDataInit {
     private final AnswerRepository answerRepository;
 
     // 샘플 데이터 생성
-    @PostConstruct
     @Transactional
     public void init() {
         User user = userRepository.save(User.builder()
