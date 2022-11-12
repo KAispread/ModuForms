@@ -11,6 +11,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
+@Table(name = "SURVEY_QUESTION")
 public class SurveyQuestion {
     private Integer number;
 
