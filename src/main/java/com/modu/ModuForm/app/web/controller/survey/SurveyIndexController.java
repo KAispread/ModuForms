@@ -44,7 +44,7 @@ public class SurveyIndexController {
         JwtUser user = jwtHandler.getJwtUser(request);
         model.addAttribute("user", user);
         model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(id));
-        return "/survey/form-check";
+        return "survey/form-check";
     }
 
     @Operation(summary = "설문 수정 페이지", description = "선택한 설문을 수정하는 페이지를 반환합니다.")
@@ -53,7 +53,7 @@ public class SurveyIndexController {
         JwtUser user = jwtHandler.getJwtUser(request);
         model.addAttribute("user", user);
         model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(id));
-        return "/survey/form-edit";
+        return "survey/form-edit";
     }
 
     @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
@@ -66,7 +66,7 @@ public class SurveyIndexController {
 
         model.addAttribute("user", user);
         model.addAttribute("surveyPage", surveyPages);
-        return "/survey/formPage";
+        return "survey/formPage";
     }
 
     @Operation(summary = "설문 응답 확인 페이지", description = "선택한 설문에 대한 응답을 확인하는 페이지를 반환합니다.")
@@ -75,6 +75,6 @@ public class SurveyIndexController {
         JwtUser user = jwtHandler.getJwtUser(request);
         model.addAttribute("user", user);
         model.addAttribute("queAnsList", surveyService.getSurveyAnswerCheckDto(surveyId));
-        return "/survey/form-check-Answer";
+        return "survey/form-check-Answer";
     }
 }

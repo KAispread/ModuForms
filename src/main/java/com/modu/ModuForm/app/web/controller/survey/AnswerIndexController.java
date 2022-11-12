@@ -31,7 +31,7 @@ public class AnswerIndexController {
         model.addAttribute("user", user);
         model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(surveyId));
         model.addAttribute("answer", new AnswerStringClass());
-        return "/answer/answer-form";
+        return "answer/answer-form";
     }
 
     @Operation(summary = "응답 확인 페이지", description = "선택한 응답을 확인하는 페이지를 반환합니다.")
@@ -40,7 +40,7 @@ public class AnswerIndexController {
         JwtUser user = jwtHandler.getJwtUser(request);
         model.addAttribute("user", user);
         model.addAttribute("answerDto", answerService.getAnswerDto(answerId));
-        return "/answer/answer-check";
+        return "answer/answer-check";
     }
 
     @Operation(summary = "응답 수정 페이지", description = "선택한 응답을 수정하는 페이지를 반환합니다.")
@@ -49,6 +49,6 @@ public class AnswerIndexController {
         JwtUser user = jwtHandler.getJwtUser(request);
         model.addAttribute("user", user);
         model.addAttribute("answerDto", answerService.getAnswerDto(answerId));
-        return "/answer/answer-edit";
+        return "answer/answer-edit";
     }
 }
