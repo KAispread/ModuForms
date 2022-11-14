@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.web.controller.survey;
 
 import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.service.survey.SurveyService;
+import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
 import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class SurveyIndexController {
     private final SurveyService surveyService;
-    private final JwtHandler jwtHandler;
     private final QuesType[] quesTypes = QuesType.values();
 
     @ModelAttribute("quesTypes")
@@ -32,48 +32,37 @@ public class SurveyIndexController {
 
     @Operation(summary = "설문 등록 페이지", description = "설문을 등록하는 페이지를 반환합니다.")
     @GetMapping("/form")
-    public String register(Model model, HttpServletRequest request){
-        JwtUser user = jwtHandler.getJwtUser(request);
-        model.addAttribute("user", user);
+    public String register(@LoginUser JwtUser user){
         return "survey/formTemplate";
     }
 
     @Operation(summary = "설문 확인 페이지", description = "선택한 설문을 페이지를 반환합니다.")
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id, Model model, HttpServletRequest request) {
-        JwtUser user = jwtHandler.getJwtUser(request);
-        model.addAttribute("user", user);
+    public String view(@PathVariable Long id, Model model, @LoginUser JwtUser user) {
         model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(id));
         return "survey/form-check";
     }
 
     @Operation(summary = "설문 수정 페이지", description = "선택한 설문을 수정하는 페이지를 반환합니다.")
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable Long id, Model model, HttpServletRequest request) {
-        JwtUser user = jwtHandler.getJwtUser(request);
-        model.addAttribute("user", user);
+    public String edit(@PathVariable Long id, Model model, @LoginUser JwtUser user) {
         model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(id));
         return "survey/form-edit";
     }
 
     @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
     @GetMapping("/lists")
-    public String formList(Model model, @RequestParam(name = "sp", defaultValue = "1") Integer page, HttpServletRequest request) {
-        JwtUser user = jwtHandler.getJwtUser(request);
-
+    public String formList(Model model, @RequestParam(name = "sp", defaultValue = "1") Integer page, @LoginUser JwtUser user) {
         PageRequest pageRequest = PageRequest.of(page - 1, 9, Sort.by("createdDate").descending());
         SurveyPage surveyPages = surveyService.findAllPages(pageRequest, page);
 
-        model.addAttribute("user", user);
         model.addAttribute("surveyPage", surveyPages);
         return "survey/formPage";
     }
 
     @Operation(summary = "설문 응답 확인 페이지", description = "선택한 설문에 대한 응답을 확인하는 페이지를 반환합니다.")
     @GetMapping("/{surveyId}/answer")
-    public String formResult(@PathVariable Long surveyId, Model model, HttpServletRequest request) {
-        JwtUser user = jwtHandler.getJwtUser(request);
-        model.addAttribute("user", user);
+    public String formResult(@PathVariable Long surveyId, Model model, @LoginUser JwtUser user) {
         model.addAttribute("queAnsList", surveyService.getSurveyAnswerCheckDto(surveyId));
         return "survey/form-check-Answer";
     }

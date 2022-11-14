@@ -1,6 +1,7 @@
 package com.modu.ModuForm.app.web.controller.survey;
 
 import com.modu.ModuForm.app.service.survey.AnswerServiceImpl;
+import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
 import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
@@ -20,13 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class AnswerApiController {
     private final AnswerServiceImpl answerService;
-    private final JwtHandler jwtHandler;
 
     @Operation(summary = "응답 저장 API", description = "응답 저장 요청을 처리합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long save(HttpServletRequest request, @Validated @RequestBody AnswerSaveDto answerSaveDto, @RequestParam Long surveyId) {
-        JwtUser user = jwtHandler.getJwtUser(request);
+    public Long save(@LoginUser JwtUser user, @Validated @RequestBody AnswerSaveDto answerSaveDto, @RequestParam Long surveyId) {
         Long userId = user.getId();
         return answerService.save(answerSaveDto, surveyId, userId);
     }

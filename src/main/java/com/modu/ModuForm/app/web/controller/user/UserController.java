@@ -64,7 +64,7 @@ public class UserController {
     @Operation(summary = "JWT 로그인 요청 처리", description = "JWT 로그인 요청을 처리합니다.")
     @PostMapping("/logins")
     public Long loginJwt(@Validated LoginRequestDto loginRequestDto, BindingResult bindingResult,
-                      @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request,
+                      @RequestParam(defaultValue = "/") String redirectURL,
                       HttpServletResponse response) throws IOException {
         if (bindingResult.hasErrors()) {
             log.warn("BINDING ERROR");
