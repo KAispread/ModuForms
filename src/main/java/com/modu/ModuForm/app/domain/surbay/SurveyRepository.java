@@ -12,7 +12,7 @@ import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphTyp
 
 public interface SurveyRepository extends JpaRepository<Survey, Long> {
     List<Survey> findSurveysByUser(User user);
-    @EntityGraph(attributePaths = {"user", "answers"}, type = FETCH)
+    @EntityGraph(attributePaths = {"user"}, type = FETCH)
     Page<Survey> findAllByUser(User user, Pageable pageable);
     List<Survey> findAllByOrderByCreatedDateDesc();
 }
