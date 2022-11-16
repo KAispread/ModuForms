@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +103,7 @@ public class TestDataInit {
         SurveySaveDto saveDto2 = SurveySaveDto.builder()
                 .title("만족도 조사")
                 .email("Esdf@mane.com")
-                .description("회식 참여 조사를 위한 설문입니다.")
+                .description("본 어플리케이션 만족도 조사입니다.")
                 .deadLine("2022-10-06-15-30")
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestionList2)
