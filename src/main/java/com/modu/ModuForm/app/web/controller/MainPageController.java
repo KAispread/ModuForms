@@ -1,9 +1,8 @@
 package com.modu.ModuForm.app.web.controller;
 
-import com.modu.ModuForm.app.service.user.UserService;
+import com.modu.ModuForm.app.service.MainPageService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.user.UserFormDetailsDto;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,13 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Api(tags = "MainPage TEMPLATE")
 @RequiredArgsConstructor
 @Controller
 public class MainPageController {
-    private final UserService userService;
+    private final MainPageService mainPageService;
 
     @Operation(summary = "메인 페이지", description = "메인 페이지를 반환합니다.")
     @GetMapping("/")
@@ -32,7 +29,7 @@ public class MainPageController {
 
         PageRequest surveyPageRequest = PageRequest.of(surveyPage - 1, 9, Sort.by("createdDate").descending());
         PageRequest answerPageRequest = PageRequest.of(answerPage - 1, 9, Sort.by("createdDate").descending());
-        UserFormDetailsDto userMainDetails = userService.getUserFormDetails(surveyPageRequest, surveyPage, answerPageRequest, answerPage, userid);
+        UserFormDetailsDto userMainDetails = mainPageService.getUserFormDetails(surveyPageRequest, surveyPage, answerPageRequest, answerPage, userid);
 
         model.addAttribute("userFormDetails", userMainDetails);
         return "userMain";
