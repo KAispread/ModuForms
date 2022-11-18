@@ -1,6 +1,6 @@
 package com.modu.ModuForm.app.web.config.auth.jwt.encrypt;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +37,6 @@ class RSATest {
         System.out.print("AES256 Algorithm : ");
         System.out.println(after - before);
 
-        Assert.assertEquals(plainText, decrypted);
+        Assertions.assertEquals(plainText, decrypted);
     }
 }
