@@ -4,6 +4,8 @@ import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
+import com.modu.ModuForm.app.domain.user.Gender;
+import com.modu.ModuForm.app.domain.user.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
 @Transactional
+@TestPropertySource(value = "classpath:application-test-db.properties")
 @SpringBootTest
 public class SurveyServiceImplTest {
     @Autowired
@@ -35,6 +39,17 @@ public class SurveyServiceImplTest {
     @Test
     public void post() {
         //given
+        User user = User.builder()
+                .gender(Gender.MAN)
+                .email("adfsd@naver.com")
+                .phone("01032491031")
+                .birth(19980112L)
+                .role(Role.USER)
+                .name("예진")
+                .nickName("Rosa")
+                .build();
+        userRepository.save(user);
+
         List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
         surveyQuestionList.add(SurveyQuestion.builder()
                 .number(1)
@@ -55,18 +70,18 @@ public class SurveyServiceImplTest {
                 .surveyQuestionList(surveyQuestionList)
                 .build();
 
-        Long saved = surveyService.save(saveDto, "Kai");
+        Long saved = surveyService.save(saveDto, "Rosa");
 
         //when
         Survey survey = surveyRepository.findById(saved).orElse(null);
-        User user = userRepository.findByNickName("Kai").orElse(null);
+        User rosa = userRepository.findByNickName("Rosa").orElse(null);
 
         //then
         assert survey != null;
         assertThat(survey.getTitle()).isEqualTo("회식 참여 조사");
         assertThat(survey.getSurveyQuestionList().get(0).getQuestion()).isEqualTo("회식에 참여하십니까?");
-        assert user != null;
-        assertThat(user.getSurveyList()).contains(survey);
+        assert rosa != null;
+        assertThat(rosa.getSurveyList()).contains(survey);
     }
 
     @Transactional
@@ -77,6 +92,17 @@ public class SurveyServiceImplTest {
         @BeforeAll
         void setUpData() {
             //given
+            User user = User.builder()
+                    .gender(Gender.MAN)
+                    .email("adfsd@naver.com")
+                    .phone("01032491031")
+                    .birth(19980112L)
+                    .role(Role.USER)
+                    .name("예진")
+                    .nickName("Rosa")
+                    .build();
+            userRepository.save(user);
+
             for (int i = 0; i < 91; i++) {
                 List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
                 surveyQuestionList.add(SurveyQuestion.builder()
@@ -98,7 +124,7 @@ public class SurveyServiceImplTest {
                         .surveyQuestionList(surveyQuestionList)
                         .build();
 
-                surveyService.save(saveDto, "Kai");
+                surveyService.save(saveDto, "Rosa");
             }
         }
 
@@ -140,11 +166,8 @@ public class SurveyServiceImplTest {
             PageRequest pr = PageRequest.of(illegalPage, 9, Sort.by("maximumAnswer").descending());
 
             //then
-            try {
-                surveyService.findAllPages(pr, illegalPage);
-            } catch (Exception e) {
-                assertThat(e.getMessage()).contains("java.");
-            }
+            SurveyPage surveyPage = surveyService.findAllPages(pr, illegalPage);
+            assertThat(surveyPage.getSurveyPreviews()).isEmpty();
         }
     }
 }
