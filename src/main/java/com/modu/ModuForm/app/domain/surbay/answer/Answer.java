@@ -4,10 +4,7 @@ import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,16 +35,37 @@ public class Answer extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean anonymousFlag;
 
-    public void setAnswerDataList(List<AnswerData> answerDataList) {
-        this.answerDataList = answerDataList;
-    }
-
     @Builder
     public Answer(User user, Survey survey, List<AnswerData> answerDataList, Boolean anonymousFlag) {
+        validateUser(user, survey);
         this.user = user;
         this.survey = survey;
         this.answerDataList = answerDataList;
         this.anonymousFlag = anonymousFlag;
+    }
+
+    public void setSurvey(Survey survey) {
+        validateUser(survey);
+        this.survey = survey;
+        survey.addAnswer(this);
+    }
+
+    public void update(AnswerSaveDto answerSaveDto) {
+        this.anonymousFlag = answerSaveDto.getAnonymousFlag();
+        this.answerDataList.clear();
+        this.answerDataList = answerSaveDto.convertAnswerData();
+    }
+
+    private void validateUser(Survey survey) {
+        if (this.user.equals(survey.getUser())) {
+            throw new IllegalArgumentException("설문 등록자는 본인 설문에 응답할 수 없습니다");
+        }
+    }
+
+    private void validateUser(User user, Survey survey) {
+        if (user.equals(survey.getUser())) {
+            throw new IllegalArgumentException("설문 등록자는 본인 설문에 응답할 수 없습니다");
+        }
     }
 
     @Override
@@ -61,16 +79,5 @@ public class Answer extends BaseTimeEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getUser(), getSurvey(), getAnswerDataList(), getAnonymousFlag());
-    }
-
-    public void setSurvey(Survey servey) {
-        this.survey = servey;
-        servey.addAnswer(this);
-    }
-
-    public void update(AnswerSaveDto answerSaveDto) {
-        this.anonymousFlag = answerSaveDto.getAnonymousFlag();
-        this.answerDataList.clear();
-        this.answerDataList = answerSaveDto.convertAnswerData();
     }
 }
