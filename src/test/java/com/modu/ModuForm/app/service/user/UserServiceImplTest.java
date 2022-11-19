@@ -6,22 +6,21 @@ import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@TestInstance(PER_CLASS)
 @Transactional
+@TestPropertySource(value = "classpath:application-test-db.properties")
 @SpringBootTest
 class UserServiceImplTest {
     @Autowired
@@ -60,12 +59,16 @@ class UserServiceImplTest {
 
             when(userRepository.save(any())).thenReturn(userEntity);
             when(accessRepository.save(any())).thenReturn(userRegisterDto.toAccessEntity(userEntity));
+            when(userRepository.findByNickName(nickname)).thenReturn(Optional.ofNullable(userEntity));
 
             //when
-            Long userId = userService.register(userRegisterDto);
+            userService.register(userRegisterDto);
 
             //then
-            assertThat(userId).isGreaterThan(0L);
+            User user = userRepository.findByNickName(nickname).orElseThrow();
+            assertThat(user).isEqualTo(userEntity);
+            assertThat(user.getNickName()).isEqualTo(nickname);
+            assertThat(user.getEmail()).isEqualTo(email);
         }
 
         @DisplayName("중복되는 ID를 입력할 경우 회원 가입에 실패한다.")

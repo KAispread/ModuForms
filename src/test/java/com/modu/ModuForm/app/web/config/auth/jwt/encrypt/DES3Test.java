@@ -14,9 +14,7 @@ class DES3Test {
     void encrypt() {
         //when
         try {
-            long before = System.currentTimeMillis();
-            String encrypt = des3.encrypt(plainText);
-            long after = System.currentTimeMillis();
+            des3.encrypt(plainText);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -33,12 +31,6 @@ class DES3Test {
         try {
             long before = System.currentTimeMillis();
             encrypted = des3.encrypt(plainText);
-
-            for (int i = 0; i < 100000; i++) {
-                des3.encrypt(plainText);
-                des3.decrypt(encrypted);
-            }
-
             decrypted = des3.decrypt(encrypted);
 
             long after = System.currentTimeMillis();
