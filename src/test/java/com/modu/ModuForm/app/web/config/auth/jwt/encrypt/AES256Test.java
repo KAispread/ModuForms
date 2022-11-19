@@ -14,7 +14,7 @@ class AES256Test {
     void encrypt() {
         //when
         try {
-            String encrypt = aes256.encrypt(plainText);
+            aes256.encrypt(plainText);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -50,12 +50,6 @@ class AES256Test {
             long before = System.currentTimeMillis();
 
             encrypted = aes256.encrypt(plainText);
-
-            for (int i = 0; i < 100000; i++) {
-                aes256.encrypt(plainText);
-                aes256.decrypt(encrypted);
-            }
-
             decrypted = aes256.decrypt(encrypted);
 
             long after = System.currentTimeMillis();

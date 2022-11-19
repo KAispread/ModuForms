@@ -39,6 +39,38 @@ class UserRepositoryTest {
         assertThat(save.getId()).isGreaterThan(0);
     }
 
+    @DisplayName("save(): nickname이 중복될 경우 저장에 저장에 실패한다.")
+    @Test
+    void saveFail() {
+        //given
+        User user = User.builder()
+                .gender(Gender.WOMAN)
+                .email("adfsd@naver.com")
+                .phone("01032491031")
+                .birth(19980112L)
+                .role(Role.USER)
+                .name("예진")
+                .nickName("Rosa")
+                .build();
+
+        User user2 = User.builder()
+                .gender(Gender.MAN)
+                .email("pqwe@naver.com")
+                .phone("0109991031")
+                .birth(19980112L)
+                .role(Role.USER)
+                .name("기우")
+                .nickName("Rosa")
+                .build();
+
+
+        //when
+        userRepository.save(user);
+
+        //then
+        assertThatThrownBy(() -> userRepository.save(user2)).isInstanceOf(RuntimeException.class);
+    }
+
     @DisplayName("findByEmail()에 email을 넘겨주면 해당 User 엔티티가 반환된다")
     @Test
     void findByEmailSuccess() {
@@ -53,7 +85,7 @@ class UserRepositoryTest {
                 .name("예진")
                 .nickName("Rosa")
                 .build();
-        User save = userRepository.save(user);
+        userRepository.save(user);
 
         //when
         User findUser = userRepository.findByEmail(email).orElseThrow();
@@ -80,7 +112,7 @@ class UserRepositoryTest {
                 .name("예진")
                 .nickName("Rosa")
                 .build();
-        User save = userRepository.save(user);
+        userRepository.save(user);
 
         //then
         assertThatThrownBy(() -> userRepository.findByEmail("adsfqewr@naver.com")
@@ -103,7 +135,7 @@ class UserRepositoryTest {
                 .name("예진")
                 .nickName(nickname)
                 .build();
-        User save = userRepository.save(user);
+        userRepository.save(user);
 
         //when
         User findUser = userRepository.findByNickName(nickname).orElseThrow();
@@ -131,11 +163,13 @@ class UserRepositoryTest {
                 .name("예진")
                 .nickName(nickname)
                 .build();
-        User save = userRepository.save(user);
+        userRepository.save(user);
 
         //then
         assertThatThrownBy(() -> userRepository.findByNickName("Alexander")
                 .orElseThrow(IllegalArgumentException::new))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+
 }

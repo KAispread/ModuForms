@@ -29,8 +29,7 @@ class CustomJwtProviderTest {
                     .birth(19980121L)
                     .gender(Gender.MAN)
                     .build();
-            String token = customJwtProvider.createToken(user);
-//            System.out.println("Normal JWT : " + token);
+            customJwtProvider.createToken(user);
         }
 
         @DisplayName("JWT 토큰 생성 및 파싱에 성공한다 (토큰 생성 및 파싱에 걸리는 시간 측정[nano])")
@@ -50,10 +49,6 @@ class CustomJwtProviderTest {
 
             String jwtToken = customJwtProvider.createToken(user);
             final String jwt = customJwtProvider.JWT_PREFIX + jwtToken;
-            for (int i = 0; i < 1000; i++) {
-                customJwtProvider.createToken(user);
-                Claims claims = customJwtProvider.parseToken(jwt);
-            }
             Claims claims = customJwtProvider.parseToken(jwt);
 
             long after = System.currentTimeMillis();
@@ -81,8 +76,7 @@ class CustomJwtProviderTest {
                     .birth(19980121L)
                     .gender(Gender.MAN)
                     .build();
-            String encryptedToken = customJwtProvider.createEncryptedToken(user);
-//            System.out.println("Encrypted JWT : " + encryptedToken);
+            customJwtProvider.createEncryptedToken(user);
         }
 
         @DisplayName("암호화 JWT 토큰 생성, 파싱에 성공한다. (토큰 생성 및 파싱에 걸리는 시간 측정[nano])")
@@ -101,11 +95,6 @@ class CustomJwtProviderTest {
             long before = System.currentTimeMillis();
             String encryptedToken = customJwtProvider.createEncryptedToken(user);
             final String encryptedJwt = customJwtProvider.ENCRYPT_PREFIX + encryptedToken;
-
-            for (int i = 0; i < 1000; i++) {
-                customJwtProvider.createEncryptedToken(user);
-                customJwtProvider.parseEncryptedToken(encryptedJwt);
-            }
             Claims decryptedTokenClaims = customJwtProvider.parseEncryptedToken(encryptedJwt);
 
             long after = System.currentTimeMillis();
