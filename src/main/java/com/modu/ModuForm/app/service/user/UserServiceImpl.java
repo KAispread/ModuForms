@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public Long register(UserRegisterDto registerDto) {
-        User user = userRepository.saveAndFlush(registerDto.toUserEntity());
+        User user = userRepository.save(registerDto.toUserEntity());
         accessRepository.save(registerDto.toAccessEntity(user));
         return user.getId();
     }

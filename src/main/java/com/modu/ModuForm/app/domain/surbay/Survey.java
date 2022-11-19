@@ -43,7 +43,6 @@ public class Survey extends BaseTimeEntity {
     )
     private List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
 
-
     @Column(name = "DEADLINE")
     private LocalDateTime deadLine;
 
@@ -72,6 +71,7 @@ public class Survey extends BaseTimeEntity {
     }
 
     public void update(SurveySaveDto surveySaveDto) {
+        this.answers.clear();
         this.answers  = new ArrayList<>();
         this.title = surveySaveDto.getTitle();
         this.description = surveySaveDto.getDescription();
@@ -80,12 +80,11 @@ public class Survey extends BaseTimeEntity {
         this.surveyQuestionList.clear();
         this.surveyQuestionList = surveySaveDto.getSurveyQuestionList();
         this.deadLine = surveySaveDto.getDeadLineLocalDateTime();
-
-        this.answers.clear();
     };
 
     public void updateQuestion(List<SurveyQuestion> newSurveyQuestionList) {
-        surveyQuestionList = newSurveyQuestionList;
+        this.surveyQuestionList.clear();
+        this.surveyQuestionList = newSurveyQuestionList;
     }
 
     @Override

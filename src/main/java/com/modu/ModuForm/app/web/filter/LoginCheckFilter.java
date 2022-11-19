@@ -31,7 +31,6 @@ public class LoginCheckFilter implements Filter {
         try {
             if (isLoginCheckPath(requestURI)) {
                 log.info("AUTHORIZE CHECK [{}]", requestURI);
-                HttpSession session = httpRequest.getSession(false);
 
                 if (!validateJwt(cookies)) {
                     log.warn("UNAUTHORIZED [{}]", requestURI);
