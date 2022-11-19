@@ -16,5 +16,4 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Page<Answer> findAllByUser(User user, Pageable pageable);
     void deleteAllBySurvey(Survey survey);
     List<Answer> findAllBySurvey(Survey survey);
-
 }
