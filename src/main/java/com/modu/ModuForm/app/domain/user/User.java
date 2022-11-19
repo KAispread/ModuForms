@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,7 +22,7 @@ public class User extends BaseTimeEntity {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nickName;
     private Long birth;
     @Enumerated(EnumType.STRING)
@@ -58,4 +59,17 @@ public class User extends BaseTimeEntity {
         return this.role.getKey();
     }
     public String getGenderTitle() {return this.gender.getTitle();}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getId().equals(user.getId()) && getName().equals(user.getName()) && getNickName().equals(user.getNickName()) && getRole() == user.getRole();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getNickName(), getRole());
+    }
 }
