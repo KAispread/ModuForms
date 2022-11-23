@@ -21,7 +21,7 @@
                     </p>
                     <p>
                         <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
-                        <a href="/surveys/lists" class="btn btn-secondary my-2">다른 설문 보기</a>
+                        <a href="/surveys/lists" class="btn btn-secondary my-2">모든 설문 보기</a>
                     </p>
                 </div>
             </div>
@@ -62,10 +62,10 @@
                             </div>
                             <div>
                                 <small style="display: block; float: right"
-                                       th:text="|작성일 : ${#temporals.format(surveyPreview.createdDate, 'MM-dd HH:mm')}|"
+                                       th:text="|등록일 : ${#temporals.format(surveyPreview.createdDate, 'yyyy-MM-dd')}|"
                                        class="text-muted"></small>
                                 <small style="display: block; float: right"
-                                       th:text="|마감일 : ${#temporals.format(surveyPreview.deadLine, 'MM-dd HH:mm')}|"
+                                       th:text="|마감일 : ${#temporals.format(surveyPreview.deadLine, 'yyyy-MM-dd')}|"
                                        class="text-muted"></small>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
         </div>
     </div>
 
-    <div class="b-example-divider"></div>
+    <div id="section-divider" class="b-example-divider"></div>
 
     <div class="album py-5 bg-white">
         <div class="container">
@@ -133,10 +133,10 @@
                             </div>
                             <div>
                                 <small style="display: block"
-                                       th:text="|응답일 :${#temporals.format(answerPreview.answerDate, 'MM-dd HH:mm')}|"
+                                       th:text="|응답일 :${#temporals.format(answerPreview.answerDate, 'yyyy-MM-dd')}|"
                                        class="text-muted"></small>
                                 <small style="display: block"
-                                       th:text="|마감일 :${#temporals.format(answerPreview.surveyEndDate, 'MM-dd HH:mm')}|"
+                                       th:text="|설문 마감일 :${#temporals.format(answerPreview.surveyEndDate, 'yyyy-MM-dd')}|"
                                        class="text-muted"></small>
                             </div>
                         </div>
@@ -186,6 +186,6 @@
 </footer>
 
 <th:block th:replace="~{layout/footer :: common_footer}"/>
-
+<script src="/js/scroll.js"></script>
 </body>
 </html>
