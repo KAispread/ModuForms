@@ -55,4 +55,13 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보에 해당 닉네임이 존재하지 않습니다."))
                 .getId();
     }
+
+    @Override
+    @Transactional
+    public Long update(UserDetailsDto userDetailsDto, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다."));
+        user.update(userDetailsDto);
+        return user.getId();
+    }
 }

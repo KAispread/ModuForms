@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/header :: common_header(~{::title},~{::link}, ~{::meta})}">
+  <title th:text="|${userDetails.nickname}님의 프로필을 수정합니다.|"></title>
+  <link>
+  <meta name="theme-color" content="#7952b3">
+</head>
+
+<body class="bg-light">
+<main>
+  <header th:replace="~{layout/header :: body-header-main}">
+  </header>
+  <div class="user_detail_cover">
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h2 style="font-weight: bolder" th:text="|${userDetails.nickname}님|" class="gowun-font-ko">사용자
+            닉네임</h2>
+          <p class="lead">프로필 정보</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="container-xxl">
+
+    <div class="py-5">
+    </div>
+
+    <div class="row container-xxl">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <div class="col-12">
+          <label class="form-label">Menu</label>
+          <a th:if="${userId == userDetails.id}" th:href="@{/users/{userId} (userId=${userDetails.id})}" style="margin-top: 1rem;" type="button"
+             class="form-control btn btn-outline-info">프로필 보기</a>
+          <hr class="my-3">
+          <a th:if="${userId == userDetails.id}" th:href="@{/users/{userId}/edit (userId=${userDetails.id})}" type="button"
+             class="form-control btn btn-outline-warning">프로필 수정</a>
+          <hr class="my-3">
+          <button id="btn-user-delete" type="button" class="form-control btn btn-outline-danger">계정 삭제
+          </button>
+
+          <div class="py-5">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-7 col-lg-8">
+        <h4 style="margin-bottom: 1rem" th:text="|${userDetails.nickname}님의 프로필|"
+            class="mb-3 gowun-font-ko"></h4>
+        <hr class="my-4">
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="name" class="form-label">이름 (필수)</label>
+              <input required type="text" th:value="${userDetails.name}" placeholder="이름을 입력해주세요" class="form-control" id="name">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="nickname" class="form-label">닉네임</label>
+              <input required disabled type="text" th:value="${userDetails.nickname}" placeholder="닉네임을 입력해주세요" class="form-control"
+                     id="nickname">
+              <small class="text-muted">닉네임은 변경할 수 없습니다</small>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="birth" class="form-label">생일</label>
+              <input required type="text" th:value="${userDetails.birth}" placeholder="생일을 입력해주세요" class="form-control" id="birth">
+              <small class="text-muted">19980101 형태로 입력해주세요</small>
+            </div>
+
+            <div class="col-sm-3">
+              <label for="gender" class="form-label">성별 (필수)</label>
+              <select class="form-select" id="gender" required>
+                <option value="">성별 선택</option>
+                <option th:each="gender : ${genders}"
+                        th:selected="${gender.title} == ${userDetails.gender}"
+                        th:value="${gender.title}"
+                        th:text="${gender.title}"></option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email</label>
+              <input required type="text" th:value="${userDetails.email}" placeholder="email을 입력해주세요" class="form-control" id="email">
+            </div>
+
+            <div class="col-12">
+              <label for="phone" class="form-label">Phone</label>
+              <input required type="text" th:value="${userDetails.phone}" placeholder="핸드폰 번호를 입력해주세요" class="form-control" id="phone">
+              <small class="text-muted">01012345678 형태로 입력해주세요</small>
+            </div>
+
+            <div class="col-12">
+              <label for="company" class="form-label">소속</label>
+              <input required type="text" th:value="${userDetails.company}" placeholder="소속을 입력해주세요" class="form-control"
+                     id="company">
+              <small class="text-muted">사용자의 소속을 나타냅니다.</small>
+            </div>
+            <hr class="my-4">
+            <button id="btn-user-edit" type="button" class="w-100 btn btn-warning">프로필 수정하기</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" id="userId" th:value="${userDetails.id}">
+</main>
+<div class="py-5">
+</div>
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#">Back to top</a>
+    </p>
+    <p class="mb-1">KAispread's first toy project!!</p>
+    <p class="mb-0">Click the following link to view the code for this project →
+      <a href="https://github.com/KAispread/ModuForms">Github Repo</a></p>
+  </div>
+</footer>
+
+<th:block th:replace="~{layout/footer :: common_footer}"/>
+<script src="/js/details.js"></script>
+</body>
+</html>

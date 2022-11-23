@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.domain.user;
 
 import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
+import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,6 +60,15 @@ public class User extends BaseTimeEntity {
         return this.role.getKey();
     }
     public String getGenderTitle() {return this.gender.getTitle();}
+
+    public void update(UserDetailsDto userDetailsDto) {
+        this.name = userDetailsDto.getName();
+        this.birth = userDetailsDto.getBirth();
+        this.gender = Gender.convertTitleToGender(userDetailsDto.getGender());
+        this.email = userDetailsDto.getEmail();
+        this.phone = userDetailsDto.getPhone();
+        this.company = userDetailsDto.getCompany();
+    }
 
     @Override
     public boolean equals(Object o) {
