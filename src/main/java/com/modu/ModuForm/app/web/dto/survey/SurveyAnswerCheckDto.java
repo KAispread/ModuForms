@@ -27,7 +27,7 @@ public class SurveyAnswerCheckDto {
     }
 
     public void setQuestionList(List<SurveyQuestion> surveyQuestionList, List<Answer> answerList) {
-        for (int i = 0; i< surveyQuestionList.size(); i++) {
+        for (int i = 0; i < surveyQuestionList.size(); i++) {
             questionList.add(new QuestionListForSurveyAnswer(surveyQuestionList.get(i), answerList, i));
         }
     }
@@ -35,6 +35,7 @@ public class SurveyAnswerCheckDto {
     public void setUserList(List<Answer> answerList) {
         for (Answer answer : answerList) {
             this.userList.add(UserDetailsForAnswer.builder()
+                    .userId(answer.getUser().getId())
                     .userNickname(answer.getUser().getNickName())
                     .email(answer.getUser().getEmail())
                     .anonymousFlag(answer.getAnonymousFlag())
