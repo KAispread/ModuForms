@@ -2,6 +2,9 @@ package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.domain.user.Gender;
 import com.modu.ModuForm.app.service.user.UserService;
+import com.modu.ModuForm.app.web.config.auth.LoginUser;
+import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
+import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
 import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,28 +24,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserIndexController {
     private final UserService userService;
-    private final Gender[] genders = Gender.values();
+
+    @ModelAttribute("genders")
+    public Gender[] genders() {
+        return Gender.values();
+    }
 
     @Operation(summary = "로그인 페이지", description = "로그인 페이지를 반환합니다.")
     @GetMapping("/login")
     public String userLogin() {
-        return "loginForm";
+        return "user/loginForm";
     }
 
     @Operation(summary = "회원가입 페이지", description = "회원가입 페이지를 반환합니다.")
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("userRegisterDto", new UserRegisterDto());
-        model.addAttribute("genders", genders);
-        return "register";
+        return "user/register";
     }
 
     @Operation(summary = "프로필 조회", description = "선택한 유저의 프로필 페이지를 반환합니다.")
-    @GetMapping("/{nickName}")
-    public String detail(@PathVariable Long nickName) {
-        userService.getUserDetails(nickName);
+    @GetMapping("/{userId}")
+    public String detail(@PathVariable Long userId, @LoginUser JwtUser jwtUser, Model model) {
+        UserDetailsDto userDetails = userService.getUserDetails(userId);
+        model.addAttribute("userDetails", userDetails);
 
-        return "userDetail";
+        return "user/userDetail";
+    }
+
+    @GetMapping("/{userId}/edit")
+    public String edit(@PathVariable Long userId, @LoginUser JwtUser jwtUser, Model model) {
+        UserDetailsDto userDetails = userService.getUserDetails(userId);
+        model.addAttribute("userDetails", userDetails);
+
+        return "user/userEdit";
     }
 
     @GetMapping("/logout")

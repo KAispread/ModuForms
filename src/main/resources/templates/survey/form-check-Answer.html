@@ -63,7 +63,7 @@
                     <tr th:each="user : ${queAnsList.userList}">
                         <th style="margin: auto; text-align: center" scope="row" class="text-start">
                             <p th:if="${user.anonymousFlag}" class="form-text">익명</p>
-                            <a th:unless="${user.anonymousFlag}" href="#" class="btn btn-secondary" th:text="${user.userNickname}">사용자 닉네임</a>
+                            <a th:unless="${user.anonymousFlag}" th:href="@{/users/{id} (id=${user.userId})}" class="btn btn-secondary" th:text="${user.userNickname}">사용자 닉네임</a>
                         </th>
                         <td>
                             <p th:if="${user.anonymousFlag}" style="text-align: center" class="form-text">"BLIND"</p>

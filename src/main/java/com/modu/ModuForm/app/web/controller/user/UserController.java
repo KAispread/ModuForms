@@ -2,10 +2,12 @@ package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
 import com.modu.ModuForm.app.web.config.auth.SessionManager;
 import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
+import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
 import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +34,7 @@ import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.NORMAL;
 @RequestMapping("/app/users")
 public class UserController {
     private final UserServiceImpl userService;
+    private final UserAccountService userAccountService;
     private final SessionManager sessionManager;
     private final JwtHandler jwtHandler;
 
@@ -103,20 +106,20 @@ public class UserController {
             log.warn("No Cookies available");
             return;
         }
-        jwtHandler.invalidate(ENCRYPT.getCookieName(), response);
-        jwtHandler.invalidate(NORMAL.getCookieName(), response);
+        jwtHandler.invalidate(ENCRYPT, response);
+        jwtHandler.invalidate(NORMAL, response);
     }
 
     // 회원 정보 수정
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
-    @PatchMapping("/{nickname}")
-    public Long update(@Validated @RequestBody UserRegisterDto userRequestDto, @PathVariable String nickname) {
-        return null;
+    @PatchMapping("/{userId}")
+    public Long update(@Validated @RequestBody UserDetailsDto userDetailsDto, @PathVariable Long userId) {
+        return userService.update(userDetailsDto, userId);
     }
 
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴 요청을 처리합니다.")
-    @DeleteMapping("/{nickname}")
-    public Long delete(@PathVariable String nickname) {
-        return null;
+    @DeleteMapping("/{userId}")
+    public void delete(@PathVariable Long userId) {
+        userAccountService.delete(userId);
     }
 }
