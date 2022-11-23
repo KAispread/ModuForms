@@ -32,6 +32,6 @@ public class MainPageController {
         UserFormDetailsDto userMainDetails = mainPageService.getUserFormDetails(surveyPageRequest, surveyPage, answerPageRequest, answerPage, userid);
 
         model.addAttribute("userFormDetails", userMainDetails);
-        return "userMain";
+        return "user/userMain";
     }
 }
