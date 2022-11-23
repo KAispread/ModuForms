@@ -58,7 +58,8 @@ public class JwtHandler {
         throw new IllegalArgumentException("JWT is Not valid");
     }
 
-    public void invalidate(String name, HttpServletResponse response) {
+    public void invalidate(JwtCookie jwtCookie, HttpServletResponse response) {
+        String name = jwtCookie.getCookieName();
         Cookie cookie = new Cookie(name, null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
