@@ -7,6 +7,9 @@ let index = {
         $('#btn-logout').on('click', function () {
             _this.logout();
         });
+        $('#user_toggle').on('click', function () {
+            $("#user_dropdown").toggle();
+        });
     },
     register : function () {
         let data = {
