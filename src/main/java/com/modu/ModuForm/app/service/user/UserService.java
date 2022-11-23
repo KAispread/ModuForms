@@ -10,4 +10,5 @@ public interface UserService {
     Long register(UserRegisterDto userRequestDto);
     UserDetailsDto getUserDetails(Long id);
     Long getUserPk(String nickName);
+    Long update(UserDetailsDto userDetailsDto, Long userId);
 }
