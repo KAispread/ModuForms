@@ -78,7 +78,7 @@
                         </a>
                         <ul style="display:list-item; display: none;" id="user_dropdown" class="dropdown-menu text-small">
                             <li><a class="dropdown-item" href="/surveys/form">New survey..</a></li>
-                            <li><a class="dropdown-item" th:href="@{/users/${user.nickname}}">profile</a></li>
+                            <li><a class="dropdown-item" th:href="@{/users/{userId} (userId=${user.id})}">profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
