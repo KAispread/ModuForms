@@ -32,12 +32,14 @@
                     <label class="form-label">Menu</label>
                     <a th:href="@{/users/{userId} (userId=${userDetails.id})}" style="margin-top: 1rem;" type="button"
                        class="form-control btn btn-outline-info">프로필 보기</a>
-                    <hr class="my-3">
-                    <a th:if="${userId == userDetails.id}" th:href="@{/users/{userId}/edit (userId=${userDetails.id})}" type="button"
-                       class="form-control btn btn-outline-warning">프로필 수정</a>
-                    <hr class="my-3">
-                    <button th:if="${userId == userDetails.id}" id="btn-user-delete" type="button" class="form-control btn btn-outline-danger">계정 삭제
-                    </button>
+                    <th:block th:if="${user.id == userDetails.id}">
+                        <hr class="my-3">
+                        <a th:href="@{/users/{userId}/edit (userId=${userDetails.id})}" type="button"
+                           class="form-control btn btn-outline-warning">프로필 수정</a>
+                        <hr class="my-3">
+                        <button id="btn-user-delete" type="button" class="form-control btn btn-outline-danger">계정 삭제
+                        </button>
+                    </th:block>
 
                     <div class="py-5">
                     </div>
