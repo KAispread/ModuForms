@@ -3,7 +3,7 @@
 ModuForm은 설문조사를 위한 웹 어플리케이션입니다.        
 본 어플리케이션의 기능을 이용하기 위해선 로그인이 필요합니다.   
 다음의 URL에서 직접 이용해 보실 수 있습니다.    
-### 🖇LINK -> [ModuForm](http://ec2-3-36-156-200.ap-northeast-2.compute.amazonaws.com:8080, "ModuForm link")    
+### 🖇LINK -> [ModuForm](http://ec2-3-36-156-200.ap-northeast-2.compute.amazonaws.com:8080)    
 
 
 &nbsp;
