@@ -20,26 +20,26 @@
             <form th:action="@{/app/users/logins (redirectURL=${param.redirectURL})}" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
                 <div class="form-floating mb-3">
                     <input name="userId" type="text" class="form-control" id="userId" placeholder="ID">
-                    <label for="userId">아이디</label>
+                    <label th:text="#{input.user.id}" for="userId">아이디</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-                    <label for="password">비밀번호</label>
+                    <label th:text="#{input.user.password}" for="password">비밀번호</label>
                 </div>
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+                <button th:text="#{button.user.login}" class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
                 <hr class="my-4">
 
-                <a th:href="@{/oauth2/authorization/google}" class="w-100 btn btn-lg btn-outline-primary" role="button">Google Login</a>
+                <a th:text="#{button.user.login.google}" th:href="@{/oauth2/authorization/google}" class="w-100 btn btn-lg btn-outline-primary" role="button">Google Login</a>
 
                 <hr class="my-4">
                 <div>
                     <small class="text-muted">ModuForm에 처음이세요?</small>
-                    <span><a href="/users/register">회원가입하기</a></span>
+                    <span><a th:text="#{button.view.user.register}" href="/users/register">회원가입하기</a></span>
                 </div>
             </form>
         </div>

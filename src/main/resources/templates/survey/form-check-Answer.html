@@ -44,18 +44,18 @@
 
 
     <div style="text-align: center;" class="my-3 p-3 bg-body rounded shadow-sm">
-        <h5 style="font-size: 1.25rem; color:darkorchid;" class="border-bottom pb-2 mb-0 form-text">
+        <h5 th:text="#{label.answer.user_all}" style="font-size: 1.25rem; color:darkorchid;" class="border-bottom pb-2 mb-0 form-text">
             응답한
             사용자
         </h5>
         <details>
-            <summary class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">목록 보기</summary>
+            <summary th:text="#{button.survey.answer.list}" class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">목록 보기</summary>
             <div class="table-responsive">
                 <table class="table text-center" style="text-align: center; width: 90%; margin: auto;">
                     <thead>
                     <tr>
-                        <th style="width: 25%; color: coral;">닉네임</th>
-                        <th style="width: 70%; color:olivedrab;">이메일</th>
+                        <th th:text="#{label.survey.answer.user_nickname}" style="width: 25%; color: coral;">닉네임</th>
+                        <th th:text="#{label.survey.answer.user_email}" style="width: 70%; color:olivedrab;">이메일</th>
                     </tr>
                     </thead>
 
@@ -82,7 +82,7 @@
     <div th:each="question : ${queAnsList.questionList}" class="my-3 p-3 bg-body rounded shadow-sm">
         <h5 style="text-align: center; font-size: 1.25rem;"
             class="border-bottom pb-2 mb-0 form-text"
-            th:text="|Question ${questionStat.count}. ${question.question}|">
+            th:text="|#{label.survey.question} ${questionStat.count}. ${question.question}|">
             Question
         </h5>
 
@@ -97,7 +97,8 @@
                                 <span class="d-flex">
                                   <h5 style=" color: darkcyan; display: block;" th:text="|ㆍ${distractor.distractor}|">선택지</h5>
                                 </span>
-                                <strong class="text-gray-dark" th:text="|응답 수 : ${distractor.count} / |">응답 수</strong>
+                                <strong class="text-gray-dark" th:text="|응답 수 : ${distractor.count}|">응답 수</strong>
+                                <br>
                                 <strong class="text-gray-dark" th:text="'비율 : ' + (${distractor.count == 0} ? 0 : (${percentage})) + '%'">비율</strong>
                             </div>
 
@@ -111,13 +112,16 @@
         </th:block>
 
         <details style="text-align: center;">
-            <summary class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">자세히 보기
+            <summary th:text="#{button.survey.answer.summary}" class="form-text" style="text-align: center; font-size: 1rem; margin-top: 2vh;">자세히 보기
             </summary>
             <div th:if="${question.questionType.name() == 'MULTIPLE'}" class="table-responsive">
                 <table style="margin-top: 1.5rem" class="table text-center">
                     <thead style="text-align: center;">
                     <tr>
-                        <th th:classappend="${question.distractor.size() < 4 } ? 'column-th3-usr': 'column-th4-usr'">User nickname</th>
+                        <th th:text="#{label.survey.answer.user_nickname}"
+                            th:classappend="${question.distractor.size() < 4 } ? 'column-th3-usr': 'column-th4-usr'">
+                            User nickname
+                        </th>
 
                         <th th:classappend="${question.distractor.size() <= 2} ? 'column-th2':
                         (${question.distractor.size() <= 3 } ? 'column-th3':
@@ -148,14 +152,14 @@
                 <table style="margin-top: 1.5rem" class="table text-center">
                     <thead style="text-align: center;">
                     <tr>
-                        <th class="column-short-usr">User nickname</th>
-                        <th class="column-short">Response</th>
+                        <th th:text="#{label.survey.answer.user_nickname}" class="column-short-usr">User nickname</th>
+                        <th th:text="#{label.survey.answer.response}" class="column-short">Response</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="answerUser : ${question.answerUser}">
-                        <th th:if="${answerUser.anonymousFlag}" th:text="${answerUser.user.nickName}" scope="row" class="text-start">익명</th>
-                        <th th:unless="${answerUser.anonymousFlag}" th:text="${answerUser.user.nickName}" scope="row" class="text-start">User nickname</th>
+                        <th th:text="${answerUser.anonymousFlag} ? #{label.survey.answer.user_nickname.anonymous} : ${answerUser.user.nickName}"
+                            scope="row" class="text-start">닉네임</th>
                         <td>
                             <div th:text="${answerUser.answer}" class="form-text">Response</div>
                         </td>

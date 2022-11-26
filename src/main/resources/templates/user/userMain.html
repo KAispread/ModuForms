@@ -20,8 +20,8 @@
                         여러분의 설문을 등록하세요
                     </p>
                     <p>
-                        <a href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
-                        <a href="/surveys/lists" class="btn btn-secondary my-2">모든 설문 보기</a>
+                        <a th:text="#{button.view.make.survey}" href="/surveys/form" class="btn btn-primary my-2">설문 만들기</a>
+                        <a th:text="#{button.view.survey.all}" href="/surveys/lists" class="btn btn-secondary my-2">모든 설문 보기</a>
                     </p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="album py-5 bg-light">
         <div class="container">
-            <h4 style="font-weight: bold" class="gowun-font-ko">작성한 설문</h4>
+            <h4 th:text="#{label.user.survey.all}" style="font-weight: bold" class="gowun-font-ko">등록한 설문</h4>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div th:each="surveyPreview : ${userFormDetails.surveyPage.surveyPreviews}" class="col">
@@ -47,26 +47,26 @@
 
                         <div class="card-body">
                             <div>
-                                <small style="font-weight: bold" th:text="|설문 작성자 : ${surveyPreview.author}|"
+                                <small style="font-weight: bold" th:text="|#{label.survey.create_user} : ${surveyPreview.author}|"
                                        class="text-muted"/>
                             </div>
                             <div id="emailHelp" th:text="${surveyPreview.description}" class="form-text">설문 설명</div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
+                                    <a th:text="#{button.view.survey.check}" th:href="@{/surveys/{id} (id=${surveyPreview.getId()})}"
                                        class="btn btn-sm btn-outline-primary">보기</a>
-                                    <a th:href="@{/surveys/{id}/edit (id=${surveyPreview.getId()})}"
+                                    <a th:text="#{button.view.survey.edit}" th:href="@{/surveys/{id}/edit (id=${surveyPreview.getId()})}"
                                        class="btn btn-sm btn-outline-success">수정하기</a>
                                 </div>
-                                <small th:text="|응답자 : ${surveyPreview.answersCount} 명|" class="text-muted"/>
+                                <small th:text="|#{label.survey.answer_user} : ${surveyPreview.answersCount} 명|" class="text-muted"/>
                             </div>
                             <div>
                                 <small style="display: block; float: right"
-                                       th:text="|등록일 : ${#temporals.format(surveyPreview.createdDate, 'yyyy-MM-dd')}|"
-                                       class="text-muted"></small>
+                                       th:text="|#{label.survey.create} : ${#temporals.format(surveyPreview.createdDate, 'yyyy-MM-dd')}|"
+                                       class="text-muted">등록일</small>
                                 <small style="display: block; float: right"
-                                       th:text="|마감일 : ${#temporals.format(surveyPreview.deadLine, 'yyyy-MM-dd')}|"
-                                       class="text-muted"></small>
+                                       th:text="|#{label.survey.deadline} : ${#temporals.format(surveyPreview.deadLine, 'yyyy-MM-dd')}|"
+                                       class="text-muted">마감일</small>
                             </div>
                         </div>
                     </div>
@@ -77,10 +77,12 @@
                 <ul class="nav_item" th:with="surveyPage=${userFormDetails.surveyPage}">
                     <li>
                         <a th:if="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}"
+                           th:text="#{a.survey.previous.page}"
                            th:href="@{/ (sp=${surveyPage.startPage - 1}, ap=${param.ap})}">
-                            < 이전
+                            이전 페이지
                         </a>
-                        <a th:unless="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}">< 이전</a>
+                        <a th:text="#{a.survey.previous.page}"
+                           th:unless="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}">이전 페이지</a>
                     </li>
                     <li th:each="num : ${#numbers.sequence(1,5)}"
                         th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''">
@@ -90,10 +92,10 @@
                            th:text="${surveyPage.startPage} + ${num - 1}"></a>
                     </li>
                     <li>
-                        <a th:if="${surveyPage.endPage} < ${surveyPage.totalPages}"
-                           th:href="@{/ (sp=${surveyPage.endPage + 1}, ap=${param.ap})}">다음 >
+                        <a th:text="#{a.survey.next.page}" th:if="${surveyPage.endPage} < ${surveyPage.totalPages}"
+                           th:href="@{/ (sp=${surveyPage.endPage + 1}, ap=${param.ap})}">다음 페이지
                         </a>
-                        <a th:unless="${surveyPage.endPage} < ${surveyPage.totalPages}">다음 ></a>
+                        <a th:text="#{a.survey.next.page}" th:unless="${surveyPage.endPage} < ${surveyPage.totalPages}">다음 페이지</a>
                     </li>
                 </ul>
             </div>
@@ -105,7 +107,7 @@
 
     <div class="album py-5 bg-white">
         <div class="container">
-            <h4 style="font-weight: bold" class="gowun-font-ko">응답한 설문</h4>
+            <h4 th:text="#{label.user.answer.all}" style="font-weight: bold" class="gowun-font-ko">응답한 설문</h4>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
@@ -125,18 +127,18 @@
                             <p th:text="${answerPreview.description}" class="card-text"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a th:href="@{/answers/{id} (id=${answerPreview.getId()})}"
+                                    <a th:text="#{button.view.answer.check}" th:href="@{/answers/{id} (id=${answerPreview.getId()})}"
                                        class="btn btn-sm btn-outline-primary">보기</a>
-                                    <a th:href="@{/answers/{id}/edit (id=${answerPreview.getId()})}"
+                                    <a th:text="#{button.view.answer.edit}" th:href="@{/answers/{id}/edit (id=${answerPreview.getId()})}"
                                        class="btn btn-sm btn-outline-success">수정하기</a>
                                 </div>
                             </div>
                             <div>
                                 <small style="display: block"
-                                       th:text="|응답일 :${#temporals.format(answerPreview.answerDate, 'yyyy-MM-dd')}|"
+                                       th:text="|#{label.answer.create} :${#temporals.format(answerPreview.answerDate, 'yyyy-MM-dd')}|"
                                        class="text-muted"></small>
                                 <small style="display: block"
-                                       th:text="|설문 마감일 :${#temporals.format(answerPreview.surveyEndDate, 'yyyy-MM-dd')}|"
+                                       th:text="|설문 #{label.survey.deadline} :${#temporals.format(answerPreview.surveyEndDate, 'yyyy-MM-dd')}|"
                                        class="text-muted"></small>
                             </div>
                         </div>
@@ -147,11 +149,12 @@
             <div th:if="!${userFormDetails.answerPage.totalPages < 1}" class="page-control">
                 <ul class="nav_item" th:with="answerPage=${userFormDetails.answerPage}">
                     <li>
-                        <a th:if="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}"
+                        <a th:text="#{a.answer.previous.page}"
+                           th:if="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}"
                            th:href="@{/ (ap=${answerPage.startPage - 1}, sp=${param.sp})}">
-                            < 이전
+                            이전 페이지
                         </a>
-                        <a th:unless="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}">< 이전</a>
+                        <a th:text="#{a.answer.previous.page}" th:unless="${answerPage.currentPage} > ${answerPage.PAGE_ROW_COUNT}">이전 페이지</a>
                     </li>
                     <li th:each="num : ${#numbers.sequence(1,5)}"
                         th:classappend="((${answerPage.startPage} + ${num - 1}) == ${answerPage.currentPage}) ? 'on' : ''">
@@ -161,10 +164,12 @@
                            th:text="${answerPage.startPage} + ${num - 1}"></a>
                     </li>
                     <li>
-                        <a th:if="${answerPage.endPage} < ${answerPage.totalPages}"
-                           th:href="@{/ (ap=${answerPage.endPage + 1}, sp=${param.sp})}">다음 >
+                        <a th:text="#{a.answer.next.page}"
+                           th:if="${answerPage.endPage} < ${answerPage.totalPages}"
+                           th:href="@{/ (ap=${answerPage.endPage + 1}, sp=${param.sp})}">다음 페이지
                         </a>
-                        <a th:unless="${answerPage.endPage} < ${answerPage.totalPages}">다음 ></a>
+                        <a th:text="#{a.answer.next.page}"
+                           th:unless="${answerPage.endPage} < ${answerPage.totalPages}">다음 페이지</a>
                     </li>
                 </ul>
             </div>

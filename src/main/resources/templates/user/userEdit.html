@@ -53,25 +53,25 @@
         <form class="needs-validation" novalidate>
           <div class="row g-3">
             <div class="col-sm-6">
-              <label for="name" class="form-label">이름 (필수)</label>
+              <label th:text="|#{label.user.name} (필수)|" for="name" class="form-label">이름 (필수)</label>
               <input required type="text" th:value="${userDetails.name}" placeholder="이름을 입력해주세요" class="form-control" id="name">
             </div>
 
             <div class="col-sm-6">
-              <label for="nickname" class="form-label">닉네임</label>
+              <label th:text="#{label.user.nickname}" for="nickname" class="form-label">닉네임</label>
               <input required disabled type="text" th:value="${userDetails.nickname}" placeholder="닉네임을 입력해주세요" class="form-control"
                      id="nickname">
               <small class="text-muted">닉네임은 변경할 수 없습니다</small>
             </div>
 
             <div class="col-sm-6">
-              <label for="birth" class="form-label">생일</label>
+              <label th:text="#{label.user.birth}" for="birth" class="form-label">생일</label>
               <input required type="text" th:value="${userDetails.birth}" placeholder="생일을 입력해주세요" class="form-control" id="birth">
               <small class="text-muted">19980101 형태로 입력해주세요</small>
             </div>
 
             <div class="col-sm-3">
-              <label for="gender" class="form-label">성별 (필수)</label>
+              <label th:text="|#{label.user.gender} (필수)|" for="gender" class="form-label">성별 (필수)</label>
               <select class="form-select" id="gender" required>
                 <option value="">성별 선택</option>
                 <option th:each="gender : ${genders}"
@@ -82,24 +82,24 @@
             </div>
 
             <div class="col-12">
-              <label for="email" class="form-label">Email</label>
+              <label th:text="#{label.user.email}" for="email" class="form-label">Email</label>
               <input required type="text" th:value="${userDetails.email}" placeholder="email을 입력해주세요" class="form-control" id="email">
             </div>
 
             <div class="col-12">
-              <label for="phone" class="form-label">Phone</label>
+              <label th:text="#{label.user.phone}" for="phone" class="form-label">Phone</label>
               <input required type="text" th:value="${userDetails.phone}" placeholder="핸드폰 번호를 입력해주세요" class="form-control" id="phone">
               <small class="text-muted">01012345678 형태로 입력해주세요</small>
             </div>
 
             <div class="col-12">
-              <label for="company" class="form-label">소속</label>
+              <label th:text="#{label.user.company}" for="company" class="form-label">소속</label>
               <input required type="text" th:value="${userDetails.company}" placeholder="소속을 입력해주세요" class="form-control"
                      id="company">
               <small class="text-muted">사용자의 소속을 나타냅니다.</small>
             </div>
             <hr class="my-4">
-            <button th:if="${user.id == userDetails.id}" id="btn-user-edit" type="button" class="w-100 btn btn-warning">프로필 수정하기</button>
+            <button th:text="#{button.user.edit}" th:if="${user.id == userDetails.id}" id="btn-user-edit" type="button" class="w-100 btn btn-warning">프로필 수정하기</button>
           </div>
         </form>
       </div>
