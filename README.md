@@ -41,8 +41,8 @@ ModuForm은 설문조사를 위한 웹 어플리케이션입니다.
 
 > __Login & Form__
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/99247279/204090069-9faad37c-7358-4ade-b7cb-33032b8d9228.png" width="700" />
-    <img src="https://user-images.githubusercontent.com/99247279/195881166-e4b283bf-8593-4f33-af6a-eb368d1b2b5d.png" width="290" />
+    <img src="https://user-images.githubusercontent.com/99247279/204090069-9faad37c-7358-4ade-b7cb-33032b8d9228.png" width="500" />
+    <img src="https://user-images.githubusercontent.com/99247279/195881166-e4b283bf-8593-4f33-af6a-eb368d1b2b5d.png" width="190" />
 </p>
 &nbsp;
 
