@@ -26,29 +26,29 @@
             <form class="needs-validation">
                 <div class="row g-3">
                     <div class="text-end">
-                        <p class="form-text">버튼을 클릭하고 설문을 공유해보세요!!</p>
-                        <a id="btn-copy-url"
+                        <p th:text="#{label.copyURL}" class="form-text">버튼을 클릭하고 설문을 공유해보세요!!</p>
+                        <a th:text="#{button.copyURL}" id="btn-copy-url"
                            class="btn btn-sm btn-warning">응답 URL 복사</a>
                     </div>
                     <div class="col-12">
-                        <label for="survey_title" class="form-label">제목</label>
+                        <label th:text="#{input.survey.title}" for="survey_title" class="form-label">제목</label>
                         <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
                                th:value="${surveyCheck.title}" disabled
                                required>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text">설명</span>
+                        <span th:text="#{input.survey.description}" class="input-group-text">설명</span>
                         <textarea class="form-control" id="survey_description" aria-label="With textarea"
                                   th:value="${surveyCheck.description}" disabled
                                   required>[[${surveyCheck.description}]]</textarea>
                     </div>
                     <div class="col-12">
-                        <label for="survey_email" class="form-label">관리자 이메일</label>
+                        <label th:text="#{input.survey.email}" for="survey_email" class="form-label">관리자 이메일</label>
                         <input type="text" class="form-control" id="survey_email" placeholder="유효한 이메일 주소를 입력하세요."
                                th:value="${surveyCheck.email}" disabled>
                     </div>
 
-                    <label class="form-label">마감 날짜</label>
+                    <label th:text="#{input.survey.deadline}" class="form-label">마감 날짜</label>
                     <div class="input-group mb-3">
                         <input type="date" class="form-control" id="date" required disabled
                                th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
@@ -59,7 +59,7 @@
 
 
                     <div class="col-12">
-                        <label class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
+                        <label th:text="#{input.survey.max_answer}" class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
                         <input type="text" class="form-control" id="survey_max" disabled
                                th:value="${surveyCheck.maximumAnswer}"
                                value="">
@@ -69,7 +69,7 @@
                     <h4 class="md-3 gowun-font-ko">질문 등록</h4>
 
                     <div class="col-12" th:each="question : ${surveyCheck.surveyQuestionList}">
-                    <label class="form-label" th:text="|Question ${questionStat.count}.|"></label>
+                    <label class="form-label" th:text="|#{label.survey.question} ${questionStat.count}.|"></label>
                         <span th:if="${question.questionType.name()} == 'SHORT'" style="float: right;"><p>단답형</p></span>
                         <span th:if="${question.questionType.name()} == 'MULTIPLE'"
                               style="float: right;"><p>객관식</p></span>
@@ -84,11 +84,11 @@
                     <hr class="my-4">
 
                     <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a th:href="@{/surveys/{id}/edit (id=${surveyCheck.getSurveyId()})}" th:if="${surveyCheck.user.id == user.id}"
+                        <a th:text="#{button.survey.edit}" th:href="@{/surveys/{id}/edit (id=${surveyCheck.getSurveyId()})}" th:if="${surveyCheck.user.id == user.id}"
                            class="btn btn-primary">수정하기</a>
-                        <button th:if="${surveyCheck.user.id == user.id}" type="button"
+                        <button th:text="#{button.survey.delete}" th:if="${surveyCheck.user.id == user.id}" type="button"
                            id="btn-survey-delete" class="btn btn-dark">삭제하기</button>
-                        <a th:href="@{/}" class="btn btn-secondary">돌아가기</a>
+                        <a th:text="#{button.return}" th:href="@{/}" class="btn btn-secondary">돌아가기</a>
                     </div>
                 </div>
             </form>

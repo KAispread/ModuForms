@@ -19,17 +19,17 @@
         <div class="row g-5">
             <div class="col-md-5 col-lg-4 order-md-last">
                 <div class="col-12">
-                    <label for="survey_user_nickname" class="form-label">설문 제공자 닉네임</label>
+                    <label th:text="#{label.answer.user_survey.nickname}" for="survey_user_nickname" class="form-label">설문 제공자 닉네임</label>
                     <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_user_nickname"
                            th:value="${answerDto.answerCheckDto.surveyUser.nickName}" disabled>
                 </div>
                 <div class="col-12">
-                    <label for="survey_email" class="form-label">설문 제공자 이메일</label>
+                    <label th:text="#{label.answer.user_survey.email}" for="survey_email" class="form-label">설문 제공자 이메일</label>
                     <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_email"
                            th:value="${answerDto.answerCheckDto.email}" disabled>
                 </div>
 
-                <label for="survey_deadline" class="form-label">마감 날짜</label>
+                <label th:text="#{label.answer.deadline}" for="survey_deadline" class="form-label">마감 날짜</label>
                 <div class="input-group mb-3">
                     <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_deadline"
                            th:value="${#temporals.format(answerDto.answerCheckDto.deadLine, 'yyyy-MM-dd HH:mm:ss')}"
@@ -42,23 +42,23 @@
                 <h4 class="mb-3 gowun-font-ko">설문 응답</h4>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="anonymous_flag" id="anonymous_flag" value="on" th:checked="${answerDto.anonymousFlag}">
-                    <label class="form-check-label" for="anonymous_flag">익명 응답</label>
-                    <div id="emailHelp" class="form-text">체크 박스에 체크하시면 설문 제공자에게 프로필이 노출되지 않습니다.</div>
+                    <label th:text="#{check.anonymous}" class="form-check-label" for="anonymous_flag">익명 응답</label>
+                    <div th:text="#{label.check.anonymous}" id="emailHelp" class="form-text">체크 박스에 체크하시면 설문 제공자에게 프로필이 노출되지 않습니다.</div>
                 </div>
                 <hr class="my-4">
                 <form>
                     <div class="col-12 question_wrapper"
                          th:each="question : ${answerDto.answerCheckDto.answerQuestions}">
                         <label style="font-weight: bold; color: darkgreen;" class="form-label"
-                               th:text="|Question ${questionStat.count}.|"></label>
+                               th:text="|#{label.survey.question} ${questionStat.count}.|"></label>
                         <span th:switch="${question.questionType.name()}" style="float: right;">
                           <th:block th:case="'SHORT'">
                             <input name="que_type" type="hidden" value="short">
-                            <p>단답형</p>
+                            <p th:text="${question.questionType.description}">단답형</p>
                           </th:block>
                           <th:block th:case="'MULTIPLE'">
                             <input name="que_type" type="hidden" value="multiple">
-                            <p>객관식</p>
+                            <p th:text="${question.questionType.description}">객관식</p>
                           </th:block>
                         </span>
 
@@ -66,7 +66,7 @@
                         <div th:if="${question.questionType.name() =='SHORT'}" class="form-floating short_answer">
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="answer"
                                           th:text="${question.answer}"></textarea>
-                            <label for="floatingTextarea">Answer</label>
+                            <label th:text="#{label.answer.question}" for="floatingTextarea">Answer</label>
                         </div>
                         <div th:if="${question.questionType.name() == 'MULTIPLE'}" class="form-check multiple_answer"
                              th:each="selectOption : ${question.distractor}">
@@ -82,8 +82,8 @@
                 <hr class="my-4">
 
                 <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" id="btn-answer-edit" class="btn btn-success">수정하기</button>
-                    <button type="button" onclick="history.back()" class="btn btn-secondary">취소</button>
+                    <button th:text="#{button.answer.edit}" type="button" id="btn-answer-edit" class="btn btn-success">수정하기</button>
+                    <button th:text="#{button.return}" type="button" onclick="history.back()" class="btn btn-secondary">취소</button>
                 </div>
             </div>
         </div>

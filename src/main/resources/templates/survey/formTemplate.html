@@ -19,7 +19,7 @@
             <form class="needs-validation">
                 <div class="row g-3">
                     <div class="col-12">
-                        <label for="survey_title" class="form-label">제목</label>
+                        <label th:text="#{input.survey.title}" for="survey_title" class="form-label">제목</label>
                         <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
                                value=""
                                required>
@@ -28,13 +28,13 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text">설명</span>
+                        <span th:text="#{input.survey.description}" class="input-group-text">설명</span>
                         <textarea class="form-control" id="survey_description" aria-label="With textarea"
                                   placeholder="설문에 대한 간단한 설명을 입력해주세요."
                                   required></textarea>
                     </div>
                     <div class="col-12">
-                        <label for="survey_email" class="form-label">관리자 이메일</label>
+                        <label th:text="#{input.survey.email}" for="survey_email" class="form-label">관리자 이메일</label>
                         <input type="text" class="form-control" id="survey_email" placeholder="유효한 이메일 주소를 입력하세요."
                                value="" required>
                         <div class="invalid-feedback">
@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <label class="form-label">마감 날짜</label>
+                    <label th:text="#{input.survey.deadline}" class="form-label">마감 날짜</label>
                     <div class="input-group mb-3">
                         <input type="date" class="form-control" id="date" required>
                         <span class="input-group-text">&</span>
@@ -50,17 +50,17 @@
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
+                        <label th:text="#{input.survey.max_answer}" class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
                         <input type="text" class="form-control" id="survey_max" placeholder="숫자를 입력하세요"
                                value="">
                     </div>
                     <hr class="my-4">
 
-                    <h4 class="md-3 gowun-font-ko">질문 등록</h4>
+                    <h4 th:text="#{label.survey.question.title}" class="md-3 gowun-font-ko">질문 등록</h4>
                     <div id="question_box">
                         <div class="question_root">
                             <div class="col-12 question_wrapper">
-                                <label class="form-label">Question </label>
+                                <label th:text="#{label.survey.question}" class="form-label">Question </label>
                                 <select class="form-select form-select-sm" name="question_type">
                                     <option selected>질문 유형 선택</option>
                                     <option th:each="quesType : ${quesTypes}"
@@ -76,9 +76,9 @@
                     </div>
 
                     <hr class="my-4">
-                    <button type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
+                    <button th:text="#{button.survey.question.add}" type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
                     <hr class="my-4">
-                    <button class="w-100 btn btn-primary btn-lg" type="button" id="btn-survey-save">설문 등록하기</button>
+                    <button th:text="#{button.survey.save}" class="w-100 btn btn-primary btn-lg" type="button" id="btn-survey-save">설문 등록하기</button>
                 </div>
             </form>
         </div>

@@ -18,23 +18,23 @@
         <form class="needs-validation">
             <div class="row g-3">
                 <div class="col-12">
-                    <label for="survey_title" class="form-label">제목</label>
+                    <label th:text="#{input.survey.title}" for="survey_title" class="form-label">제목</label>
                     <input type="text" class="form-control" id="survey_title" placeholder="설문의 제목을 입력해주세요"
                            th:value="${surveyCheck.title}" required>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-text">설명</span>
+                    <span th:text="#{input.survey.description}" class="input-group-text">설명</span>
                     <textarea class="form-control" id="survey_description" aria-label="With textarea"
                               th:value="${surveyCheck.description}"
                               required>[[${surveyCheck.description}]]</textarea>
                 </div>
                 <div class="col-12">
-                    <label for="survey_email" class="form-label">관리자 이메일</label>
+                    <label th:text="#{input.survey.email}" for="survey_email" class="form-label">관리자 이메일</label>
                     <input type="text" class="form-control" id="survey_email" placeholder="유효한 이메일 주소를 입력하세요."
                            th:value="${surveyCheck.email}">
                 </div>
 
-                <label class="form-label">마감 날짜</label>
+                <label th:text="#{input.survey.deadline}" class="form-label">마감 날짜</label>
                 <div class="input-group mb-3">
                     <input type="date" class="form-control" id="date" required
                            th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
@@ -45,19 +45,19 @@
 
 
                 <div class="col-12">
-                    <label class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
+                    <label th:text="#{input.survey.max_answer}" class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
                     <input type="text" class="form-control" id="survey_max"
                            th:value="${surveyCheck.maximumAnswer}"
                            value="">
                 </div>
                 <hr class="my-4">
 
-                <h4 class="md-3 gowun-font-ko">질문 등록</h4>
+                <h4 th:text="#{label.survey.question.title}" class="md-3 gowun-font-ko">질문 등록</h4>
 
                 <div id="question_box">
                     <div class="question_root" th:each="question : ${surveyCheck.surveyQuestionList}">
                         <div class="col-12 question_wrapper">
-                            <label class="form-label">Question </label>
+                            <label th:text="#{label.survey.question}" class="form-label">Question </label>
                             <select class="form-select form-select-sm" name="question_type">
                                 <option selected>질문 유형 선택</option>
                                 <option th:each="quesType : ${quesTypes}"
@@ -102,7 +102,7 @@
                                             <path
                                                     d="M2.5 0c-.166 0-.33.016-.487.048l.194.98A1.51 1.51 0 0 1 2.5 1h.458V0H2.5zm2.292 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zm1.833 0h-.916v1h.916V0zm1.834 0h-.917v1h.917V0zm1.833 0h-.917v1h.917V0zM13.5 0h-.458v1h.458c.1 0 .199.01.293.029l.194-.981A2.51 2.51 0 0 0 13.5 0zm2.079 1.11a2.511 2.511 0 0 0-.69-.689l-.556.831c.164.11.305.251.415.415l.83-.556zM1.11.421a2.511 2.511 0 0 0-.689.69l.831.556c.11-.164.251-.305.415-.415L1.11.422zM16 2.5c0-.166-.016-.33-.048-.487l-.98.194c.018.094.028.192.028.293v.458h1V2.5zM.048 2.013A2.51 2.51 0 0 0 0 2.5v.458h1V2.5c0-.1.01-.199.029-.293l-.981-.194zM0 3.875v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 5.708v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zM0 7.542v.916h1v-.916H0zm15 .916h1v-.916h-1v.916zM0 9.375v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .916v.917h1v-.917H0zm16 .917v-.917h-1v.917h1zm-16 .917v.458c0 .166.016.33.048.487l.98-.194A1.51 1.51 0 0 1 1 13.5v-.458H0zm16 .458v-.458h-1v.458c0 .1-.01.199-.029.293l.981.194c.032-.158.048-.32.048-.487zM.421 14.89c.183.272.417.506.69.689l.556-.831a1.51 1.51 0 0 1-.415-.415l-.83.556zm14.469.689c.272-.183.506-.417.689-.69l-.831-.556c-.11.164-.251.305-.415.415l.556.83zm-12.877.373c.158.032.32.048.487.048h.458v-1H2.5c-.1 0-.199-.01-.293-.029l-.194.981zM13.5 16c.166 0 .33-.016.487-.048l-.194-.98A1.51 1.51 0 0 1 13.5 15h-.458v1h.458zm-9.625 0h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zm1.834-1v1h.916v-1h-.916zm1.833 1h.917v-1h-.917v1zm1.833 0h.917v-1h-.917v1zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                                         </svg>
-                                        선택지 추가
+                                        <th:block th:text="#{button.survey.distractor.add}">선택지 추가</th:block>
                                     </button>
                                 </div>
                             </th:block>
@@ -114,14 +114,14 @@
                 </div>
 
                 <hr class="my-4">
-                <button type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
+                <button th:text="#{button.survey.question.add}" type="button" id="insertButton" class="w-100 btn btn-outline-dark btn-lg">질문 추가하기</button>
 
                 <hr class="my-4">
                 <div style="width: 99%;" class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button th:if="${surveyCheck.user.id == user.id}" type="button"
+                    <button th:text="#{button.survey.edit}" th:if="${surveyCheck.user.id == user.id}" type="button"
                             id="btn-survey-edit-save" class="btn btn-success">수정하기
                     </button>
-                    <button type="button" onclick="history.back()" class="btn btn-secondary">돌아가기
+                    <button th:text="#{button.return}" type="button" onclick="history.back()" class="btn btn-secondary">돌아가기
                     </button>
                 </div>
             </div>
