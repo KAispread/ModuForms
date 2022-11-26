@@ -34,7 +34,14 @@
                 <button th:text="#{button.user.login}" class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
                 <hr class="my-4">
 
-                <a th:text="#{button.user.login.google}" th:href="@{/oauth2/authorization/google}" class="w-100 btn btn-lg btn-outline-primary" role="button">Google Login</a>
+                <a th:href="@{/oauth2/authorization/google}" class="w-100 btn btn-lg btn-outline-primary" role="button">
+                    <div>
+                        <img style="margin-right: 0.5rem;" src="/css/image/google_icon.png" height="25" alt="icon">
+                        <th:block th:text="#{button.user.login.google}">
+                            Google Logins
+                        </th:block>
+                    </div>
+                </a>
 
                 <hr class="my-4">
                 <div>
