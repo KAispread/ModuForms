@@ -6,15 +6,15 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class AnswerResponseDto {
+public class AnswerResponse {
     private Long answerId;
-    private AnswerCheckDto answerCheckDto;
+    private AnswerCheck answerCheck;
     private Boolean anonymousFlag;
 
     @Builder
-    public AnswerResponseDto(Long answerId, AnswerCheckDto answerCheckDto, Boolean anonymousFlag) {
+    public AnswerResponse(Long answerId, AnswerCheck answerCheck, Boolean anonymousFlag) {
         this.answerId = answerId;
-        this.answerCheckDto = answerCheckDto;
+        this.answerCheck = answerCheck;
         this.anonymousFlag = anonymousFlag;
     }
 }

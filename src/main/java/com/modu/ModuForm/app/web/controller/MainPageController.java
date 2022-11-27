@@ -3,7 +3,7 @@ package com.modu.ModuForm.app.web.controller;
 import com.modu.ModuForm.app.service.MainPageService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.dto.user.UserFormDetailsDto;
+import com.modu.ModuForm.app.web.dto.user.UserFormDetails;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class MainPageController {
 
         PageRequest surveyPageRequest = PageRequest.of(surveyPage - 1, 9, Sort.by("createdDate").descending());
         PageRequest answerPageRequest = PageRequest.of(answerPage - 1, 9, Sort.by("createdDate").descending());
-        UserFormDetailsDto userMainDetails = mainPageService.getUserFormDetails(surveyPageRequest, surveyPage, answerPageRequest, answerPage, userid);
+        UserFormDetails userMainDetails = mainPageService.getUserFormDetails(surveyPageRequest, surveyPage, answerPageRequest, answerPage, userid);
 
         model.addAttribute("userFormDetails", userMainDetails);
         return "user/userMain";

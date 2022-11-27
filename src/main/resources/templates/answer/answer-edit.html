@@ -12,8 +12,8 @@
 <div class="container">
     <main>
         <div class="py-5 text-center">
-            <h2 style="font-weight: bolder" th:text="${answerDto.answerCheckDto.title}" class="gowun-font-ko">설문 제목</h2>
-            <p th:text="${answerDto.answerCheckDto.description}" class="lead">설문 설명</p>
+            <h2 style="font-weight: bolder" th:text="${answerDto.answerCheck.title}" class="gowun-font-ko">설문 제목</h2>
+            <p th:text="${answerDto.answerCheck.description}" class="lead">설문 설명</p>
         </div>
 
         <div class="row g-5">
@@ -21,18 +21,18 @@
                 <div class="col-12">
                     <label th:text="#{label.answer.user_survey.nickname}" for="survey_user_nickname" class="form-label">설문 제공자 닉네임</label>
                     <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_user_nickname"
-                           th:value="${answerDto.answerCheckDto.surveyUser.nickName}" disabled>
+                           th:value="${answerDto.answerCheck.surveyUser.nickName}" disabled>
                 </div>
                 <div class="col-12">
                     <label th:text="#{label.answer.user_survey.email}" for="survey_email" class="form-label">설문 제공자 이메일</label>
                     <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_email"
-                           th:value="${answerDto.answerCheckDto.email}" disabled>
+                           th:value="${answerDto.answerCheck.email}" disabled>
                 </div>
 
                 <label th:text="#{label.answer.deadline}" for="survey_deadline" class="form-label">마감 날짜</label>
                 <div class="input-group mb-3">
                     <input style="margin-bottom: 10px;" type="text" class="form-control" id="survey_deadline"
-                           th:value="${#temporals.format(answerDto.answerCheckDto.deadLine, 'yyyy-MM-dd HH:mm:ss')}"
+                           th:value="${#temporals.format(answerDto.answerCheck.deadLine, 'yyyy-MM-dd HH:mm:ss')}"
                            disabled>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                 <hr class="my-4">
                 <form>
                     <div class="col-12 question_wrapper"
-                         th:each="question : ${answerDto.answerCheckDto.answerQuestions}">
+                         th:each="question : ${answerDto.answerCheck.answerQuestions}">
                         <label style="font-weight: bold; color: darkgreen;" class="form-label"
                                th:text="|#{label.survey.question} ${questionStat.count}.|"></label>
                         <span th:switch="${question.questionType.name()}" style="float: right;">

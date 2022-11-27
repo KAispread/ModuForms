@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
-public class SurveyCheckDto {
+public class SurveyCheck {
     private Long surveyId;
     private User user;
     private String title;
@@ -25,7 +25,7 @@ public class SurveyCheckDto {
     private List<SurveyQuestionCheck> surveyQuestionList = new ArrayList<>();
 
     @Builder
-    public SurveyCheckDto(Survey survey) {
+    public SurveyCheck(Survey survey) {
         this.surveyId = survey.getId();
         this.title = survey.getTitle();
         this.description = survey.getDescription();

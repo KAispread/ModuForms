@@ -6,8 +6,8 @@ import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.*;
-import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
-import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSave;
+import com.modu.ModuForm.app.web.dto.survey.SurveySave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +72,7 @@ public class TestDataInit {
                 .distractor("회|곱창|고기|치킨|육회")
                 .build());
 
-        SurveySaveDto saveDto = SurveySaveDto.builder()
+        SurveySave saveDto = SurveySave.builder()
                 .title("회식 참여 조사")
                 .email("Esdf@mane.com")
                 .description("회식 참여 조사를 위한 설문입니다.")
@@ -100,7 +100,7 @@ public class TestDataInit {
                 .questionType(QuesType.SHORT)
                 .build());
 
-        SurveySaveDto saveDto2 = SurveySaveDto.builder()
+        SurveySave saveDto2 = SurveySave.builder()
                 .title("만족도 조사")
                 .email("Esdf@mane.com")
                 .description("본 어플리케이션 만족도 조사입니다.")
@@ -116,11 +116,11 @@ public class TestDataInit {
         answerList1.add("인터페이스");
         answerList1.add("UI를 좀 더 둥글둥글하게 하면 더 좋을 것 같아요");
 
-        AnswerSaveDto answerSaveDto = AnswerSaveDto.builder()
+        AnswerSave answerSave = AnswerSave.builder()
                 .anonymousFlag(true)
                 .answerList(answerList1)
                 .build();
 
-        answerRepository.save(answerSaveDto.toEntity(survey1, user));
+        answerRepository.save(answerSave.toEntity(survey1, user));
     }
 }

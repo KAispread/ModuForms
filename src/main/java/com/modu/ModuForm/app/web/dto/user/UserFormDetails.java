@@ -10,7 +10,7 @@ import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 @Getter
-public class UserFormDetailsDto {
+public class UserFormDetails {
     private final Long id;
     private final String name;
     private final String nickName;
@@ -18,7 +18,7 @@ public class UserFormDetailsDto {
     private final SurveyPage surveyPage;
     private final AnswerPage answerPage;
 
-    public UserFormDetailsDto(User user, Page<Survey> surveyPageList, Integer currentSurveyPage, Page<Answer> answerPageList, Integer currentAnswerPage) {
+    public UserFormDetails(User user, Page<Survey> surveyPageList, Integer currentSurveyPage, Page<Answer> answerPageList, Integer currentAnswerPage) {
         this.id = user.getId();
         this.name = user.getName();
         this.role = user.getRole();

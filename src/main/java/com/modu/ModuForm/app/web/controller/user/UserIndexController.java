@@ -4,8 +4,9 @@ import com.modu.ModuForm.app.domain.user.Gender;
 import com.modu.ModuForm.app.service.user.UserService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
-import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
+import com.modu.ModuForm.app.web.dto.user.LoginRequest;
+import com.modu.ModuForm.app.web.dto.user.UserDetails;
+import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -32,21 +33,22 @@ public class UserIndexController {
 
     @Operation(summary = "로그인 페이지", description = "로그인 페이지를 반환합니다.")
     @GetMapping("/login")
-    public String userLogin() {
+    public String userLogin(Model model) {
+        model.addAttribute("login", new LoginRequest());
         return "user/loginForm";
     }
 
     @Operation(summary = "회원가입 페이지", description = "회원가입 페이지를 반환합니다.")
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("userRegisterDto", new UserRegisterDto());
+        model.addAttribute("userRegister", new UserRegister());
         return "user/register";
     }
 
     @Operation(summary = "프로필 조회", description = "선택한 유저의 프로필 페이지를 반환합니다.")
     @GetMapping("/{userId}")
     public String detail(@PathVariable Long userId, @LoginUser JwtUser jwtUser, Model model) {
-        UserDetailsDto userDetails = userService.getUserDetails(userId);
+        UserDetails userDetails = userService.getUserDetails(userId);
         model.addAttribute("userDetails", userDetails);
 
         return "user/userDetail";
@@ -54,7 +56,7 @@ public class UserIndexController {
 
     @GetMapping("/{userId}/edit")
     public String edit(@PathVariable Long userId, @LoginUser JwtUser jwtUser, Model model) {
-        UserDetailsDto userDetails = userService.getUserDetails(userId);
+        UserDetails userDetails = userService.getUserDetails(userId);
         model.addAttribute("userDetails", userDetails);
 
         return "user/userEdit";

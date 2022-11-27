@@ -5,9 +5,9 @@ import com.modu.ModuForm.app.domain.user.AccessRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
-import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
-import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
-import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
+import com.modu.ModuForm.app.web.dto.user.LoginRequest;
+import com.modu.ModuForm.app.web.dto.user.UserDetails;
+import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,16 +23,16 @@ public class UserServiceImpl implements UserService{
     @PerfLog
     @Override
     @Transactional(readOnly = true)
-    public Access login(LoginRequestDto loginRequestDto) {
-        return accessRepository.findByUserId(loginRequestDto.getUserId())
-                .filter(access -> access.getPassword().equals(loginRequestDto.getPassword()))
+    public Access login(LoginRequest loginRequest) {
+        return accessRepository.findByUserId(loginRequest.getUserId())
+                .filter(access -> access.getPassword().equals(loginRequest.getPassword()))
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 ID, PW 입니다."));
     }
 
     @PerfLog
     @Override
     @Transactional
-    public Long register(UserRegisterDto registerDto) {
+    public Long register(UserRegister registerDto) {
         User user = userRepository.save(registerDto.toUserEntity());
         accessRepository.save(registerDto.toAccessEntity(user));
         return user.getId();
@@ -41,10 +41,10 @@ public class UserServiceImpl implements UserService{
     @PerfLog
     @Override
     @Transactional(readOnly = true)
-    public UserDetailsDto getUserDetails(Long id) {
+    public UserDetails getUserDetails(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다."));
-        return new UserDetailsDto(user);
+        return new UserDetails(user);
     }
 
     @PerfLog
@@ -58,10 +58,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public Long update(UserDetailsDto userDetailsDto, Long userId) {
+    public Long update(UserDetails userDetails, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다."));
-        user.update(userDetailsDto);
+        user.update(userDetails);
         return user.getId();
     }
 }

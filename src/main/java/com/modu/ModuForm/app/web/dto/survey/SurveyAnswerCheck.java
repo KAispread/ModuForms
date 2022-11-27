@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class SurveyAnswerCheckDto {
+public class SurveyAnswerCheck {
     private final Long surveyId;
     private final String surveyTitle;
     private final int answerCount;
     private final List<UserDetailsForAnswer> userList = new ArrayList<>();
     private final List<QuestionListForSurveyAnswer> questionList = new ArrayList<>();
 
-    public SurveyAnswerCheckDto(Survey survey, List<Answer> answerList) {
+    public SurveyAnswerCheck(Survey survey, List<Answer> answerList) {
         this.surveyId = survey.getId();
         this.surveyTitle = survey.getTitle();
         this.answerCount = answerList.size();

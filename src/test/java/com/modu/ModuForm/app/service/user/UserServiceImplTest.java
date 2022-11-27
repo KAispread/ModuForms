@@ -1,8 +1,8 @@
 package com.modu.ModuForm.app.service.user;
 
 import com.modu.ModuForm.app.domain.user.*;
-import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
-import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
+import com.modu.ModuForm.app.web.dto.user.LoginRequest;
+import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class UserServiceImplTest {
             String nickname = "Kia";
             String email = "asdfas@gmail.com";
 
-            UserRegisterDto userRegisterDto = UserRegisterDto.builder()
+            UserRegister userRegister = UserRegister.builder()
                     .id(id)
                     .pwd(pwd)
                     .username(username)
@@ -55,14 +55,14 @@ class UserServiceImplTest {
                     .phone("01012345611")
                     .company("KaKao")
                     .build();
-            User userEntity = userRegisterDto.toUserEntity();
+            User userEntity = userRegister.toUserEntity();
 
             when(userRepository.save(any())).thenReturn(userEntity);
-            when(accessRepository.save(any())).thenReturn(userRegisterDto.toAccessEntity(userEntity));
+            when(accessRepository.save(any())).thenReturn(userRegister.toAccessEntity(userEntity));
             when(userRepository.findByNickName(nickname)).thenReturn(Optional.ofNullable(userEntity));
 
             //when
-            userService.register(userRegisterDto);
+            userService.register(userRegister);
 
             //then
             User user = userRepository.findByNickName(nickname).orElseThrow();
@@ -80,7 +80,7 @@ class UserServiceImplTest {
             String username = "희준";
             String nickname = "Kia";
             String email = "asdfas@gmail.com";
-            UserRegisterDto userRegisterDto = UserRegisterDto.builder()
+            UserRegister userRegister = UserRegister.builder()
                     .id(id)
                     .pwd(pwd)
                     .username(username)
@@ -91,12 +91,12 @@ class UserServiceImplTest {
                     .phone("01012345611")
                     .company("KaKao")
                     .build();
-            when(userRepository.saveAndFlush(any())).thenReturn(userRegisterDto.toUserEntity());
+            when(userRepository.saveAndFlush(any())).thenReturn(userRegister.toUserEntity());
             when(accessRepository.save(any())).thenThrow(IllegalArgumentException.class);
 
             //then
             assertThrows(IllegalArgumentException.class, () ->
-                    userService.register(UserRegisterDto.builder()
+                    userService.register(UserRegister.builder()
                             .id(id)
                             .pwd(pwd)
                             .username(username)
@@ -127,11 +127,11 @@ class UserServiceImplTest {
             when(accessRepository.findByUserId(any())).thenReturn(Optional.of(access));
 
             //when
-            LoginRequestDto loginRequestDto = LoginRequestDto.builder()
+            LoginRequest loginRequest = LoginRequest.builder()
                     .userId(user_id)
                     .password(password)
                     .build();
-            Access userAccess = userService.login(loginRequestDto);
+            Access userAccess = userService.login(loginRequest);
 
             //then
             assertThat(userAccess.getUserId()).isEqualTo(user_id);
@@ -143,7 +143,7 @@ class UserServiceImplTest {
         void loginFail() {
             //then
             assertThrows(IllegalArgumentException.class, () -> userService.login(
-                    LoginRequestDto.builder()
+                    LoginRequest.builder()
                             .userId("qioeurha1fbk")
                             .password("1232qsfjsbaa")
                             .build())

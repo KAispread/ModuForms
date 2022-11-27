@@ -7,11 +7,10 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
-import com.modu.ModuForm.app.web.dto.SurveyPreview;
-import com.modu.ModuForm.app.web.dto.survey.SurveyAnswerCheckDto;
-import com.modu.ModuForm.app.web.dto.survey.SurveyCheckDto;
+import com.modu.ModuForm.app.web.dto.survey.SurveyAnswerCheck;
+import com.modu.ModuForm.app.web.dto.survey.SurveyCheck;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
-import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
+import com.modu.ModuForm.app.web.dto.survey.SurveySave;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,9 +31,9 @@ public class SurveyServiceImpl implements SurveyService{
     @PerfLog
     @Override
     @Transactional
-    public Long save(SurveySaveDto surveySaveDto, String nickName) {
+    public Long save(SurveySave surveySave, String nickName) {
         User user = userRepository.findByNickName(nickName).orElseThrow(() -> new IllegalArgumentException("일치하는 사용자가 없습니다."));
-        Survey survey = surveyRepository.save(surveySaveDto.toSurveyEntity(user));
+        Survey survey = surveyRepository.save(surveySave.toSurveyEntity(user));
 
         return survey.getId();
     }
@@ -43,10 +41,10 @@ public class SurveyServiceImpl implements SurveyService{
     @PerfLog
     @Override
     @Transactional
-    public Long update(Long id, SurveySaveDto surveySaveDto) {
+    public Long update(Long id, SurveySave surveySave) {
         Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
         answerRepository.deleteAllBySurvey(survey);
-        survey.update(surveySaveDto);
+        survey.update(surveySave);
 
         return survey.getId();
     }
@@ -61,9 +59,9 @@ public class SurveyServiceImpl implements SurveyService{
     @PerfLog
     @Override
     @Transactional(readOnly = true)
-    public SurveyCheckDto getSurveyCheckDto(Long id) {
+    public SurveyCheck getSurveyCheckDto(Long id) {
         Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
-        return new SurveyCheckDto(survey);
+        return new SurveyCheck(survey);
     }
 
     @PerfLog
@@ -77,11 +75,11 @@ public class SurveyServiceImpl implements SurveyService{
 
     @Transactional(readOnly = true)
     @Override
-    public SurveyAnswerCheckDto getSurveyAnswerCheckDto(Long surveyId) {
+    public SurveyAnswerCheck getSurveyAnswerCheckDto(Long surveyId) {
         Survey survey = surveyRepository.findById(surveyId).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
         List<Answer> allAnswer = answerRepository.findAllBySurvey(survey);
 
-        return new SurveyAnswerCheckDto(survey, allAnswer);
+        return new SurveyAnswerCheck(survey, allAnswer);
     }
 
 }

@@ -15,14 +15,14 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class AnswerSaveDto {
+public class AnswerSave {
     @NotNull
     private Boolean anonymousFlag;
     @NotEmpty
     private List<String> answerList;
 
     @Builder
-    public AnswerSaveDto(Boolean anonymousFlag, List<String> answerList) {
+    public AnswerSave(Boolean anonymousFlag, List<String> answerList) {
         this.anonymousFlag = anonymousFlag;
         this.answerList = answerList;
     }

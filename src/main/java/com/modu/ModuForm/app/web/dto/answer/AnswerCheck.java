@@ -14,7 +14,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class AnswerCheckDto {
+public class AnswerCheck {
     private User surveyUser;
     private String title;
     private String description;
@@ -24,7 +24,7 @@ public class AnswerCheckDto {
     private final List<AnswerQuestionCheck> answerQuestions = new ArrayList<>();
 
     @Builder
-    public AnswerCheckDto(Survey survey, List<AnswerData> answerDataList) {
+    public AnswerCheck(Survey survey, List<AnswerData> answerDataList) {
         this.title = survey.getTitle();
         this.description = survey.getDescription();
         this.deadLine = survey.getDeadLine();

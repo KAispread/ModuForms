@@ -8,7 +8,7 @@ import com.modu.ModuForm.app.domain.user.Gender;
 import com.modu.ModuForm.app.domain.user.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
-import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSave;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -288,7 +288,7 @@ class AnswerRepositoryTest {
         editAnswerData.add("김강훈");
         editAnswerData.add("30");
 
-        answer.update(AnswerSaveDto.builder()
+        answer.update(AnswerSave.builder()
                 .anonymousFlag(false)
                 .answerList(editAnswerData)
                 .build());

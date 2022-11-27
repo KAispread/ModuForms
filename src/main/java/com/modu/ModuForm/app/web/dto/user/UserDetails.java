@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserDetailsDto {
+public class UserDetails {
     private Long id;
     @NotBlank
     private String name;
@@ -27,7 +27,7 @@ public class UserDetailsDto {
     private String phone;
     private String company;
 
-    public UserDetailsDto(User user) {
+    public UserDetails(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.nickname = user.getNickName();
