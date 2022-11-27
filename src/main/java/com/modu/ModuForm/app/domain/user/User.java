@@ -38,7 +38,7 @@ public class User extends BaseTimeEntity {
 
     private String company;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private final List<Survey> surveyList = new ArrayList<>();
 
     @Builder

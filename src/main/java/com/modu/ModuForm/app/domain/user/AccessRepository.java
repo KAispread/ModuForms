@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface AccessRepository extends JpaRepository<Access, Long> {
     Optional<Access> findByUser(User user);
     Optional<Access> findByUserId(String userId);
+    void deleteByUser(User user);
 }
