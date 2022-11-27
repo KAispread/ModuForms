@@ -27,7 +27,7 @@ public class Survey extends BaseTimeEntity {
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "survey")
+    @OneToMany(mappedBy = "survey", orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     @Column(nullable = false)
