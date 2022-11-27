@@ -7,9 +7,9 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.service.PerfLog;
-import com.modu.ModuForm.app.web.dto.answer.AnswerCheckDto;
-import com.modu.ModuForm.app.web.dto.answer.AnswerResponseDto;
-import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerCheck;
+import com.modu.ModuForm.app.web.dto.answer.AnswerResponse;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSave;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,27 +26,27 @@ public class AnswerServiceImpl implements AnswerService{
     @PerfLog
     @Override
     @Transactional
-    public Long save(AnswerSaveDto answerSaveDto, Long surveyId, Long userPk) {
+    public Long save(AnswerSave answerSave, Long surveyId, Long userPk) {
         User user = userRepository.getReferenceById(userPk);
         Survey survey = surveyRepository.getReferenceById(surveyId);
 
-        return answerRepository.save(answerSaveDto.toEntity(survey, user)).getId();
+        return answerRepository.save(answerSave.toEntity(survey, user)).getId();
     }
 
     @Override
-    public Long update(Long answerId, AnswerSaveDto answerSaveDto) {
+    public Long update(Long answerId, AnswerSave answerSave) {
         Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다."));
-        answer.update(answerSaveDto);
+        answer.update(answerSave);
         return answer.getId();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public AnswerResponseDto getAnswerDto(Long id) {
+    public AnswerResponse getAnswerDto(Long id) {
         Answer answer = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다."));
-        return AnswerResponseDto.builder()
+        return AnswerResponse.builder()
                 .answerId(answer.getId())
-                .answerCheckDto(new AnswerCheckDto(answer.getSurvey(), answer.getAnswerDataList()))
+                .answerCheck(new AnswerCheck(answer.getSurvey(), answer.getAnswerDataList()))
                 .anonymousFlag(answer.getAnonymousFlag())
                 .build();
     }

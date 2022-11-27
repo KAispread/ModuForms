@@ -3,7 +3,7 @@ package com.modu.ModuForm.app.domain.surbay;
 import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
+import com.modu.ModuForm.app.web.dto.survey.SurveySave;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -70,16 +70,15 @@ public class Survey extends BaseTimeEntity {
         this.answers.add(answer);
     }
 
-    public void update(SurveySaveDto surveySaveDto) {
+    public void update(SurveySave surveySave) {
         this.answers.clear();
-        this.answers  = new ArrayList<>();
-        this.title = surveySaveDto.getTitle();
-        this.description = surveySaveDto.getDescription();
-        this.email = surveySaveDto.getEmail();
-        this.maximumAnswer = surveySaveDto.getMaximumAnswer();
+        this.title = surveySave.getTitle();
+        this.description = surveySave.getDescription();
+        this.email = surveySave.getEmail();
+        this.maximumAnswer = surveySave.getMaximumAnswer();
         this.surveyQuestionList.clear();
-        this.surveyQuestionList = surveySaveDto.getSurveyQuestionList();
-        this.deadLine = surveySaveDto.getDeadLineLocalDateTime();
+        this.surveyQuestionList = surveySave.getSurveyQuestionList();
+        this.deadLine = surveySave.getDeadLineLocalDateTime();
     };
 
     public void updateQuestion(List<SurveyQuestion> newSurveyQuestionList) {

@@ -34,21 +34,24 @@
                            th:value="${surveyCheck.email}">
                 </div>
 
-                <label th:text="#{input.survey.deadline}" class="form-label">마감 날짜</label>
-                <div class="input-group mb-3">
-                    <input type="date" class="form-control" id="date" required
-                           th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
-                    <span class="input-group-text">&</span>
-                    <input type="time" class="form-control" id="time" required
-                           th:value="${#temporals.format(surveyCheck.deadLine, 'HH:mm')}">
+                <div>
+                    <label th:text="#{input.survey.deadline}" class="form-label">마감 날짜</label>
+                    <span class="text-muted">(선택)</span>
+                    <div class="input-group mb-3">
+                        <input type="date" class="form-control" id="date" required
+                               th:value="${#temporals.format(surveyCheck.deadLine, 'yyyy-MM-dd')}">
+                        <span class="input-group-text">&</span>
+                        <input type="time" class="form-control" id="time" required
+                               th:value="${#temporals.format(surveyCheck.deadLine, 'HH:mm')}">
+                    </div>
                 </div>
 
 
                 <div class="col-12">
-                    <label th:text="#{input.survey.max_answer}" class="form-label" for="survey_max">최대 응답 개수 <span class="text-muted">(선택)</span></label>
+                    <label th:text="#{input.survey.max_answer}" class="form-label" for="survey_max">최대 응답 개수</label>
+                    <span class="text-muted">(선택)</span>
                     <input type="text" class="form-control" id="survey_max"
-                           th:value="${surveyCheck.maximumAnswer}"
-                           value="">
+                           th:value="${surveyCheck.maximumAnswer}">
                 </div>
                 <hr class="my-4">
 
@@ -109,7 +112,6 @@
 
 
                         </div>
-                        <hr th:if="${questionStat.count == 1}" class="my-4">
                     </div>
                 </div>
 

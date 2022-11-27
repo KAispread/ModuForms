@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class LoginResponseDto {
+public class LoginResponse {
     private String name;
     private Role role;
 
     @Builder
-    public LoginResponseDto(String name, Role role) {
+    public LoginResponse(String name, Role role) {
         this.name = name;
         this.role = role;
     }

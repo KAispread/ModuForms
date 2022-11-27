@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserRegisterDto {
+public class UserRegister {
     @Length(min = 5, max = 16 , message = "아이디는 5자 이상 16자 미만으로 입력하세요.")
     private String id;
     @Length(min = 5, max = 16 , message = "비밀 번호는 5자 이상 16자 미만으로 입력하세요.")
@@ -35,7 +35,7 @@ public class UserRegisterDto {
     private String company;
 
     @Builder
-    public UserRegisterDto(String id, String pwd, String username, String nickname, Long birth, Gender gender, String email, String phone, String company) {
+    public UserRegister(String id, String pwd, String username, String nickname, Long birth, Gender gender, String email, String phone, String company) {
         this.id = id;
         this.pwd = pwd;
         this.username = username;

@@ -3,7 +3,7 @@ package com.modu.ModuForm.app.domain.surbay.answer;
 import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.dto.answer.AnswerSaveDto;
+import com.modu.ModuForm.app.web.dto.answer.AnswerSave;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,10 +50,10 @@ public class Answer extends BaseTimeEntity {
         survey.addAnswer(this);
     }
 
-    public void update(AnswerSaveDto answerSaveDto) {
-        this.anonymousFlag = answerSaveDto.getAnonymousFlag();
+    public void update(AnswerSave answerSave) {
+        this.anonymousFlag = answerSave.getAnonymousFlag();
         this.answerDataList.clear();
-        this.answerDataList = answerSaveDto.convertAnswerData();
+        this.answerDataList = answerSave.convertAnswerData();
     }
 
     private void validateUser(Survey survey) {

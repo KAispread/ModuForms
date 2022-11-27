@@ -9,7 +9,7 @@ import com.modu.ModuForm.app.domain.user.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
-import com.modu.ModuForm.app.web.dto.survey.SurveySaveDto;
+import com.modu.ModuForm.app.web.dto.survey.SurveySave;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,7 +62,7 @@ public class SurveyServiceImplTest {
                 .questionType(QuesType.SHORT)
                 .build());
 
-        SurveySaveDto saveDto = SurveySaveDto.builder()
+        SurveySave saveDto = SurveySave.builder()
                 .title("회식 참여 조사")
                 .description("회식 참여 조사를 위한 설문입니다.")
                 .deadLine("2022-10-06-15-30")
@@ -116,7 +116,7 @@ public class SurveyServiceImplTest {
                         .questionType(QuesType.SHORT)
                         .build());
 
-                SurveySaveDto saveDto = SurveySaveDto.builder()
+                SurveySave saveDto = SurveySave.builder()
                         .title("회식 참여 조사" + i)
                         .description("회식 참여 조사를 위한 설문입니다." + i)
                         .deadLine("2022-10-06-15-30")

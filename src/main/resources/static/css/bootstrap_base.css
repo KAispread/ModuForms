@@ -1,5 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 
+.filed-error-text {
+    color: #dc3545;
+}
+
+.filed-error-box {
+    border-color: #dc3545;
+}
+
+.filed-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
 .b-example-divider {
     height: 3rem;
     background-color: rgba(0, 0, 0, .1);
