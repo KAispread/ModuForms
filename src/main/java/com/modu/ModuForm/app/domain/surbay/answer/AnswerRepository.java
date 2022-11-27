@@ -15,6 +15,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @EntityGraph(attributePaths = {"user", "survey"}, type = FETCH)
     Page<Answer> findAllByUser(User user, Pageable pageable);
     void deleteAllBySurvey(Survey survey);
+    @EntityGraph(attributePaths = {"user"}, type = FETCH)
     List<Answer> findAllBySurvey(Survey survey);
     void deleteAllByUser(User user);
 }

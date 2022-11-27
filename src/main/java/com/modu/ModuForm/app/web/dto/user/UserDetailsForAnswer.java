@@ -14,6 +14,7 @@ public class UserDetailsForAnswer {
 
     @Builder
     public UserDetailsForAnswer(Long userId, String userNickname, String email, Boolean anonymousFlag) {
+        this.userId = userId;
         this.userNickname = userNickname;
         this.email = email;
         this.anonymousFlag = anonymousFlag;
