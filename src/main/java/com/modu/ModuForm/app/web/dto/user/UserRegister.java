@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 
@@ -16,21 +17,24 @@ import javax.validation.constraints.*;
 @Setter
 @Getter
 public class UserRegister {
-    @Length(min = 5, max = 16 , message = "아이디는 5자 이상 16자 미만으로 입력하세요.")
+    @Length(min = 5, max = 16)
     private String id;
-    @Length(min = 5, max = 16 , message = "비밀 번호는 5자 이상 16자 미만으로 입력하세요.")
+    @Length(min = 5, max = 16)
     private String pwd;
+    @Length(min = 2, max = 20)
     @NotBlank
     private String username;
+    @Length(min = 2, max = 20)
     @NotBlank
     private String nickname;
+    @Range(min = 19000000, max = 20221128)
     @Positive
     private Long birth;
     @NotNull
     private Gender gender;
     @Email
     private String email;
-    @Min(10)
+    @Length(min = 11, max = 11)
     private String phone;
     private String company;
 
