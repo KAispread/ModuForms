@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     if (page_id == 'answer_point') {
         $('html, body').animate({
-            scrollTop: $('#section-divider').offset.top
+            scrollTop: $('#section-divider').offset().top
         }, 500);
     }
 });
