@@ -35,18 +35,19 @@ let details = {
             company : $('#company').val()
         };
 
-        $.ajax({
-            type: 'PATCH',
-            url: '/app/users/' + path_name,
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-        }).done(function () {
-            alert('프로필 수정이 수정되었습니다.');
-            window.location.href = '/users/' + path_name;
-        }).fail(function () {
-            alert('필수 정보를 모두 입력해주세요');
-        })
+        if (window.confirm('프로필을 수정하시겠습니까?')) {
+            $.ajax({
+                type: 'PATCH',
+                url: '/app/users/' + path_name,
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function () {
+                alert('프로필 수정이 수정되었습니다.');
+                window.location.href = '/users/' + path_name;
+            }).fail(function () {
+                alert('필수 정보를 모두 입력해주세요');
+            })
+        }
     }
 }
 
