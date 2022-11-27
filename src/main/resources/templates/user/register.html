@@ -16,71 +16,89 @@
 
         <div class="col-md-10 container-md">
             <h4 class="mb-3">회원 정보 입력</h4>
-            <form th:object="${userRegister}" class="needs-validation was-validated">
+            <form th:action="@{/app/users}" method="post" th:object="${userRegister}">
                 <div class="row g-3">
                     <div class="col-12">
                         <label th:text="#{input.user.id}" for="id" class="form-label">아이디</label>
                         <span class="text-muted">(5자 이상 16자 미만)</span>
-                        <input type="text" th:field="*{id}" class="form-control" id="id" placeholder="아이디를 입력해주세요" required>
+                        <input type="text" th:field="*{id}" th:errorclass="filed-error-box" class="form-control" id="id" placeholder="아이디를 입력해주세요" required>
+                        <div th:errors="*{id}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label th:text="#{input.user.password}" for="pwd" class="form-label">비밀번호</label>
                         <span class="text-muted">(5자 이상 16자 미만)</span>
-                        <input type="password" th:field="*{pwd}" class="form-control" id="pwd" placeholder="비밀번호를 입력해주세요" required>
+                        <input type="password" th:field="*{pwd}" th:errorclass="filed-error-box" class="form-control" id="pwd" placeholder="비밀번호를 입력해주세요" required>
+                        <div th:errors="*{pwd}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label for="username" class="form-label">이름</label>
-                        <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="본인 성함을 입력해주세요" required>
+                        <input type="text" th:field="*{username}" th:errorclass="filed-error-box" class="form-control" id="username" placeholder="본인 성함을 입력해주세요" required>
+                        <div th:errors="*{username}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label th:text="#{input.user.nickname}" for="nickname" class="form-label">닉네임
                         </label>
-                        <input type="text" th:field="*{nickname}" class="form-control" id="nickname" placeholder="사용할 닉네임을 입력해주세요." required>
+                        <input type="text" th:field="*{nickname}" th:errorclass="filed-error-box" class="form-control" id="nickname" placeholder="사용할 닉네임을 입력해주세요." required>
+                        <div th:errors="*{nickname}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label for="birth" th:text="#{input.user.birth}" class="form-label">생년월일</label>
                         <span class="text-muted">(YYYYMMDD)</span>
-                        <input type="number" th:field="*{birth}" class="form-control" id="birth" placeholder="Ex) 19980101" required>
+                        <input type="number" th:field="*{birth}" th:errorclass="filed-error-box" class="form-control" id="birth" placeholder="Ex) 19980101" required>
+                        <div th:errors="*{birth}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label for="gender" th:text="#{input.user.gender}" class="form-label">성별</label>
-                        <select class="form-select" th:field="*{gender}" id="gender" required>
+                        <select th:errorclass="filed-error-box" class="form-select" th:field="*{gender}" id="gender" required>
                             <option value="">=== 성별 선택 ===</option>
                             <option th:each="gender : ${genders}"
                                     th:value="${gender.name()}"
                                     th:text="${gender.title}"></option>
                         </select>
+                        <div th:errors="*{gender}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label for="email" th:text="#{input.user.email}" class="form-label">이메일
                             <span class="text-muted">(선택)</span>
                         </label>
-                        <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="your@example.com" required>
+                        <input type="email" th:field="*{email}" th:errorclass="filed-error-box" class="form-control" id="email" placeholder="your@example.com" required>
+                        <div th:errors="*{email}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label for="phone" th:text="#{input.user.phone}" class="form-label">휴대전화
                         </label>
                         <span class="text-muted">('-' 기호를 빼고 입력해주세요.)</span>
-                        <input type="number" th:field="*{phone}" class="form-control" id="phone" placeholder="0102345xxxx" required>
+                        <input type="number" th:field="*{phone}" th:errorclass="filed-error-box" class="form-control" id="phone" placeholder="0102345xxxx" required>
+                        <div th:errors="*{phone}" class="filed-error-text">
+                        </div>
                     </div>
 
                     <div class="col-12">
                         <label for="company" th:text="#{input.user.company}" class="form-label">소속
                         </label>
                         <span class="text-muted">(선택)</span>
-                        <input type="text" th:field="*{company}" class="form-control" id="company" placeholder="소속을 입력해주세요">
+                        <input type="text" th:field="*{company}" th:errorclass="filed-error-box" class="form-control" id="company" placeholder="소속을 입력해주세요">
+                        <div th:errors="*{company}" class="filed-error-text">
+                        </div>
                     </div>
                 </div>
                 <hr class="my-4">
 
-                <button th:text="#{button.user.register}" class="w-100 btn btn-primary btn-lg" type="button" id="btn-register">가입 하기</button>
+                <button th:text="#{button.user.register}" class="w-100 btn btn-primary btn-lg" type="submit" id="btn-register_none">가입 하기</button>
             </form>
         </div>
     </main>

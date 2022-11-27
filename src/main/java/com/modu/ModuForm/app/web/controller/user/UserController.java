@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.web.controller.user;
 
+import com.modu.ModuForm.app.domain.user.Gender;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
@@ -11,11 +12,12 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,18 +39,25 @@ public class UserController {
 
     // 회원가입
     @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public String register(@Validated @RequestBody UserRegister userRegister) {
+    public String register(@Validated @ModelAttribute UserRegister userRegister, BindingResult bindingResult,
+                           Model model, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            log.warn("error={}", bindingResult);
+            model.addAttribute("userRegister", userRegister);
+            model.addAttribute("genders", Gender.values());
+            return "user/register";
+        }
         userService.register(userRegister);
-        return "user/loginForm";
+        redirectAttributes.addAttribute("created", true);
+        return "redirect:/users/login";
     }
 
     @Operation(summary = "JWT 로그인 요청 처리", description = "JWT 로그인 요청을 처리합니다.")
     @PostMapping("/logins")
     public String loginJwt(@Validated @ModelAttribute(name = "login") LoginRequest loginRequest, BindingResult bindingResult,
                            @RequestParam(defaultValue = "/") String redirectURL,
-                           HttpServletResponse response) throws IOException {
+                           HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
             log.warn("error={}", bindingResult);
             return "user/loginForm";
