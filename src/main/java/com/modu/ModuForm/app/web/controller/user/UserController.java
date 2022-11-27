@@ -1,19 +1,18 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
-import com.modu.ModuForm.app.web.config.auth.SessionManager;
 import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
-import com.modu.ModuForm.app.web.dto.user.LoginRequestDto;
-import com.modu.ModuForm.app.web.dto.user.UserDetailsDto;
-import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;
+import com.modu.ModuForm.app.web.dto.user.LoginRequest;
+import com.modu.ModuForm.app.web.dto.user.UserDetails;
+import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
@@ -30,72 +28,44 @@ import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.NORMAL;
 @Api(tags = "User DATA handling API")
 @Slf4j
 @RequiredArgsConstructor
-@RestController
 @RequestMapping("/app/users")
+@Controller
 public class UserController {
     private final UserServiceImpl userService;
     private final UserAccountService userAccountService;
-    private final SessionManager sessionManager;
     private final JwtHandler jwtHandler;
 
     // 회원가입
     @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long register(@Validated @RequestBody UserRegisterDto userRegisterDto) {
-        return userService.register(userRegisterDto);
-    }
-
-    @Operation(summary = "로그인 요청 처리", description = "로그인 요청을 처리합니다.")
-    @PostMapping("/login")
-    public Long login(@Validated LoginRequestDto loginRequestDto, BindingResult bindingResult,
-                      @RequestParam(defaultValue = "/") String redirectURL,
-                      HttpServletResponse response) throws IOException {
-        if (bindingResult.hasErrors()) {
-            log.warn("바인딩 에러");
-            response.sendRedirect("/users/login");
-            return 0L;
-        }
-
-        Access loginAccess = userService.login(loginRequestDto);
-        log.info("{}: USER LOGIN", sessionManager.createSession(loginAccess));
-
-        response.sendRedirect(redirectURL);
-        return loginAccess.getId();
+    public String register(@Validated @RequestBody UserRegister userRegister) {
+        userService.register(userRegister);
+        return "user/loginForm";
     }
 
     @Operation(summary = "JWT 로그인 요청 처리", description = "JWT 로그인 요청을 처리합니다.")
     @PostMapping("/logins")
-    public Long loginJwt(@Validated LoginRequestDto loginRequestDto, BindingResult bindingResult,
-                      @RequestParam(defaultValue = "/") String redirectURL,
-                      HttpServletResponse response) throws IOException {
+    public String loginJwt(@Validated @ModelAttribute(name = "login") LoginRequest loginRequest, BindingResult bindingResult,
+                           @RequestParam(defaultValue = "/") String redirectURL,
+                           HttpServletResponse response) throws IOException {
         if (bindingResult.hasErrors()) {
-            log.warn("BINDING ERROR");
-            response.sendRedirect("/users/login");
-            return 0L;
+            log.warn("error={}", bindingResult);
+            return "user/loginForm";
         }
 
-        User user = userService.login(loginRequestDto).getUser();
+        User user;
+        try {
+            user = userService.login(loginRequest).getUser();
+        } catch (IllegalArgumentException argumentException) {
+            bindingResult.reject("login", null, "아이디나 비밀번호가 맞지 않습니다.");
+            log.warn("login error={}", bindingResult);
+            return "user/loginForm";
+        }
 
         response.addCookie(jwtHandler.createJwtCookie(user));
         response.addCookie(jwtHandler.createEncryptJwtCookie(user));
-
-        response.sendRedirect(redirectURL);
-        return user.getId();
-    }
-
-    @Operation(summary = "로그아웃 요청 처리", description = "로그아웃 요청을 처리합니다.")
-    @PostMapping("/logout")
-    public Long logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            log.warn("No Session available");
-            return 0L;
-        }
-
-        Long userPk = (Long) session.getAttribute("userPk");
-        session.invalidate();
-        return userPk;
+        return "redirect:" + redirectURL;
     }
 
     @Operation(summary = "JWT 로그아웃 요청 처리", description = "JWT 로그아웃 요청을 처리합니다.")
@@ -112,12 +82,14 @@ public class UserController {
 
     // 회원 정보 수정
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
+    @ResponseBody
     @PatchMapping("/{userId}")
-    public Long update(@Validated @RequestBody UserDetailsDto userDetailsDto, @PathVariable Long userId) {
-        return userService.update(userDetailsDto, userId);
+    public Long update(@Validated @RequestBody UserDetails userDetails, @PathVariable Long userId) {
+        return userService.update(userDetails, userId);
     }
 
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴 요청을 처리합니다.")
+    @ResponseBody
     @DeleteMapping("/{userId}")
     public void delete(@PathVariable Long userId) {
         userAccountService.delete(userId);
