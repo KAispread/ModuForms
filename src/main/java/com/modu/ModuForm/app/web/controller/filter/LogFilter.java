@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.filter;
+package com.modu.ModuForm.app.web.controller.filter;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,16 +1,14 @@
 package com.modu.ModuForm.app.web.config;
 
 import com.modu.ModuForm.app.web.config.auth.LoginUserArgumentResolver;
-import com.modu.ModuForm.app.web.filter.LogFilter;
-import com.modu.ModuForm.app.web.filter.LoginCheckFilter;
+import com.modu.ModuForm.app.web.interceptor.LogInterceptor;
+import com.modu.ModuForm.app.web.interceptor.LoginCheckInterceptor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.Filter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,23 +22,18 @@ public class WebConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
     }
 
-    @Bean
-    public FilterRegistrationBean<Filter> logFilter() {
-        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        filterFilterRegistrationBean.setFilter(new LogFilter());
-        filterFilterRegistrationBean.setOrder(1);
-        filterFilterRegistrationBean.addUrlPatterns("/*");
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginCheckInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/users/login**", "/users/register**",
+                        "/app/users**", "/app/users/login**", "/app/users/logout**",
+                        "/css/**", "/js/**", "/fonts/**");
 
-        return filterFilterRegistrationBean;
-    }
-
-    @Bean
-    public FilterRegistrationBean<Filter> loginCheckFilter() {
-        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        filterFilterRegistrationBean.setFilter(new LoginCheckFilter());
-        filterFilterRegistrationBean.setOrder(2);
-        filterFilterRegistrationBean.addUrlPatterns("/*");
-
-        return filterFilterRegistrationBean;
+        registry.addInterceptor(new LogInterceptor())
+                .order(2)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/css/**", "/js/**", "/fonts/**");
     }
 }
