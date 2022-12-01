@@ -1,6 +1,5 @@
-package com.modu.ModuForm.app.web.filter;
+package com.modu.ModuForm.app.web.controller.filter;
 
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
 
@@ -8,7 +7,6 @@ import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
