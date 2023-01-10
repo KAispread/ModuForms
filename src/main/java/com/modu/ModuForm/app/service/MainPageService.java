@@ -6,6 +6,7 @@ import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.exception.nosuch.NoSuchUserIdException;
 import com.modu.ModuForm.app.web.dto.user.UserFormDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ public class MainPageService {
     @Transactional(readOnly = true)
     public UserFormDetails getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage,
                                               Pageable answerPage, Integer currentAnswerPage, Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+        User user = userRepository.findById(id).orElseThrow(NoSuchUserIdException::new);
         Page<Survey> surveyPageList = surveyRepository.findAllByUser(user, surveyPage);
         Page<Answer> answerPageList = answerRepository.findAllByUser(user, answerPage);
 

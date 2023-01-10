@@ -6,6 +6,7 @@ import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.exception.nosuch.NoSuchAnswerIdException;
 import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.answer.AnswerCheck;
 import com.modu.ModuForm.app.web.dto.answer.AnswerResponse;
@@ -35,7 +36,7 @@ public class AnswerServiceImpl implements AnswerService{
 
     @Override
     public Long update(Long answerId, AnswerSave answerSave) {
-        Answer answer = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다."));
+        Answer answer = answerRepository.findById(answerId).orElseThrow(NoSuchAnswerIdException::new);
         answer.update(answerSave);
         return answer.getId();
     }
@@ -43,7 +44,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Transactional(readOnly = true)
     @Override
     public AnswerResponse getAnswerDto(Long id) {
-        Answer answer = answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다."));
+        Answer answer = answerRepository.findById(id).orElseThrow(NoSuchAnswerIdException::new);
         return AnswerResponse.builder()
                 .answerId(answer.getId())
                 .answerCheck(new AnswerCheck(answer.getSurvey(), answer.getAnswerDataList()))
@@ -54,8 +55,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Override
     @Transactional
     public Long delete(Long answerId) {
-        answerRepository.delete(answerRepository.findById(answerId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 설문응답이 없습니다.")));
+        answerRepository.delete(answerRepository.findById(answerId).orElseThrow(NoSuchAnswerIdException::new));
         return answerId;
     }
 }

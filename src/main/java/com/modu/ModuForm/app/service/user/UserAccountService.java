@@ -4,6 +4,7 @@ import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.AccessRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.exception.nosuch.NoSuchUserIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class UserAccountService {
 
     @Transactional
     public void delete(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        User user = userRepository.findById(userId).orElseThrow(NoSuchUserIdException::new);
         answerRepository.deleteAllByUser(user);
         accessRepository.deleteByUser(user);
         userRepository.delete(user);
