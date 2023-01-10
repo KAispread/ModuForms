@@ -4,6 +4,9 @@ import com.modu.ModuForm.app.domain.user.Access;
 import com.modu.ModuForm.app.domain.user.AccessRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.exception.invalid.InvalidUserIdPwException;
+import com.modu.ModuForm.app.exception.invalid.InvalidUserUsernameException;
+import com.modu.ModuForm.app.exception.nosuch.NoSuchUserIdException;
 import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.user.LoginRequest;
 import com.modu.ModuForm.app.web.dto.user.UserDetails;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
@@ -26,12 +30,11 @@ public class UserServiceImpl implements UserService{
     public Access login(LoginRequest loginRequest) {
         return accessRepository.findByUserId(loginRequest.getUserId())
                 .filter(access -> access.getPassword().equals(loginRequest.getPassword()))
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 ID, PW 입니다."));
+                .orElseThrow(InvalidUserIdPwException::new);
     }
 
     @PerfLog
     @Override
-    @Transactional
     public Long register(UserRegister registerDto) {
         User user = userRepository.save(registerDto.toUserEntity());
         accessRepository.save(registerDto.toAccessEntity(user));
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService{
     @Transactional(readOnly = true)
     public UserDetails getUserDetails(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다."));
+                .orElseThrow(NoSuchUserIdException::new);
         return new UserDetails(user);
     }
 
@@ -52,15 +55,14 @@ public class UserServiceImpl implements UserService{
     @Transactional(readOnly = true)
     public Long getUserPk(String nickName) {
         return userRepository.findByNickName(nickName)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보에 해당 닉네임이 존재하지 않습니다."))
+                .orElseThrow(InvalidUserUsernameException::new)
                 .getId();
     }
 
     @Override
-    @Transactional
     public Long update(UserDetails userDetails, Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다."));
+                .orElseThrow(NoSuchUserIdException::new);
         user.update(userDetails);
         return user.getId();
     }

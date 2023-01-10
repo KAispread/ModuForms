@@ -6,6 +6,7 @@ import com.modu.ModuForm.app.domain.surbay.answer.Answer;
 import com.modu.ModuForm.app.domain.surbay.answer.AnswerRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
+import com.modu.ModuForm.app.exception.nosuch.NoSuchSurveyIdException;
 import com.modu.ModuForm.app.service.PerfLog;
 import com.modu.ModuForm.app.web.dto.survey.SurveyAnswerCheck;
 import com.modu.ModuForm.app.web.dto.survey.SurveyCheck;
@@ -60,7 +61,7 @@ public class SurveyServiceImpl implements SurveyService{
     @Override
     @Transactional(readOnly = true)
     public SurveyCheck getSurveyCheckDto(Long id) {
-        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
+        Survey survey = surveyRepository.findById(id).orElseThrow(NoSuchSurveyIdException::new);
         return new SurveyCheck(survey);
     }
 
@@ -68,7 +69,7 @@ public class SurveyServiceImpl implements SurveyService{
     @Transactional
     @Override
     public Long delete(Long id) {
-        Survey survey = surveyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
+        Survey survey = surveyRepository.findById(id).orElseThrow(NoSuchSurveyIdException::new);
         surveyRepository.delete(survey);
         return id;
     }
@@ -76,7 +77,7 @@ public class SurveyServiceImpl implements SurveyService{
     @Transactional(readOnly = true)
     @Override
     public SurveyAnswerCheck getSurveyAnswerCheckDto(Long surveyId) {
-        Survey survey = surveyRepository.findById(surveyId).orElseThrow(() -> new IllegalArgumentException("해당 설문이 없습니다."));
+        Survey survey = surveyRepository.findById(surveyId).orElseThrow(NoSuchSurveyIdException::new);
         List<Answer> allAnswer = answerRepository.findAllBySurvey(survey);
 
         return new SurveyAnswerCheck(survey, allAnswer);
