@@ -59,6 +59,21 @@ ModuForm은 설문조사를 위한 웹 어플리케이션입니다.
 </p>
 &nbsp;
 
+## 📑 REST API
+> __View__
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/211710344-8b0d0991-c25c-4a50-9e85-07a41d7e745e.png" width="700" />
+</p>
+&nbsp;
+
+> __Data__
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/211710210-f743f658-c3f8-4c28-a265-75e7561e3c74.png" width="700" />
+</p>
+&nbsp;
+
+
+
 ## 🔱 UML diagrams
 <p align="center">
     <img src="https://user-images.githubusercontent.com/99247279/194758571-7f308f6b-4763-444b-ac2b-84accef13f49.png" width="400" />
