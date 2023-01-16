@@ -53,12 +53,23 @@ public class User extends BaseTimeEntity {
         this.company = company;
     }
 
-    public void setSurveyList(Survey survey) {
-        surveyList.add(survey);
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public void setSurveyList(Survey survey) {
+        if (!surveyList.contains(survey)) {
+            surveyList.add(survey);
+        }
+        if (survey.getUser() != this) {
+            survey.setUser(this);
+        }
+    }
+
     public String getRoleKey() {
         return this.role.getKey();
     }
+
     public String getGenderTitle() {return this.gender.getTitle();}
 
     public void update(UserDetails userDetails) {

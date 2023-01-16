@@ -37,16 +37,16 @@ public class SurveyIndexController {
     }
 
     @Operation(summary = "설문 확인 페이지", description = "선택한 설문을 페이지를 반환합니다.")
-    @GetMapping("/{id}")
-    public String view(@PathVariable Long id, Model model, @LoginUser JwtUser user) {
-        model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(id));
+    @GetMapping("/{surveyId}")
+    public String view(@PathVariable Long surveyId, Model model, @LoginUser JwtUser user) {
+        model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(surveyId));
         return "survey/form-check";
     }
 
     @Operation(summary = "설문 수정 페이지", description = "선택한 설문을 수정하는 페이지를 반환합니다.")
-    @GetMapping("/{id}/edit")
-    public String edit(@PathVariable Long id, Model model, @LoginUser JwtUser user) {
-        model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(id));
+    @GetMapping("/{surveyId}/edit")
+    public String edit(@PathVariable Long surveyId, Model model, @LoginUser JwtUser user) {
+        model.addAttribute("surveyCheck", surveyService.getSurveyCheckDto(surveyId));
         return "survey/form-edit";
     }
 

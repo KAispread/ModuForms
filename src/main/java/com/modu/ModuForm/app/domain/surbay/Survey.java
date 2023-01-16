@@ -63,7 +63,9 @@ public class Survey extends BaseTimeEntity {
 
     public void setUser(User user) {
         this.user = user;
-        user.setSurveyList(this);
+        if (!user.getSurveyList().contains(this)) {
+            user.getSurveyList().add(this);
+        }
     }
 
     public void addAnswer(Answer answer) {

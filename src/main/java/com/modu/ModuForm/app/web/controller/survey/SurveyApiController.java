@@ -24,14 +24,14 @@ public class SurveyApiController {
     }
 
     @Operation(summary = "설문 수정 API", description = "설문 수정 요청을 처리합니다.")
-    @PutMapping("/{id}")
-    public Long update(@Validated @RequestBody final SurveySave surveySave, @PathVariable final Long id) {
-        return surveyService.update(id, surveySave);
+    @PutMapping("/{surveyId}")
+    public Long update(@Validated @RequestBody final SurveySave surveySave, @PathVariable final Long surveyId) {
+        return surveyService.update(surveyId, surveySave);
     }
 
     @Operation(summary = "설문 삭제 API", description = "설문을 삭제하는 요청을 처리합니다.")
-    @DeleteMapping("/{id}")
-    public Long delete(@PathVariable final Long id) {
-        return surveyService.delete(id);
+    @DeleteMapping("/{surveyId}")
+    public Long delete(@PathVariable final Long surveyId) {
+        return surveyService.delete(surveyId);
     }
 }

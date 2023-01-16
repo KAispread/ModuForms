@@ -53,7 +53,7 @@ public class UserController {
         return "redirect:/users/login";
     }
 
-    @Operation(summary = "JWT 로그인 요청 처리", description = "JWT 로그인 요청을 처리합니다.")
+    @Operation(summary = "로그인 요청 처리", description = "JWT 로그인 요청을 처리합니다.")
     @PostMapping("/logins")
     public String loginJwt(@Validated @ModelAttribute(name = "login") LoginRequest loginRequest, BindingResult bindingResult,
                            @RequestParam(defaultValue = "/") String redirectURL,
@@ -72,12 +72,11 @@ public class UserController {
             return "user/loginForm";
         }
 
-        response.addCookie(jwtHandler.createJwtCookie(user));
         response.addCookie(jwtHandler.createEncryptJwtCookie(user));
         return "redirect:" + redirectURL;
     }
 
-    @Operation(summary = "JWT 로그아웃 요청 처리", description = "JWT 로그아웃 요청을 처리합니다.")
+    @Operation(summary = "로그아웃 요청 처리", description = "로그아웃 요청을 처리합니다.")
     @PostMapping("/logouts")
     public void logoutJwt(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
@@ -86,7 +85,6 @@ public class UserController {
             return;
         }
         jwtHandler.invalidate(ENCRYPT, response);
-        jwtHandler.invalidate(NORMAL, response);
     }
 
     // 회원 정보 수정
