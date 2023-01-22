@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,8 +133,8 @@ public class SurveyServiceImplTest {
         @Test
         public void case1() {
             // when
-            PageRequest maximumAnswer = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
-            SurveyPage allPages = surveyService.findAllPages(maximumAnswer, 1);
+            Pageable maximumAnswer = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
+            SurveyPage allPages = surveyService.findAllPages(maximumAnswer);
 
             //then
             assertThat(allPages.getCurrentPage()).isEqualTo(1);
@@ -145,10 +146,10 @@ public class SurveyServiceImplTest {
         public void case2() {
             // when
             PageRequest maximumAnswer1 = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
-            SurveyPage page1 = surveyService.findAllPages(maximumAnswer1, 1);
+            SurveyPage page1 = surveyService.findAllPages(maximumAnswer1);
 
             PageRequest maximumAnswer2 = PageRequest.of(1, 9, Sort.by("maximumAnswer").descending());
-            SurveyPage page2 = surveyService.findAllPages(maximumAnswer2, 1);
+            SurveyPage page2 = surveyService.findAllPages(maximumAnswer2);
 
             //then
             assertThat(page1.getSurveyPreviews().get(0).getTitle()).isEqualTo("회식 참여 조사90");
@@ -160,13 +161,13 @@ public class SurveyServiceImplTest {
         public void case3() {
             // when
             PageRequest maximumAnswer = PageRequest.of(0, 9, Sort.by("maximumAnswer").descending());
-            SurveyPage allPages = surveyService.findAllPages(maximumAnswer, 1);
+            SurveyPage allPages = surveyService.findAllPages(maximumAnswer);
             int illegalPage = allPages.getTotalPages() + 1;
 
             PageRequest pr = PageRequest.of(illegalPage, 9, Sort.by("maximumAnswer").descending());
 
             //then
-            SurveyPage surveyPage = surveyService.findAllPages(pr, illegalPage);
+            SurveyPage surveyPage = surveyService.findAllPages(pr);
             assertThat(surveyPage.getSurveyPreviews()).isEmpty();
         }
     }

@@ -18,12 +18,12 @@ public class UserFormDetails {
     private final SurveyPage surveyPage;
     private final AnswerPage answerPage;
 
-    public UserFormDetails(User user, Page<Survey> surveyPageList, Integer currentSurveyPage, Page<Answer> answerPageList, Integer currentAnswerPage) {
+    public UserFormDetails(User user, Page<Survey> surveyPageList, Page<Answer> answerPageList) {
         this.id = user.getId();
         this.name = user.getName();
         this.role = user.getRole();
         this.nickName = user.getNickName();
-        this.surveyPage = new SurveyPage(surveyPageList, currentSurveyPage);
-        this.answerPage = new AnswerPage(answerPageList, currentAnswerPage);
+        this.surveyPage = new SurveyPage(surveyPageList);
+        this.answerPage = new AnswerPage(answerPageList);
     }
 }

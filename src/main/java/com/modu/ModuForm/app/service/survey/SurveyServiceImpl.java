@@ -15,7 +15,7 @@ import com.modu.ModuForm.app.web.dto.survey.SurveySave;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,9 +52,9 @@ public class SurveyServiceImpl implements SurveyService{
 
     @Override
     @Transactional(readOnly = true)
-    public SurveyPage findAllPages(PageRequest pageable, Integer page){
+    public SurveyPage findAllPages(Pageable pageable){
         Page<Survey> surveyPage = surveyRepository.findAll(pageable);
-        return new SurveyPage(surveyPage, page);
+        return new SurveyPage(surveyPage);
     }
 
     @PerfLog

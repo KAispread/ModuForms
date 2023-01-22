@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class AnswerPage extends PageContents {
     private List<AnswerPreview> answerPreviews = new ArrayList<>();
 
-    public AnswerPage(Page<Answer> answerPageList, Integer currentPage) {
-        super(answerPageList.getTotalPages(), currentPage);
+    public AnswerPage(Page<Answer> answerPageList) {
+        super(answerPageList);
         this.answerPreviews = answerPageList.getContent().stream()
                 .map(AnswerPreview::new)
                 .collect(Collectors.toList());

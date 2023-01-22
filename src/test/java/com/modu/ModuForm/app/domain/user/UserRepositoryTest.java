@@ -18,6 +18,24 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Test
+    void auditingTest() {
+        //given
+        User user = User.builder()
+                .gender(Gender.MAN)
+                .email("adfsd@naver.com")
+                .phone("01012345671")
+                .birth(19980112L)
+                .role(Role.USER)
+                .name("기우")
+                .nickName("Kai")
+                .build();
+
+        User saveUser = userRepository.save(user);
+        System.out.println("createdDate = " + saveUser.getCreatedDate());
+        System.out.println("modifiedDate = " + saveUser.getModifiedDate());
+    }
+
     @DisplayName("save(): 같은 트랜잭션 안에서 User 저장 후 id 값을 불러오는데 성공한다.")
     @Test
     void save() {

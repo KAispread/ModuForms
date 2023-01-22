@@ -1,6 +1,7 @@
 package com.modu.ModuForm.app.web.dto;
 
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
 @Getter
 public class PageContents {
@@ -10,11 +11,11 @@ public class PageContents {
     private final int startPage;
     private final int endPage;
 
-    public PageContents(Integer totalPages, Integer page) {
-        this.totalPages = totalPages;
-        this.currentPage = page;
-        this.startPage = setStartPage(page);
-        this.endPage = setEndPage(page);
+    public PageContents(Page page) {
+        this.totalPages = page.getTotalPages();
+        this.currentPage = page.getNumber() + 1;
+        this.startPage = setStartPage(page.getNumber() + 1);
+        this.endPage = setEndPage(page.getNumber() + 1);
     }
 
     private int setStartPage(Integer currentPage) {

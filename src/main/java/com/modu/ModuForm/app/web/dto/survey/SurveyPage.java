@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class SurveyPage extends PageContents {
     private List<SurveyPreview> surveyPreviews = new ArrayList<>();
 
-    public SurveyPage(Page<Survey> surveyPage, Integer page) {
-        super(surveyPage.getTotalPages(), page);
+    public SurveyPage(Page<Survey> surveyPage) {
+        super(surveyPage);
         this.surveyPreviews = surveyPage.getContent().stream()
                 .map(SurveyPreview::new)
                 .collect(Collectors.toList());

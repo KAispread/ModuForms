@@ -23,12 +23,11 @@ public class MainPageService {
 
     @PerfLog
     @Transactional(readOnly = true)
-    public UserFormDetails getUserFormDetails(Pageable surveyPage, Integer currentSurveyPage,
-                                              Pageable answerPage, Integer currentAnswerPage, Long id) {
+    public UserFormDetails getUserFormDetails(Pageable surveyPage, Pageable answerPage, Long id) {
         User user = userRepository.findById(id).orElseThrow(NoSuchUserIdException::new);
         Page<Survey> surveyPageList = surveyRepository.findAllByUser(user, surveyPage);
         Page<Answer> answerPageList = answerRepository.findAllByUser(user, answerPage);
 
-        return new UserFormDetails(user, surveyPageList, currentSurveyPage, answerPageList, currentAnswerPage);
+        return new UserFormDetails(user, surveyPageList, answerPageList);
     }
 }

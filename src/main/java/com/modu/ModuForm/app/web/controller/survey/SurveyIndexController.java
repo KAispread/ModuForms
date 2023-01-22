@@ -4,18 +4,20 @@ import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.service.survey.SurveyService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Api(tags = "Survey TEMPLATE handling")
 @RequestMapping("/surveys")
@@ -52,9 +54,8 @@ public class SurveyIndexController {
 
     @Operation(summary = "설문 목록 페이지", description = "모든 설문을 수정하는 페이지를 반환합니다.")
     @GetMapping("/lists")
-    public String formList(Model model, @RequestParam(name = "sp", defaultValue = "1") Integer page, @LoginUser JwtUser user) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 9, Sort.by("createdDate").descending());
-        SurveyPage surveyPages = surveyService.findAllPages(pageRequest, page);
+    public String formList(Model model, @PageableDefault(size = 9, sort = "createdDate", direction = DESC) Pageable page, @LoginUser JwtUser user) {
+        SurveyPage surveyPages = surveyService.findAllPages(page);
 
         model.addAttribute("surveyPage", surveyPages);
         return "survey/formPage";
