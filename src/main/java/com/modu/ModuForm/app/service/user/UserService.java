@@ -1,6 +1,6 @@
 package com.modu.ModuForm.app.service.user;
 
-import com.modu.ModuForm.app.domain.user.Access;
+import com.modu.ModuForm.app.domain.user.acess.Access;
 import com.modu.ModuForm.app.web.dto.user.LoginRequest;
 import com.modu.ModuForm.app.web.dto.user.UserDetails;
 import com.modu.ModuForm.app.web.dto.user.UserRegister;

@@ -1,7 +1,7 @@
 package com.modu.ModuForm.app.domain.surbay;
 
-import com.modu.ModuForm.app.domain.user.Gender;
-import com.modu.ModuForm.app.domain.user.Role;
+import com.modu.ModuForm.app.domain.user.common.Gender;
+import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;

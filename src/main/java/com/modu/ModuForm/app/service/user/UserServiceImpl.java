@@ -1,7 +1,7 @@
 package com.modu.ModuForm.app.service.user;
 
-import com.modu.ModuForm.app.domain.user.Access;
-import com.modu.ModuForm.app.domain.user.AccessRepository;
+import com.modu.ModuForm.app.domain.user.acess.Access;
+import com.modu.ModuForm.app.domain.user.acess.AccessRepository;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.domain.user.UserRepository;
 import com.modu.ModuForm.app.exception.invalid.InvalidUserIdPwException;
@@ -45,9 +45,8 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(readOnly = true)
     public UserDetails getUserDetails(Long id) {
-        User user = userRepository.findById(id)
+        return userRepository.getDetail(id)
                 .orElseThrow(NoSuchUserIdException::new);
-        return new UserDetails(user);
     }
 
     @PerfLog

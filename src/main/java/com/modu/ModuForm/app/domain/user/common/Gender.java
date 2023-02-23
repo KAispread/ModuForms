@@ -1,7 +1,6 @@
-package com.modu.ModuForm.app.domain.user;
+package com.modu.ModuForm.app.domain.user.common;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 

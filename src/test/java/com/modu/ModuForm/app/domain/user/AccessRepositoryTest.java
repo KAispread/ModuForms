@@ -1,5 +1,9 @@
 package com.modu.ModuForm.app.domain.user;
 
+import com.modu.ModuForm.app.domain.user.acess.Access;
+import com.modu.ModuForm.app.domain.user.acess.AccessRepository;
+import com.modu.ModuForm.app.domain.user.common.Gender;
+import com.modu.ModuForm.app.domain.user.common.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import com.modu.ModuForm.app.domain.user.Gender;
+import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.service.user.UserService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;

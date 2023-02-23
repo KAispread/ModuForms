@@ -2,7 +2,7 @@ package com.modu.ModuForm.app.web.dto.user;
 
 import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.answer.Answer;
-import com.modu.ModuForm.app.domain.user.Role;
+import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.web.dto.answer.AnswerPage;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;

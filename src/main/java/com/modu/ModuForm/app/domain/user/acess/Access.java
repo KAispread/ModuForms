@@ -1,5 +1,6 @@
-package com.modu.ModuForm.app.domain.user;
+package com.modu.ModuForm.app.domain.user.acess;
 
+import com.modu.ModuForm.app.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

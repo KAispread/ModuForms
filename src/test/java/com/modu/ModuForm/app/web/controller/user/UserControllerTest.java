@@ -1,7 +1,7 @@
 //package com.modu.ModuForm.app.web.controller.user;
 //
-//import com.modu.ModuForm.app.domain.user.AccessRepository;
-//import com.modu.ModuForm.app.domain.user.Gender;
+//import com.modu.ModuForm.app.domain.user.acess.AccessRepository;
+//import com.modu.ModuForm.app.domain.user.common.Gender;
 //import com.modu.ModuForm.app.domain.user.User;
 //import com.modu.ModuForm.app.domain.user.UserRepository;
 //import com.modu.ModuForm.app.web.dto.user.UserRegisterDto;

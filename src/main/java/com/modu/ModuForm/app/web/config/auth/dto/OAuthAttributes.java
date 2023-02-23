@@ -1,6 +1,6 @@
 package com.modu.ModuForm.app.web.config.auth.dto;
 
-import com.modu.ModuForm.app.domain.user.Role;
+import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;

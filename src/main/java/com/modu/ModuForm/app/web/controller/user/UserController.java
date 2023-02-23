@@ -1,6 +1,6 @@
 package com.modu.ModuForm.app.web.controller.user;
 
-import com.modu.ModuForm.app.domain.user.Gender;
+import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
@@ -22,10 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
-import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.NORMAL;
 
 @Api(tags = "User DATA handling API")
 @Slf4j

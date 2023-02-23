@@ -2,6 +2,8 @@ package com.modu.ModuForm.app.domain.user;
 
 import com.modu.ModuForm.app.domain.BaseTimeEntity;
 import com.modu.ModuForm.app.domain.surbay.Survey;
+import com.modu.ModuForm.app.domain.user.common.Gender;
+import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.web.dto.user.UserDetails;
 import lombok.AccessLevel;
 import lombok.Builder;

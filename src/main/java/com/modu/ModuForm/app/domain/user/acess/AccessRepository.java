@@ -1,5 +1,6 @@
-package com.modu.ModuForm.app.domain.user;
+package com.modu.ModuForm.app.domain.user.acess;
 
+import com.modu.ModuForm.app.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

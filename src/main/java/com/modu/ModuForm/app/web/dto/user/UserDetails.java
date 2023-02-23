@@ -1,6 +1,6 @@
 package com.modu.ModuForm.app.web.dto.user;
 
-import com.modu.ModuForm.app.domain.user.Gender;
+import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Secure ###
+/src/main/resources/application-oauth.properties
+/src/main/resources/application-real-db.properties
+
+.gitignore
+
+/src/main/generated

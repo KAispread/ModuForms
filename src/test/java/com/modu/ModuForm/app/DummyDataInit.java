@@ -5,6 +5,10 @@ import com.modu.ModuForm.app.domain.surbay.Survey;
 import com.modu.ModuForm.app.domain.surbay.SurveyQuestion;
 import com.modu.ModuForm.app.domain.surbay.SurveyRepository;
 import com.modu.ModuForm.app.domain.user.*;
+import com.modu.ModuForm.app.domain.user.acess.Access;
+import com.modu.ModuForm.app.domain.user.acess.AccessRepository;
+import com.modu.ModuForm.app.domain.user.common.Gender;
+import com.modu.ModuForm.app.domain.user.common.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
