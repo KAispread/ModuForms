@@ -44,12 +44,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Transactional(readOnly = true)
     @Override
     public AnswerResponse getAnswerDto(Long id) {
-        Answer answer = answerRepository.findById(id).orElseThrow(NoSuchAnswerIdException::new);
-        return AnswerResponse.builder()
-                .answerId(answer.getId())
-                .answerCheck(new AnswerCheck(answer.getSurvey(), answer.getAnswerDataList()))
-                .anonymousFlag(answer.getAnonymousFlag())
-                .build();
+        return answerRepository.getAnswerResponse(id);
     }
 
     @Override

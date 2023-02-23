@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
 
-public interface AnswerRepository extends JpaRepository<Answer, Long> {
+public interface AnswerRepository extends JpaRepository<Answer, Long>, AnswerRepositoryCustom {
     @EntityGraph(attributePaths = {"user", "survey"}, type = FETCH)
     Page<Answer> findAllByUser(User user, Pageable pageable);
     void deleteAllBySurvey(Survey survey);
