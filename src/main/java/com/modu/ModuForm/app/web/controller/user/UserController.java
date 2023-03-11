@@ -2,6 +2,7 @@ package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.domain.user.User;
+import com.modu.ModuForm.app.exception.invalid.InvalidUserIdPwException;
 import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
 import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
@@ -35,7 +36,6 @@ public class UserController {
     private final UserAccountService userAccountService;
     private final JwtHandler jwtHandler;
 
-    // 회원가입
     @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
     @PostMapping
     public String register(@Validated @ModelAttribute UserRegister userRegister, BindingResult bindingResult,
@@ -63,8 +63,8 @@ public class UserController {
 
         User user;
         try {
-            user = userService.login(loginRequest).getUser();
-        } catch (IllegalArgumentException argumentException) {
+            user = userService.login(loginRequest).getUsers();
+        } catch (InvalidUserIdPwException IdPwException) {
             bindingResult.reject("login", null, "아이디나 비밀번호가 맞지 않습니다.");
             log.warn("login error={}", bindingResult);
             return "user/loginForm";

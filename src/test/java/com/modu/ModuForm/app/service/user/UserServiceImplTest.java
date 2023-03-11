@@ -4,6 +4,7 @@ import com.modu.ModuForm.app.domain.user.*;
 import com.modu.ModuForm.app.domain.user.acess.Access;
 import com.modu.ModuForm.app.domain.user.acess.AccessRepository;
 import com.modu.ModuForm.app.domain.user.common.Gender;
+import com.modu.ModuForm.app.exception.invalid.InvalidUserIdPwException;
 import com.modu.ModuForm.app.web.dto.user.LoginRequest;
 import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import org.junit.jupiter.api.DisplayName;
@@ -145,7 +146,7 @@ class UserServiceImplTest {
         @Test
         void loginFail() {
             //then
-            assertThrows(IllegalArgumentException.class, () -> userService.login(
+            assertThrows(InvalidUserIdPwException.class, () -> userService.login(
                     LoginRequest.builder()
                             .userId("qioeurha1fbk")
                             .password("1232qsfjsbaa")
