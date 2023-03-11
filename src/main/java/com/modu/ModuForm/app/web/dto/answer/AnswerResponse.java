@@ -1,6 +1,5 @@
 package com.modu.ModuForm.app.web.dto.answer;
 
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
