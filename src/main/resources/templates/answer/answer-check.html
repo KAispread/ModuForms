@@ -93,7 +93,7 @@
                             th:href="@{/answers/{id}/edit (id=${answerDto.getAnswerId()})}"
                        class="btn btn-primary">수정하기</a>
                     <button th:text="#{button.answer.delete}" type="button" id="btn-answer-delete" class="btn btn-dark">삭제하기</button>
-                    <a th:text="#{button.return}" th:href="@{/}" class="btn btn-secondary">돌아가기</a>
+                    <button th:text="#{button.return}" type="button" onclick="history.back()" class="btn btn-secondary">돌아가기</button>
                 </div>
             </div>
         </div>

@@ -88,7 +88,7 @@
                            class="btn btn-primary">수정하기</a>
                         <button th:text="#{button.survey.delete}" th:if="${surveyCheck.user.id == user.id}" type="button"
                            id="btn-survey-delete" class="btn btn-dark">삭제하기</button>
-                        <a th:text="#{button.return}" th:href="@{/}" class="btn btn-secondary">돌아가기</a>
+                        <a th:text="#{button.return}" type="button" onclick="history.back()" class="btn btn-secondary">돌아가기</a>
                     </div>
                 </div>
             </form>

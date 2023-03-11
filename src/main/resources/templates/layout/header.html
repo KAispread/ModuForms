@@ -67,22 +67,18 @@
                         </li>
                     </ul>
 
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                    </form>
-
                     <div class="dropdown text-end">
                         <a id="user_toggle" style="cursor: pointer" class="d-block link-light text-decoration-none dropdown-toggle"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="/css/image/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul style="display:list-item; display: none;" id="user_dropdown" class="dropdown-menu text-small">
-                            <li><a class="dropdown-item" href="/surveys/form">New survey..</a></li>
-                            <li><a class="dropdown-item" th:href="@{/users/{userId} (userId=${user.id})}">profile</a></li>
+                            <li><a class="dropdown-item" href="/surveys/form">설문 만들기</a></li>
+                            <li><a class="dropdown-item" th:href="@{/users/{userId} (userId=${user.id})}">내 정보</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a style="cursor: pointer" id="btn-logout" class="dropdown-item">Logout</a></li>
+                            <li><a style="cursor: pointer" id="btn-logout" class="dropdown-item">로그아웃</a></li>
                         </ul>
                     </div>
                 </div>
