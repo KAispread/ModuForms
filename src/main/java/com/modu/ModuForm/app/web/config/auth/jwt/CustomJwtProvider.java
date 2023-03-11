@@ -8,15 +8,19 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
+import java.util.Base64;
 import java.util.Date;
 
 @Slf4j
 @Component
 public class CustomJwtProvider {
+    public static final String JWT_SECRET_KEY="236979CB6F1AD6B6A6184A31E6BE37DB3818CC36871E26235DD67DCFE4041492";
+
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final Cryptography cryptography;
     public final String JWT_PREFIX = "Bearer|";
@@ -40,7 +44,7 @@ public class CustomJwtProvider {
                 .claim("name", user.getName())
                 .claim("nickname", getNickname(user))
                 .claim("email", user.getEmail())
-                .signWith(secretKey)
+                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(JWT_SECRET_KEY.getBytes()))
                 .compact();
     }
 
@@ -62,7 +66,7 @@ public class CustomJwtProvider {
 
     private JwtParser getParser() {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey.getEncoded())
+                .setSigningKey(Base64.getEncoder().encodeToString(JWT_SECRET_KEY.getBytes()))
                 .requireIssuer(ISSUER)
                 .build();
     }
