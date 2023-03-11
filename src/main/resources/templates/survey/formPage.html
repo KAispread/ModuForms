@@ -35,7 +35,7 @@
       <div class="d-flex align-items-center justify-content-between">
         <h4 th:text="#{label.survey.all}" style="font-weight: bold" class="gowun-font-ko">모든 설문 목록</h4>
         <div class="btn-group ">
-          <a th:href="@{/surveys/lists (page=${param.page}, sort=${param.sort})}"
+          <a th:href="@{/surveys/lists (page=${param.page})}"
              class="btn btn-success" th:classappend="${param.sort == null || #strings.equals(param.sort, '')} ? 'active' : ''">최신순</a>
           <a th:href="@{/surveys/lists (page=${param.page}, sort='createdDate,ASC')}"
              class="btn btn-success" th:classappend="${#strings.equals(param.sort, 'createdDate,ASC')} ? 'active' : ''">오래된순</a>
