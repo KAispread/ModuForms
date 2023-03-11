@@ -1,3 +1,5 @@
+const ROOT_DOMAIN = "http://modu-elb-1191182514.ap-northeast-2.elb.amazonaws.com:8080/";
+
 let survey = {
     init : function () {
         let _this = this;
@@ -145,7 +147,7 @@ let survey = {
         let textarea = document.createElement("textarea");
 
         document.body.appendChild(textarea);
-        textarea.value = "http://ec2-3-36-156-200.ap-northeast-2.compute.amazonaws.com:8080/" + "answers?surveyId=" + path_name;
+        textarea.value = ROOT_DOMAIN + "answers?surveyId=" + path_name;
         textarea.select();  //textarea를 설정
 
         document.execCommand("copy");
