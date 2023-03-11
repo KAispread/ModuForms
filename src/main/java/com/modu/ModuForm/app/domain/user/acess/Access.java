@@ -19,17 +19,17 @@ public class Access {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+    private User users;
 
-    @Column(name = "ID", nullable = false, unique = true)
+    @Column(name = "PERSONAL_ID", nullable = false, unique = true)
     private String userId;
 
     @Column(nullable = false)
     private String password;
 
     @Builder
-    public Access(User user, String userId, String password) {
-        this.user = user;
+    public Access(User users, String userId, String password) {
+        this.users = users;
         this.userId = userId;
         this.password = password;
     }

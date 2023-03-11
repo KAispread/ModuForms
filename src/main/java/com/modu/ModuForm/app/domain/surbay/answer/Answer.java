@@ -21,7 +21,7 @@ public class Answer extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
-    private User user;
+    private User users;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SURVEY_ID")
     private Survey survey;
@@ -36,9 +36,9 @@ public class Answer extends BaseTimeEntity {
     private Boolean anonymousFlag;
 
     @Builder
-    public Answer(User user, Survey survey, List<AnswerData> answerDataList, Boolean anonymousFlag) {
-        validateUser(user, survey);
-        this.user = user;
+    public Answer(User users, Survey survey, List<AnswerData> answerDataList, Boolean anonymousFlag) {
+        validateUser(users, survey);
+        this.users = users;
         this.survey = survey;
         this.answerDataList = answerDataList;
         this.anonymousFlag = anonymousFlag;
@@ -57,13 +57,13 @@ public class Answer extends BaseTimeEntity {
     }
 
     private void validateUser(Survey survey) {
-        if (this.user.equals(survey.getUser())) {
+        if (this.users.equals(survey.getUsers())) {
             throw new IllegalArgumentException("설문 등록자는 본인 설문에 응답할 수 없습니다");
         }
     }
 
     private void validateUser(User user, Survey survey) {
-        if (user.equals(survey.getUser())) {
+        if (user.equals(survey.getUsers())) {
             throw new IllegalArgumentException("설문 등록자는 본인 설문에 응답할 수 없습니다");
         }
     }
@@ -73,11 +73,11 @@ public class Answer extends BaseTimeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Answer answer = (Answer) o;
-        return Objects.equals(getId(), answer.getId()) && Objects.equals(getUser(), answer.getUser()) && Objects.equals(getSurvey(), answer.getSurvey()) && Objects.equals(getAnswerDataList(), answer.getAnswerDataList()) && Objects.equals(getAnonymousFlag(), answer.getAnonymousFlag());
+        return Objects.equals(getId(), answer.getId()) && Objects.equals(getUsers(), answer.getUsers()) && Objects.equals(getSurvey(), answer.getSurvey()) && Objects.equals(getAnswerDataList(), answer.getAnswerDataList()) && Objects.equals(getAnonymousFlag(), answer.getAnonymousFlag());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getSurvey(), getAnswerDataList(), getAnonymousFlag());
+        return Objects.hash(getId(), getUsers(), getSurvey(), getAnswerDataList(), getAnonymousFlag());
     }
 }

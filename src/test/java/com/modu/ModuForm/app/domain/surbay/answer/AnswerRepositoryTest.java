@@ -80,7 +80,7 @@ class AnswerRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey survey = surveyRepository.save(Survey.builder()
-                .user(ROSA)
+                .users(ROSA)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -91,15 +91,15 @@ class AnswerRepositoryTest {
         List<AnswerData> answerDataList = new ArrayList<>();
         answerDataList.add(AnswerData.builder()
                 .number(0)
-                .answer("이기우")
+                .response("이기우")
                 .build());
         answerDataList.add(AnswerData.builder()
                 .number(1)
-                .answer("20")
+                .response("20")
                 .build());
 
         Answer answer = answerRepository.save(Answer.builder()
-                .user(ROI)
+                .users(ROI)
                 .survey(survey)
                 .answerDataList(answerDataList)
                 .anonymousFlag(true)
@@ -107,15 +107,15 @@ class AnswerRepositoryTest {
 
         //then
         Answer findAnswer = answerRepository.findById(answer.getId()).orElseThrow();
-        assertThat(findAnswer.getUser()).isEqualTo(ROI);
+        assertThat(findAnswer.getUsers()).isEqualTo(ROI);
         assertThat(findAnswer.getAnonymousFlag()).isTrue();
         assertThat(findAnswer.getSurvey()).isEqualTo(survey);
 
         List<AnswerData> findAnswerDataList = findAnswer.getAnswerDataList();
         assertThat(findAnswerDataList.get(0).getNumber()).isEqualTo(0);
         assertThat(findAnswerDataList.get(1).getNumber()).isEqualTo(1);
-        assertThat(findAnswerDataList.get(0).getAnswer()).isEqualTo("이기우");
-        assertThat(findAnswerDataList.get(1).getAnswer()).isEqualTo("20");
+        assertThat(findAnswerDataList.get(0).getResponse()).isEqualTo("이기우");
+        assertThat(findAnswerDataList.get(1).getResponse()).isEqualTo("20");
     }
 
     @DisplayName("설문을 등록한 사람이 응답 객체를 생성하면 예외가 발생한다")
@@ -146,7 +146,7 @@ class AnswerRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey survey = surveyRepository.save(Survey.builder()
-                .user(ROSA)
+                .users(ROSA)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -156,16 +156,16 @@ class AnswerRepositoryTest {
         List<AnswerData> answerDataList = new ArrayList<>();
         answerDataList.add(AnswerData.builder()
                 .number(0)
-                .answer("이기우")
+                .response("이기우")
                 .build());
         answerDataList.add(AnswerData.builder()
                 .number(1)
-                .answer("20")
+                .response("20")
                 .build());
 
         //then
         assertThatThrownBy(() -> Answer.builder()
-                    .user(ROSA)
+                    .users(ROSA)
                     .survey(survey)
                     .anonymousFlag(true)
                     .answerDataList(answerDataList)
@@ -201,7 +201,7 @@ class AnswerRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey survey = surveyRepository.save(Survey.builder()
-                .user(ROSA)
+                .users(ROSA)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -211,16 +211,16 @@ class AnswerRepositoryTest {
         List<AnswerData> answerDataList = new ArrayList<>();
         answerDataList.add(AnswerData.builder()
                 .number(0)
-                .answer("이기우")
+                .response("이기우")
                 .build());
         answerDataList.add(AnswerData.builder()
                 .number(1)
-                .answer("20")
+                .response("20")
                 .build());
 
         //when
         Answer answer = Answer.builder()
-                .user(ROI)
+                .users(ROI)
                 .survey(survey)
                 .anonymousFlag(null)
                 .answerDataList(answerDataList)
@@ -259,7 +259,7 @@ class AnswerRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey survey = surveyRepository.save(Survey.builder()
-                .user(ROSA)
+                .users(ROSA)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -269,15 +269,15 @@ class AnswerRepositoryTest {
         List<AnswerData> answerDataList = new ArrayList<>();
         answerDataList.add(AnswerData.builder()
                 .number(0)
-                .answer("이기우")
+                .response("이기우")
                 .build());
         answerDataList.add(AnswerData.builder()
                 .number(1)
-                .answer("20")
+                .response("20")
                 .build());
 
         Answer answer = answerRepository.save(Answer.builder()
-                .user(ROI)
+                .users(ROI)
                 .survey(survey)
                 .anonymousFlag(true)
                 .answerDataList(answerDataList)
@@ -298,9 +298,9 @@ class AnswerRepositoryTest {
 
         //then
         assertThat(updateAnswer.getAnonymousFlag()).isFalse();
-        assertThat(updateAnswer.getAnswerDataList().get(0).getAnswer()).isEqualTo("김강훈");
+        assertThat(updateAnswer.getAnswerDataList().get(0).getResponse()).isEqualTo("김강훈");
         assertThat(updateAnswer.getAnswerDataList().get(0).getNumber()).isEqualTo(0);
-        assertThat(updateAnswer.getAnswerDataList().get(1).getAnswer()).isEqualTo("30");
+        assertThat(updateAnswer.getAnswerDataList().get(1).getResponse()).isEqualTo("30");
         assertThat(updateAnswer.getAnswerDataList().get(1).getNumber()).isEqualTo(1);
     }
 
@@ -343,7 +343,7 @@ class AnswerRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey survey = surveyRepository.save(Survey.builder()
-                .user(ROSA)
+                .users(ROSA)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -353,31 +353,31 @@ class AnswerRepositoryTest {
         List<AnswerData> answerDataList = new ArrayList<>();
         answerDataList.add(AnswerData.builder()
                 .number(0)
-                .answer("이기우")
+                .response("이기우")
                 .build());
         answerDataList.add(AnswerData.builder()
                 .number(1)
-                .answer("20")
+                .response("20")
                 .build());
 
         List<AnswerData> answerDataList2 = new ArrayList<>();
         answerDataList.add(AnswerData.builder()
                 .number(0)
-                .answer("양희준")
+                .response("양희준")
                 .build());
         answerDataList.add(AnswerData.builder()
                 .number(1)
-                .answer("40")
+                .response("40")
                 .build());
 
         Answer answer1 = answerRepository.save(Answer.builder()
-                .user(ROI)
+                .users(ROI)
                 .survey(survey)
                 .anonymousFlag(true)
                 .answerDataList(answerDataList)
                 .build());
         Answer answer2 = answerRepository.save(Answer.builder()
-                .user(NOPE)
+                .users(NOPE)
                 .survey(survey)
                 .anonymousFlag(true)
                 .answerDataList(answerDataList2)

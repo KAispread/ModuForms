@@ -63,7 +63,7 @@ public class SurveyRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -78,7 +78,7 @@ public class SurveyRepositoryTest {
         assertThat(findSurvey.getMaximumAnswer()).isEqualTo(200);
         assertThat(findSurvey.getTitle()).isEqualTo(title);
         assertThat(findSurvey.getSurveyQuestionList().size()).isEqualTo(2);
-        assertThat(findSurvey.getUser().getNickName()).isEqualTo("Rosa");
+        assertThat(findSurvey.getUsers().getNickName()).isEqualTo("Rosa");
     }
 
     @DisplayName(value = "제목을 입력하지 않으면 설문이 등록에 실패한다.")
@@ -111,7 +111,7 @@ public class SurveyRepositoryTest {
                 .build());
 
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(null)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -141,7 +141,7 @@ public class SurveyRepositoryTest {
                 .build());
 
         Survey newSurvey = Survey.builder()
-                .user(null)
+                .users(null)
                 .title(null)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -183,7 +183,7 @@ public class SurveyRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -250,7 +250,7 @@ public class SurveyRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -296,7 +296,7 @@ public class SurveyRepositoryTest {
 
         String title = "참여자 신상 조사 설문";
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -305,7 +305,7 @@ public class SurveyRepositoryTest {
 
         String title2 = "테스트 설문";
         Survey newSurvey2 = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(title)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
@@ -316,14 +316,14 @@ public class SurveyRepositoryTest {
         surveyRepository.save(newSurvey2);
 
         //when
-        List<Survey> surveysByUser = surveyRepository.findSurveysByUser(user);
+        List<Survey> surveysByUser = surveyRepository.findSurveysByUsers(user);
 
         //then
         assertThat(surveysByUser.size()).isEqualTo(2);
         assertThat(surveysByUser.get(0).getTitle()).isEqualTo(title, title2);
         assertThat(surveysByUser.get(1).getTitle()).isEqualTo(title, title2);
-        assertThat(surveysByUser.get(0).getUser()).isEqualTo(user);
-        assertThat(surveysByUser.get(1).getUser()).isEqualTo(user);
+        assertThat(surveysByUser.get(0).getUsers()).isEqualTo(user);
+        assertThat(surveysByUser.get(1).getUsers()).isEqualTo(user);
     }
 
     @DisplayName("특정 유저가 작성한 설문이 없다면 빈 객체가 반환된다.")
@@ -342,7 +342,7 @@ public class SurveyRepositoryTest {
                 .build());
 
         //when
-        List<Survey> surveysByUser = surveyRepository.findSurveysByUser(user);
+        List<Survey> surveysByUser = surveyRepository.findSurveysByUsers(user);
 
         //then
         assertThat(surveysByUser).isEmpty();
@@ -380,7 +380,7 @@ public class SurveyRepositoryTest {
         for (int i = 1; i < 31; i++) {
             String title = "참여자 신상 조사 설문" + i;
             Survey newSurvey = Survey.builder()
-                    .user(user)
+                    .users(user)
                     .title(title)
                     .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                     .maximumAnswer(200)
@@ -391,7 +391,7 @@ public class SurveyRepositoryTest {
 
         //when
         PageRequest pageRequest = PageRequest.of(0, 9);
-        Page<Survey> surveyPage1 = surveyRepository.findAllByUser(user, pageRequest);
+        Page<Survey> surveyPage1 = surveyRepository.findAllByUsers(user, pageRequest);
 
         //then
         List<Survey> content = surveyPage1.getContent();
@@ -434,7 +434,7 @@ public class SurveyRepositoryTest {
         for (int i = 1; i < 31; i++) {
             String title = "참여자 신상 조사 설문" + i;
             Survey newSurvey = Survey.builder()
-                    .user(user)
+                    .users(user)
                     .title(title)
                     .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                     .maximumAnswer(200)
@@ -445,7 +445,7 @@ public class SurveyRepositoryTest {
 
         //when
         PageRequest pageRequest = PageRequest.of(1, 9);
-        Page<Survey> surveyPage1 = surveyRepository.findAllByUser(user, pageRequest);
+        Page<Survey> surveyPage1 = surveyRepository.findAllByUsers(user, pageRequest);
 
         //then
         List<Survey> content = surveyPage1.getContent();
@@ -496,7 +496,7 @@ public class SurveyRepositoryTest {
         for (int i = 1; i < 6; i++) {
             String title = "참여자 신상 조사 설문" + i;
             Survey newSurvey = Survey.builder()
-                    .user(rosa)
+                    .users(rosa)
                     .title(title)
                     .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                     .maximumAnswer(200)
@@ -508,7 +508,7 @@ public class SurveyRepositoryTest {
         for (int i = 1; i < 6; i++) {
             String title = "테스트 설문" + i;
             Survey newSurvey = Survey.builder()
-                    .user(rosa)
+                    .users(rosa)
                     .title(title)
                     .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                     .maximumAnswer(200)

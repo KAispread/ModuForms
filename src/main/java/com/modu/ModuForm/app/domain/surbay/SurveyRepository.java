@@ -11,8 +11,8 @@ import java.util.List;
 import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphType.FETCH;
 
 public interface SurveyRepository extends JpaRepository<Survey, Long> {
-    List<Survey> findSurveysByUser(User user);
-    @EntityGraph(attributePaths = {"user"}, type = FETCH)
-    Page<Survey> findAllByUser(User user, Pageable pageable);
-    void deleteAllByUser(User user);
+    List<Survey> findSurveysByUsers(User user);
+    @EntityGraph(attributePaths = {"users"}, type = FETCH)
+    Page<Survey> findAllByUsers(User user, Pageable pageable);
+    void deleteAllByUsers(User user);
 }

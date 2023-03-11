@@ -72,7 +72,7 @@ public class DummyDataInit {
 
     public Access accessInit() {
         Access access = Access.builder()
-                .user(user)
+                .users(user)
                 .userId(USER_ID)
                 .password(PASSWORD)
                 .build();
@@ -100,42 +100,42 @@ public class DummyDataInit {
 
     public Survey surveyInit() {
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(SURVEY_TITLE)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestionInit())
                 .build();
 
-        newSurvey.setUser(user);
+        newSurvey.setUsers(user);
         surveyRepository.save(newSurvey);
         return newSurvey;
     }
 
     public Survey surveyInit(User targetUser) {
         Survey newSurvey = Survey.builder()
-                .user(targetUser)
+                .users(targetUser)
                 .title(SURVEY_TITLE)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestionInit())
                 .build();
 
-        newSurvey.setUser(user);
+        newSurvey.setUsers(user);
         surveyRepository.save(newSurvey);
         return newSurvey;
     }
 
     public Survey surveyInit(List<SurveyQuestion> surveyQuestionList) {
         Survey newSurvey = Survey.builder()
-                .user(user)
+                .users(user)
                 .title(SURVEY_TITLE)
                 .deadLine(LocalDateTime.of(2022, 9, 30, 20, 0))
                 .maximumAnswer(200)
                 .surveyQuestionList(surveyQuestionList)
                 .build();
 
-        newSurvey.setUser(user);
+        newSurvey.setUsers(user);
         surveyRepository.save(newSurvey);
         return newSurvey;
     }

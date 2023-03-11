@@ -25,7 +25,7 @@ public class Survey extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+    private User users;
 
     @OneToMany(mappedBy = "survey", orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
@@ -50,8 +50,8 @@ public class Survey extends BaseTimeEntity {
     private Integer maximumAnswer;
 
     @Builder
-    public Survey(User user, String email, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime deadLine, Integer maximumAnswer) {
-        this.user = user;
+    public Survey(User users, String email, List<Answer> answers, String title, String description, List<SurveyQuestion> surveyQuestionList, LocalDateTime deadLine, Integer maximumAnswer) {
+        this.users = users;
         this.answers = answers;
         this.title = title;
         this.description = description;
@@ -61,15 +61,15 @@ public class Survey extends BaseTimeEntity {
         this.maximumAnswer = maximumAnswer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-        if (!user.getSurveyList().contains(this)) {
-            user.getSurveyList().add(this);
+    public void setUsers(User users) {
+        this.users = users;
+        if (!users.getSurveyList().contains(this)) {
+            users.getSurveyList().add(this);
         }
     }
 
     public void addAnswer(Answer answer) {
-        this.answers.add(answer);
+        if (!answers.contains(answer)) this.answers.add(answer);
     }
 
     public void update(SurveySave surveySave) {
@@ -93,11 +93,11 @@ public class Survey extends BaseTimeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Survey survey = (Survey) o;
-        return Objects.equals(getId(), survey.getId()) && Objects.equals(getUser(), survey.getUser()) && Objects.equals(getAnswers(), survey.getAnswers()) && Objects.equals(getTitle(), survey.getTitle()) && Objects.equals(getEmail(), survey.getEmail()) && Objects.equals(getDescription(), survey.getDescription()) && Objects.equals(getSurveyQuestionList(), survey.getSurveyQuestionList()) && Objects.equals(getDeadLine(), survey.getDeadLine()) && Objects.equals(getMaximumAnswer(), survey.getMaximumAnswer());
+        return Objects.equals(getId(), survey.getId()) && Objects.equals(getUsers(), survey.getUsers()) && Objects.equals(getAnswers(), survey.getAnswers()) && Objects.equals(getTitle(), survey.getTitle()) && Objects.equals(getEmail(), survey.getEmail()) && Objects.equals(getDescription(), survey.getDescription()) && Objects.equals(getSurveyQuestionList(), survey.getSurveyQuestionList()) && Objects.equals(getDeadLine(), survey.getDeadLine()) && Objects.equals(getMaximumAnswer(), survey.getMaximumAnswer());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUser(), getAnswers(), getTitle(), getEmail(), getDescription(), getSurveyQuestionList(), getDeadLine(), getMaximumAnswer());
+        return Objects.hash(getId(), getUsers(), getAnswers(), getTitle(), getEmail(), getDescription(), getSurveyQuestionList(), getDeadLine(), getMaximumAnswer());
     }
 }

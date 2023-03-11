@@ -15,9 +15,9 @@ public class SessionManager {
     private final Integer INTERVAL_TIME = 30 * 60;
 
     public String createSession(Access access) {
-        String nickname = access.getUser().getNickName();
+        String nickname = access.getUsers().getNickName();
 
-        session.setAttribute("user" , new SessionUser(access.getUser()));
+        session.setAttribute("user" , new SessionUser(access.getUsers()));
         session.setMaxInactiveInterval(INTERVAL_TIME);
         return nickname;
     }

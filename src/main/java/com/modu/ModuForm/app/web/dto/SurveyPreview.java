@@ -18,7 +18,7 @@ public class SurveyPreview {
 
     @Builder
     public SurveyPreview(Survey survey) {
-        this.author = survey.getUser().getNickName();
+        this.author = survey.getUsers().getNickName();
         this.id = survey.getId();
         this.title = survey.getTitle();
         this.description = survey.getDescription();

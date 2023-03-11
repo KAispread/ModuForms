@@ -37,7 +37,7 @@ public class SurveyAnswerCheck {
 
     public void setUserList(List<Answer> answerList) {
         for (Answer answer : answerList) {
-            User answerUser = answer.getUser();
+            User answerUser = answer.getUsers();
             this.userList.add(UserDetailsForAnswer.builder()
                     .userId(answerUser.getId())
                     .userNickname(answerUser.getNickName())

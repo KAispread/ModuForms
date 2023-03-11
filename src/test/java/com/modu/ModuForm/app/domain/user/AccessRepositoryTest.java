@@ -42,7 +42,7 @@ class AccessRepositoryTest {
                 .build();
         userRepository.save(user);
         Access access = Access.builder()
-                .user(user)
+                .users(user)
                 .userId(id)
                 .password(pwd)
                 .build();
@@ -62,7 +62,7 @@ class AccessRepositoryTest {
         String id = "pop123";
         String pwd = "abcdefgd1234";
         Access access = Access.builder()
-                .user(null)
+                .users(null)
                 .userId(id)
                 .password(pwd)
                 .build();
@@ -89,20 +89,20 @@ class AccessRepositoryTest {
                 .build();
         User saveUser = userRepository.save(user);
         Access testAccess = Access.builder()
-                .user(user)
+                .users(user)
                 .userId(id)
                 .password(pwd)
                 .build();
         accessRepository.save(testAccess);
 
         //when
-        Access access = accessRepository.findByUser(saveUser).orElseThrow();
+        Access access = accessRepository.findByUsers(saveUser).orElseThrow();
 
         //then
         assertThat(access.getUserId()).isEqualTo(id);
         assertThat(access.getPassword()).isEqualTo(pwd);
-        assertThat(access.getUser().getName()).isEqualTo("예진");
-        assertThat(access.getUser().getEmail()).isEqualTo("adfsd@naver.com");
+        assertThat(access.getUsers().getName()).isEqualTo("예진");
+        assertThat(access.getUsers().getEmail()).isEqualTo("adfsd@naver.com");
     }
 
     @DisplayName("findByUser()에 DB에 저장되지 않은 User을 넘겨주면 예외가 발생한다")
@@ -122,7 +122,7 @@ class AccessRepositoryTest {
                 .build();
         User save = userRepository.save(user);
         Access testAccess = Access.builder()
-                .user(save)
+                .users(save)
                 .userId(id)
                 .password(pwd)
                 .build();
@@ -140,7 +140,7 @@ class AccessRepositoryTest {
                 .build();
 
         //then
-        assertThatThrownBy(() -> accessRepository.findByUser(User.builder()
+        assertThatThrownBy(() -> accessRepository.findByUsers(User.builder()
                 .gender(Gender.MAN)
                 .email("adfsd@naver.com")
                 .phone("0112491031")
@@ -168,7 +168,7 @@ class AccessRepositoryTest {
                 .build();
         userRepository.save(user);
         Access testAccess = Access.builder()
-                .user(user)
+                .users(user)
                 .userId(id)
                 .password(pwd)
                 .build();
@@ -180,8 +180,8 @@ class AccessRepositoryTest {
         //then
         assertThat(access.getUserId()).isEqualTo(id);
         assertThat(access.getPassword()).isEqualTo(pwd);
-        assertThat(access.getUser().getName()).isEqualTo("예진");
-        assertThat(access.getUser().getEmail()).isEqualTo("adfsd@naver.com");
+        assertThat(access.getUsers().getName()).isEqualTo("예진");
+        assertThat(access.getUsers().getEmail()).isEqualTo("adfsd@naver.com");
     }
 
     @DisplayName("findByUserId()에 존재하지 않는 유저 아이디를 넘겨주면 예외가 발생한다")
@@ -201,7 +201,7 @@ class AccessRepositoryTest {
                 .build();
         User saveUser = userRepository.save(user);
         Access testAccess = Access.builder()
-                .user(user)
+                .users(user)
                 .userId(id)
                 .password(pwd)
                 .build();

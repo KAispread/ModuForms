@@ -25,8 +25,8 @@ public class MainPageService {
     @Transactional(readOnly = true)
     public UserFormDetails getUserFormDetails(Pageable surveyPage, Pageable answerPage, Long id) {
         User user = userRepository.findById(id).orElseThrow(NoSuchUserIdException::new);
-        Page<Survey> surveyPageList = surveyRepository.findAllByUser(user, surveyPage);
-        Page<Answer> answerPageList = answerRepository.findAllByUser(user, answerPage);
+        Page<Survey> surveyPageList = surveyRepository.findAllByUsers(user, surveyPage);
+        Page<Answer> answerPageList = answerRepository.findAllByUsers(user, answerPage);
 
         return new UserFormDetails(user, surveyPageList, answerPageList);
     }

@@ -32,7 +32,7 @@ public class SurveyCheck {
         this.deadLine = survey.getDeadLine();
         this.email = survey.getEmail();
         this.maximumAnswer = survey.getMaximumAnswer();
-        this.user = survey.getUser();
+        this.user = survey.getUsers();
         convertSurveyQuestionCheck(survey.getSurveyQuestionList());
     }
 

@@ -40,7 +40,7 @@ public class User extends BaseTimeEntity {
 
     private String company;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "users", orphanRemoval = true)
     private final List<Survey> surveyList = new ArrayList<>();
 
     @Builder
@@ -63,8 +63,8 @@ public class User extends BaseTimeEntity {
         if (!surveyList.contains(survey)) {
             surveyList.add(survey);
         }
-        if (survey.getUser() != this) {
-            survey.setUser(this);
+        if (survey.getUsers() != this) {
+            survey.setUsers(this);
         }
     }
 

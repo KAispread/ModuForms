@@ -48,7 +48,7 @@ public class SurveySave {
                 .surveyQuestionList(surveyQuestionList)
                 .maximumAnswer(maximumAnswer)
                 .build();
-        survey.setUser(user);
+        survey.setUsers(user);
         return survey;
     }
 

@@ -66,7 +66,7 @@ public class UserRegister {
 
     public Access toAccessEntity(User user) {
         return Access.builder()
-                .user(user)
+                .users(user)
                 .userId(id)
                 .password(pwd)
                 .build();

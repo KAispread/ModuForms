@@ -19,8 +19,8 @@ public class UserAccountService {
     @Transactional
     public void delete(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(NoSuchUserIdException::new);
-        answerRepository.deleteAllByUser(user);
-        accessRepository.deleteByUser(user);
+        answerRepository.deleteAllByUsers(user);
+        accessRepository.deleteByUsers(user);
         userRepository.delete(user);
     }
 }

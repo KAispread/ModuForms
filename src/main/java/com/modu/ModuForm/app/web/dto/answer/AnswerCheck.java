@@ -30,13 +30,13 @@ public class AnswerCheck {
         this.deadLine = survey.getDeadLine();
         this.email = survey.getEmail();
         this.maximumAnswer = survey.getMaximumAnswer();
-        this.surveyUser = survey.getUser();
+        this.surveyUser = survey.getUsers();
         convertAnswerQuestionCheck(survey.getSurveyQuestionList(), answerDataList);
     }
 
     public void convertAnswerQuestionCheck(List<SurveyQuestion> questions, List<AnswerData> answerDataList) {
         for (int i = 0; i < questions.size(); i++) {
-            answerQuestions.add(new AnswerQuestionCheck(questions.get(i), answerDataList.get(i).getAnswer()));
+            answerQuestions.add(new AnswerQuestionCheck(questions.get(i), answerDataList.get(i).getResponse()));
         }
     }
 }

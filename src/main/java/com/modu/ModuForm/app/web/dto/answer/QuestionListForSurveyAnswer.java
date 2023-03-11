@@ -31,7 +31,7 @@ public class QuestionListForSurveyAnswer {
             for (String dist : distractorArray) {
                 int count = 0;
                 for (Answer answer : answerList) {
-                    if (dist.equals(answer.getAnswerDataList().get(index).getAnswer())) {
+                    if (dist.equals(answer.getAnswerDataList().get(index).getResponse())) {
                         count++;
                     }
                 }
@@ -44,8 +44,8 @@ public class QuestionListForSurveyAnswer {
         List<AnswerUser> answerUser = new ArrayList<>();
         for (Answer answer : answerList) {
             answerUser.add(AnswerUser.builder()
-                    .user(answer.getUser())
-                    .answer(answer.getAnswerDataList().get(index).getAnswer())
+                    .user(answer.getUsers())
+                    .answer(answer.getAnswerDataList().get(index).getResponse())
                     .anonymousFlag(answer.getAnonymousFlag())
                     .build());
         }

@@ -31,7 +31,7 @@ public class AnswerSave {
     public Answer toEntity(Survey survey, User user) {
         return Answer.builder()
                 .answerDataList(convertAnswerData())
-                .user(user)
+                .users(user)
                 .survey(survey)
                 .anonymousFlag(anonymousFlag)
                 .build();
@@ -44,7 +44,7 @@ public class AnswerSave {
         for (String ans : this.answerList) {
             answerData.add(AnswerData.builder()
                     .number(num)
-                    .answer(ans)
+                    .response(ans)
                     .build());
             num += 1;
         }
