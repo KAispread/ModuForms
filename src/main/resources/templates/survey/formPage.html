@@ -31,7 +31,16 @@
 
   <div class="album py-5 bg-light">
     <div class="container">
-      <h4 th:text="#{label.survey.all}" class="gowun-font-ko">모든 설문 목록</h4>
+
+      <div class="d-flex align-items-center justify-content-between">
+        <h4 th:text="#{label.survey.all}" style="font-weight: bold" class="gowun-font-ko">모든 설문 목록</h4>
+        <div class="btn-group ">
+          <a th:href="@{/surveys/lists (page=${param.page}, sort=${param.sort})}"
+             class="btn btn-success" th:classappend="${param.sort == null || #strings.equals(param.sort, '')} ? 'active' : ''">최신순</a>
+          <a th:href="@{/surveys/lists (page=${param.page}, sort='createdDate,ASC')}"
+             class="btn btn-success" th:classappend="${#strings.equals(param.sort, 'createdDate,ASC')} ? 'active' : ''">오래된순</a>
+        </div>
+      </div>
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div th:each="surveyPreview : ${surveyPage.surveyPreviews}" class="col">
@@ -84,7 +93,7 @@
         <ul class="nav_item">
           <li>
             <a th:text="#{a.survey.previous.page}" th:if="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}"
-                 th:href="@{/surveys/lists (sp=${surveyPage.startPage - 1})}">
+                 th:href="@{/surveys/lists (page=${surveyPage.startPage - 1}, sort=${param.sort})}">
             < 이전
             </a>
             <a th:text="#{a.survey.previous.page}" th:unless="${surveyPage.currentPage} > ${surveyPage.PAGE_ROW_COUNT}">< 이전</a>
@@ -92,13 +101,13 @@
           <li th:each="num : ${#numbers.sequence(1,5)}"
               th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''">
             <a th:if="${surveyPage.startPage} + ${num - 1} <= ${surveyPage.totalPages} "
-               th:href="@{/surveys/lists (sp=(${surveyPage.startPage} + ${num - 1}))}"
+               th:href="@{/surveys/lists (page=(${surveyPage.startPage} + ${num - 1}), sort=${param.sort})}"
                th:classappend="((${surveyPage.startPage} + ${num - 1}) == ${surveyPage.currentPage}) ? 'on' : ''"
                th:text="${surveyPage.startPage} + ${num - 1}"></a>
           </li>
           <li>
             <a th:text="#{a.survey.next.page}" th:if="${surveyPage.endPage} < ${surveyPage.totalPages}"
-               th:href="@{/surveys/lists (sp=${surveyPage.endPage + 1})}">다음 >
+               th:href="@{/surveys/lists (page=${surveyPage.endPage + 1}, sort=${param.sort})}">다음 >
             </a>
             <a th:text="#{a.survey.next.page}" th:unless="${surveyPage.endPage} < ${surveyPage.totalPages}">다음 ></a>
           </li>
