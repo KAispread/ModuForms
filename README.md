@@ -3,7 +3,7 @@
 ModuForm은 설문조사를 위한 웹 어플리케이션입니다.        
 본 어플리케이션의 기능을 이용하기 위해선 로그인이 필요합니다.   
 다음의 URL에서 직접 이용해 보실 수 있습니다.    
-### 🖇LINK -> [ModuForm](http://ec2-3-36-156-200.ap-northeast-2.compute.amazonaws.com:8080)    
+### 🖇LINK -> [ModuForm](http://modu-elb-1191182514.ap-northeast-2.elb.amazonaws.com:8080)    
 
 
 &nbsp;
@@ -11,6 +11,7 @@ ModuForm은 설문조사를 위한 웹 어플리케이션입니다.
 > **🔑로그인 방식**
 - 애플리케이션 자체 로그인 (JWT)
 - Google login (OAuth2.0)
+
 > **📑주요 기능**
 - 회원가입, 로그인, 로그아웃
 - 프로필 보기, 수정, 삭제 
