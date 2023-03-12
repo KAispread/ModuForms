@@ -1,16 +1,18 @@
 # 🧩ModuForm 
 
-ModuForm은 설문조사를 위한 웹 어플리케이션입니다.        
+***ModuForm***은 설문조사를 위한 웹 어플리케이션입니다.        
 본 어플리케이션의 기능을 이용하기 위해선 로그인이 필요합니다.   
 다음의 URL에서 직접 이용해 보실 수 있습니다.    
 ### 🖇LINK -> [ModuForm](http://modu-elb-1191182514.ap-northeast-2.elb.amazonaws.com:8080)    
 
+&nbsp;
+&nbsp;
 
-&nbsp;
-&nbsp;
-> **🔑로그인 방식**
+> **🔑로그인**
 - 애플리케이션 자체 로그인 (JWT)
 - Google login (OAuth2.0)
+
+&nbsp;
 
 > **📑주요 기능**
 - 회원가입, 로그인, 로그아웃
@@ -20,41 +22,50 @@ ModuForm은 설문조사를 위한 웹 어플리케이션입니다.
 - 전체 설문 보기
 
 &nbsp;      
-> **📚기술 스택 및 버전**
+> **📚사용 기술**
 - JAVA 11
 - Spring Boot (2.7.3)
 - Spring Security (5.7.3)
 - Spring Data JPA (2.7.3)
     - H2(2.1.4 test) 
 -  AWS
-    - EC2
-    - RDS (MariaDB)      
-   
+
 &nbsp;
 &nbsp;
 ## 📌Overview
 
 > __Main__
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/99247279/204089105-2fca96eb-3881-421b-b7d8-4f74345ec89a.png" width="800" />
+    <img src="https://user-images.githubusercontent.com/99247279/224551216-ad31d272-50ff-48ff-a48d-958892911042.png" width="800" />
 </p>
 &nbsp;
 
-> __Login & Form__
+> __Login__
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/99247279/204090069-9faad37c-7358-4ade-b7cb-33032b8d9228.png" width="500" />
-    <img src="https://user-images.githubusercontent.com/99247279/195881166-e4b283bf-8593-4f33-af6a-eb368d1b2b5d.png" width="190" />
+    <img src="https://user-images.githubusercontent.com/99247279/224550941-eb641d17-2715-4120-a6fb-942796f6be70.png"/>
 </p>
 &nbsp;
 
-> __Survey & Response__
+> __Profile__
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/99247279/204089315-62f3a00b-0479-4f05-8f6b-8691ca772010.png" width="570" />
-    <img src="https://user-images.githubusercontent.com/99247279/204089479-1bdf23e5-d2b0-400e-9240-2f9e3fd87aab.png" width="420" />
+    <img src="https://user-images.githubusercontent.com/99247279/224551385-448acaf9-fad7-44ec-a62f-c77dff34652c.png"/>
 </p>
 &nbsp;
 
-## 📑 REST API
+> __Survey__
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/224551157-364cac44-f83d-434e-ada5-4abb5910473c.png"/>
+</p>
+&nbsp;
+
+> __Answer__
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/224550743-8c63b62f-af4d-447c-9ecb-a65763d2746f.png"/>
+</p>
+&nbsp;
+
+
+## 📑 API
 > __View__
 <p align="center">
     <img src="https://user-images.githubusercontent.com/99247279/211711054-415868bb-da78-4bcf-afc3-c440d8451685.png" width="700" />
@@ -67,12 +78,15 @@ ModuForm은 설문조사를 위한 웹 어플리케이션입니다.
 </p>
 &nbsp;
 
-
-
-## 🔱 UML diagrams
+## 🔱 ERD
 <p align="center">
-    <img src="https://user-images.githubusercontent.com/99247279/194758571-7f308f6b-4763-444b-ac2b-84accef13f49.png" width="400" />
-    <img src="https://user-images.githubusercontent.com/99247279/194758544-2ea22e3d-352c-43fc-be64-d59dccdf2db4.png" width="400" />
+    <img src="https://user-images.githubusercontent.com/99247279/224550591-706d14ee-92d5-4bac-b55a-441e6ba874bd.jpg" width="800" />
+</p>
+&nbsp;
+
+## 🌊 Architecture
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/224550527-00049d0d-f7a0-456b-a2ab-d9c33213a6ef.png" width="800" />
 </p>
 &nbsp;
 
