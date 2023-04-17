@@ -71,7 +71,7 @@
 &nbsp;
 
 
-## 📑 API
+## 📑 API (Swagger UI)
 > __View__
 <p align="center">
     <img src="https://user-images.githubusercontent.com/99247279/211711054-415868bb-da78-4bcf-afc3-c440d8451685.png" width="700" />
@@ -95,6 +95,14 @@
     <img src="https://user-images.githubusercontent.com/99247279/224550527-00049d0d-f7a0-456b-a2ab-d9c33213a6ef.png" width="800" />
 </p>
 &nbsp;
+
+## 🔰 CI/CD
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/232543765-31e609b0-b74e-49c1-aa6f-431dbad1d3af.png" />
+</p>
+&nbsp;
+
+
 
 # Reference
 - https://docs.spring.io/spring-boot/docs/current/reference/html/ -> Spring Boot / Reference Doc 
