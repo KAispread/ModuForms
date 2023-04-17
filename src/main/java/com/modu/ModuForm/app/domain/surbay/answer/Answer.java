@@ -57,13 +57,13 @@ public class Answer extends BaseTimeEntity {
     }
 
     private void validateUser(Survey survey) {
-        if (this.users.equals(survey.getUsers())) {
+        if (this.users.getNickName().equals(survey.getUsers().getNickName())) {
             throw new IllegalArgumentException("설문 등록자는 본인 설문에 응답할 수 없습니다");
         }
     }
 
     private void validateUser(User user, Survey survey) {
-        if (user.equals(survey.getUsers())) {
+        if (user.getNickName().equals(survey.getUsers().getNickName())) {
             throw new IllegalArgumentException("설문 등록자는 본인 설문에 응답할 수 없습니다");
         }
     }

@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.web.config.auth;
 
+import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.web.config.auth.OAuth.CustomOAuthSuccessHandler;
 import com.modu.ModuForm.app.web.config.auth.OAuth.CustomOAuthUserService;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +26,13 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/**", "/users/login", "/users/register","/app/**",
                         "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
-//                    .antMatchers("/api/**").hasRole(Role.USER.name())
-//                    .antMatchers("/answers/**").hasRole(Role.USER.name())
-//                    .antMatchers("/surveys/**").hasRole(Role.USER.name())
+                    .antMatchers("/api/**").hasRole(Role.USER.name())
+                    .antMatchers("/answers/**").hasRole(Role.USER.name())
+                    .antMatchers("/surveys/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-//                    .loginPage("/users/login")
+                    .loginPage("/users/login")
                 .successHandler(customOAuthSuccessHandler)
                 .and()
                 .logout()
