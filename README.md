@@ -27,18 +27,9 @@
 
 &nbsp;      
 > **📚버전 및 사용 기술**
-- JAVA 11
-- Spring Boot (2.7.3)
-- Spring Security (5.7.3)
-- Spring Data JPA (2.7.3)
-    - H2(2.1.4 test) 
-- AWS
-    - EC2 (ALB)
-    - RDS (MariaDB)
-    - VPC
-    - S3
-    - CodeDeploy
-- Github Actions
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/99247279/232578774-d615d7bc-5376-4ca8-864e-b84745f9a5fd.png" width="800" />
+</p>
 
 &nbsp;
 &nbsp;
