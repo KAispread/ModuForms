@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.config.auth.jwt;
+package com.modu.ModuForm.app.web.config.jwt;
 
 import javax.servlet.http.Cookie;
 

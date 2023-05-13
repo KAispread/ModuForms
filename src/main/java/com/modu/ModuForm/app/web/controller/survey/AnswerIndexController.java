@@ -3,8 +3,8 @@ package com.modu.ModuForm.app.web.controller.survey;
 import com.modu.ModuForm.app.service.survey.AnswerService;
 import com.modu.ModuForm.app.service.survey.SurveyService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.answer.AnswerStringClass;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @RequestMapping("/answers")

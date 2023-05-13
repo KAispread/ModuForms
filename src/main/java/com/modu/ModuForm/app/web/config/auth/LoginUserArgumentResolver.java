@@ -1,7 +1,7 @@
 package com.modu.ModuForm.app.web.config.auth;
 
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.jwt.JwtHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

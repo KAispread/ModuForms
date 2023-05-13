@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
+import static com.modu.ModuForm.app.web.config.jwt.JwtCookie.ENCRYPT;
 
 @Slf4j
 public class LoginCheckFilter implements Filter {

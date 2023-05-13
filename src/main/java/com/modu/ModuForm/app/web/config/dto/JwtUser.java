@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.config.auth.dto;
+package com.modu.ModuForm.app.web.config.dto;
 
 import lombok.Builder;
 import lombok.Getter;

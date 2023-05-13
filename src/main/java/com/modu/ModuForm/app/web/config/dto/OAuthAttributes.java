@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.config.auth.dto;
+package com.modu.ModuForm.app.web.config.dto;
 
 import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.domain.user.User;

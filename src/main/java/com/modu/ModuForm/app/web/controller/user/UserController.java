@@ -5,7 +5,7 @@ import com.modu.ModuForm.app.domain.user.User;
 import com.modu.ModuForm.app.exception.invalid.InvalidUserIdPwException;
 import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
+import com.modu.ModuForm.app.web.config.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.user.LoginRequest;
 import com.modu.ModuForm.app.web.dto.user.UserDetails;
 import com.modu.ModuForm.app.web.dto.user.UserRegister;
@@ -24,7 +24,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
+import static com.modu.ModuForm.app.web.config.jwt.JwtCookie.ENCRYPT;
 
 @Api(tags = "User DATA handling API")
 @Slf4j

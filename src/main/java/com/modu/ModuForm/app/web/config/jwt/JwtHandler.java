@@ -1,8 +1,8 @@
-package com.modu.ModuForm.app.web.config.auth.jwt;
+package com.modu.ModuForm.app.web.config.jwt;
 
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.auth.jwt.CustomJwtProvider;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.jwt.CustomJwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
-import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.NORMAL;
+import static com.modu.ModuForm.app.web.config.jwt.JwtCookie.ENCRYPT;
+import static com.modu.ModuForm.app.web.config.jwt.JwtCookie.NORMAL;
 
 @Slf4j
 @RequiredArgsConstructor

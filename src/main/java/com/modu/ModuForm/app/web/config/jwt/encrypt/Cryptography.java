@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.config.auth.jwt.encrypt;
+package com.modu.ModuForm.app.web.config.jwt.encrypt;
 
 public interface Cryptography {
     String encrypt(String text) throws Exception;

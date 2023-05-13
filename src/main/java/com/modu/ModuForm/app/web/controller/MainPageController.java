@@ -2,7 +2,7 @@ package com.modu.ModuForm.app.web.controller;
 
 import com.modu.ModuForm.app.service.MainPageService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
 import com.modu.ModuForm.app.web.dto.user.UserFormDetails;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;

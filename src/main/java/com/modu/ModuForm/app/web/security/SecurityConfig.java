@@ -1,11 +1,12 @@
-package com.modu.ModuForm.app.web.config.auth;
+package com.modu.ModuForm.app.web.security;
 
 import com.modu.ModuForm.app.domain.user.common.Role;
-import com.modu.ModuForm.app.web.config.auth.OAuth.CustomOAuthSuccessHandler;
-import com.modu.ModuForm.app.web.config.auth.OAuth.CustomOAuthUserService;
+import com.modu.ModuForm.app.web.config.OAuth.CustomOAuthSuccessHandler;
+import com.modu.ModuForm.app.web.config.OAuth.CustomOAuthUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -13,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     private final CustomOAuthUserService customUserTypesOAuth2UserService;
     private final CustomOAuthSuccessHandler customOAuthSuccessHandler;
@@ -28,21 +30,19 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/**", "/users/login", "/users/register","/app/**",
                         "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
-                    .antMatchers("/api/**").hasRole(Role.USER.name())
-                    .antMatchers("/answers/**").hasRole(Role.USER.name())
-                    .antMatchers("/surveys/**").hasRole(Role.USER.name())
-                .anyRequest().authenticated()
+                    .antMatchers("/api/**", "/answers/**", "/surveys/**").hasRole(Role.USER.name())
+                    .anyRequest().authenticated()
                 .and()
 
                 // form Login
                 .formLogin()
                     .loginPage("/users/login")
-                .successHandler(customOAuthSuccessHandler)
+                    .successHandler(customOAuthSuccessHandler)
                 .and()
 
                 // Logout
                 .logout()
-                .logoutSuccessUrl("/users/login")
+                    .logoutSuccessUrl("/users/login")
                 .and()
 
                 //

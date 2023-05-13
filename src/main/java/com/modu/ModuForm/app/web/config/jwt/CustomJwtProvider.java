@@ -1,14 +1,13 @@
-package com.modu.ModuForm.app.web.config.auth.jwt;
+package com.modu.ModuForm.app.web.config.jwt;
 
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.auth.jwt.encrypt.Cryptography;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.jwt.encrypt.Cryptography;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -20,7 +19,6 @@ import java.util.Date;
 @Component
 public class CustomJwtProvider {
     public static final String JWT_SECRET_KEY="236979CB6F1AD6B6A6184A31E6BE37DB3818CC36871E26235DD67DCFE4041492";
-
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final Cryptography cryptography;
     public final String JWT_PREFIX = "Bearer|";

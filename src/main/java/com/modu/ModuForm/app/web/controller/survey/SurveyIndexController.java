@@ -3,7 +3,7 @@ package com.modu.ModuForm.app.web.controller.survey;
 import com.modu.ModuForm.app.domain.surbay.QuesType;
 import com.modu.ModuForm.app.service.survey.SurveyService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
 import com.modu.ModuForm.app.web.dto.survey.SurveyPage;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;

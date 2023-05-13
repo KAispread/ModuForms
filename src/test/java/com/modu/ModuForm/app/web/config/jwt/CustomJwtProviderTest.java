@@ -1,9 +1,9 @@
-package com.modu.ModuForm.app.web.config.auth.jwt;
+package com.modu.ModuForm.app.web.config.jwt;
 
 import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.config.auth.jwt.encrypt.AES256;
+import com.modu.ModuForm.app.web.config.jwt.encrypt.AES256;
 import io.jsonwebtoken.Claims;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

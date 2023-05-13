@@ -1,4 +1,4 @@
-package com.modu.ModuForm.app.web.config.auth.jwt.encrypt;
+package com.modu.ModuForm.app.web.config.jwt.encrypt;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

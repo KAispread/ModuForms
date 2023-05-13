@@ -3,7 +3,7 @@ package com.modu.ModuForm.app.web.controller.user;
 import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.service.user.UserService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
-import com.modu.ModuForm.app.web.config.auth.dto.JwtUser;
+import com.modu.ModuForm.app.web.config.dto.JwtUser;
 import com.modu.ModuForm.app.web.dto.user.LoginRequest;
 import com.modu.ModuForm.app.web.dto.user.UserDetails;
 import com.modu.ModuForm.app.web.dto.user.UserRegister;
