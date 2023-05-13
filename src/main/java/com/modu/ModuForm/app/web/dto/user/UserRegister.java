@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.*;
 
@@ -64,11 +65,11 @@ public class UserRegister {
                 .build();
     }
 
-    public Access toAccessEntity(User user) {
+    public Access toAccessEntity(User user, PasswordEncoder passwordEncoder) {
         return Access.builder()
                 .users(user)
                 .userId(id)
-                .password(pwd)
+                .password(passwordEncoder.encode(pwd))
                 .build();
     }
 }

@@ -13,6 +13,7 @@ import com.modu.ModuForm.app.web.dto.user.UserDetails;
 import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final AccessRepository accessRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PerfLog
     @Override
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Long register(UserRegister registerDto) {
         User user = userRepository.save(registerDto.toUserEntity());
-        accessRepository.save(registerDto.toAccessEntity(user));
+        accessRepository.save(registerDto.toAccessEntity(user, passwordEncoder));
         return user.getId();
     }
 
