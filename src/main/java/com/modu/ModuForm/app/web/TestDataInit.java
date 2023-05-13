@@ -23,7 +23,7 @@ import java.util.List;
 public class TestDataInit {
     private final DataService service;
 
-//    @PostConstruct
+    @PostConstruct
     public void init() {
         service.init();
     }

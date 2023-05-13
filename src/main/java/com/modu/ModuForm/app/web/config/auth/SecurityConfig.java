@@ -23,6 +23,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
+
+                // URL 인가
                 .authorizeRequests()
                 .antMatchers("/**", "/users/login", "/users/register","/app/**",
                         "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
@@ -31,13 +33,19 @@ public class SecurityConfig {
                     .antMatchers("/surveys/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
                 .and()
+
+                // form Login
                 .formLogin()
                     .loginPage("/users/login")
                 .successHandler(customOAuthSuccessHandler)
                 .and()
+
+                // Logout
                 .logout()
                 .logoutSuccessUrl("/users/login")
                 .and()
+
+                //
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(customUserTypesOAuth2UserService);
