@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -51,16 +52,20 @@ public class UserIndexController {
 
     @Operation(summary = "프로필 조회", description = "선택한 유저의 프로필 페이지를 반환합니다.")
     @GetMapping("/{userId}")
-    public String detail(@PathVariable Long userId, @LoginUser JwtUser jwtUser, Model model) {
+    public String detail(@PathVariable Long userId, @AuthenticationPrincipal JwtUser user, Model model) {
         UserDetails userDetails = userService.getUserDetails(userId);
+
+        model.addAttribute("user", user);
         model.addAttribute("userDetails", userDetails);
 
         return "user/userDetail";
     }
 
     @GetMapping("/{userId}/edit")
-    public String edit(@PathVariable Long userId, @LoginUser JwtUser jwtUser, Model model) {
+    public String edit(@PathVariable Long userId, @AuthenticationPrincipal JwtUser user, Model model) {
         UserDetails userDetails = userService.getUserDetails(userId);
+
+        model.addAttribute("user", user);
         model.addAttribute("userDetails", userDetails);
 
         return "user/userEdit";

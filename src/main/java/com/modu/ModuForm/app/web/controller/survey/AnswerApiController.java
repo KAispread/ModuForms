@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class AnswerApiController {
     @Operation(summary = "응답 저장 API", description = "응답 저장 요청을 처리합니다.")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long save(@LoginUser JwtUser user, @Validated @RequestBody AnswerSave answerSave, @RequestParam Long surveyId) {
+    public Long save(@AuthenticationPrincipal JwtUser user, @Validated @RequestBody AnswerSave answerSave, @RequestParam Long surveyId) {
         Long userId = user.getId();
         return answerService.save(answerSave, surveyId, userId);
     }
