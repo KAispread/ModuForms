@@ -11,6 +11,7 @@ import com.modu.ModuForm.app.domain.user.common.Gender;
 import com.modu.ModuForm.app.domain.user.common.Role;
 import com.modu.ModuForm.app.web.dto.survey.SurveySave;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class TestDataInit {
         private final UserRepository userRepository;
         private final AccessRepository accessRepository;
         private final SurveyRepository surveyRepository;
+        private final PasswordEncoder passwordEncoder;
 
         @Transactional
         public void init() {
@@ -50,7 +52,7 @@ public class TestDataInit {
             accessRepository.save(Access.builder()
                     .users(user)
                     .userId("ppap012")
-                    .password("love112")
+                    .password(passwordEncoder.encode("love112"))
                     .build());
 
             User user2 = userRepository.save(User.builder()
@@ -66,7 +68,7 @@ public class TestDataInit {
             accessRepository.save(Access.builder()
                     .users(user2)
                     .userId("pppp1234")
-                    .password("qwer1234")
+                    .password(passwordEncoder.encode("qwer1234"))
                     .build());
 
             List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
