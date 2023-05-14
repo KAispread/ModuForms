@@ -13,10 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "User TEMPLATE handling")
 @Slf4j
@@ -33,8 +32,13 @@ public class UserIndexController {
 
     @Operation(summary = "로그인 페이지", description = "로그인 페이지를 반환합니다.")
     @GetMapping("/login")
-    public String userLogin(Model model) {
+    public String userLogin(Model model, @RequestParam(required = false) String error, BindingResult bindingResult) {
         model.addAttribute("login", new LoginRequest());
+
+        if (StringUtils.hasText(error)) {
+            bindingResult.reject("login", null, "아이디나 비밀번호가 맞지 않습니다.");
+        }
+
         return "user/loginForm";
     }
 
