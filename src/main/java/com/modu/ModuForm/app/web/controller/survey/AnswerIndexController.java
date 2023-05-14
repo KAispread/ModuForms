@@ -4,7 +4,6 @@ import com.modu.ModuForm.app.service.survey.AnswerService;
 import com.modu.ModuForm.app.service.survey.SurveyService;
 import com.modu.ModuForm.app.web.config.auth.LoginUser;
 import com.modu.ModuForm.app.web.config.dto.JwtUser;
-import com.modu.ModuForm.app.web.config.jwt.JwtHandler;
 import com.modu.ModuForm.app.web.dto.answer.AnswerStringClass;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
