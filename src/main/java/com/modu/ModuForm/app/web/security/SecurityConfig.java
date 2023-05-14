@@ -1,11 +1,11 @@
 package com.modu.ModuForm.app.web.security;
 
 import com.modu.ModuForm.app.domain.user.common.Role;
-import com.modu.ModuForm.app.web.config.OAuth.CustomOAuthSuccessHandler;
 import com.modu.ModuForm.app.web.config.OAuth.CustomOAuthUserService;
+import com.modu.ModuForm.app.web.config.OAuth.JwtSuccessHandler;
 import com.modu.ModuForm.app.web.security.authentication.FormAuthenticationProvider;
 import com.modu.ModuForm.app.web.security.authentication.FormUserDetailService;
-import com.modu.ModuForm.app.web.security.authentication.JwtAuthenticationFilter;
+import com.modu.ModuForm.app.web.security.authentication.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
     private final CustomOAuthUserService customUserTypesOAuth2UserService;
-    private final CustomOAuthSuccessHandler customOAuthSuccessHandler;
+    private final JwtSuccessHandler jwtSuccessHandler;
     private final FormUserDetailService formUserDetailService;
     private final FormAuthenticationProvider formAuthenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -51,11 +51,12 @@ public class SecurityConfig {
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .failureUrl("/users/login?error=true")
-                    .successHandler(customOAuthSuccessHandler)
+                    .successHandler(jwtSuccessHandler)
                 .and()
 
                 // Logout
                 .logout()
+                    .logoutUrl("/app/users/logout")
                     .logoutSuccessUrl("/users/login")
                 .and()
 
@@ -65,7 +66,8 @@ public class SecurityConfig {
                 .userService(customUserTypesOAuth2UserService);
 
         http
-                .addFilterAfter(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                // AnonymousAuthenticationFilter 이후 실행
+                .addFilterBefore(jwtAuthenticationFilter, ExceptionTranslationFilter.class);
 
         return http.build();
     }
