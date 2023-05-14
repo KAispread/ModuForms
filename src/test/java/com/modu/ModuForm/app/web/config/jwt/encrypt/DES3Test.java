@@ -1,5 +1,6 @@
 package com.modu.ModuForm.app.web.config.jwt.encrypt;
 
+import com.modu.ModuForm.app.web.security.authentication.jwt.encrypt.DES3;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
