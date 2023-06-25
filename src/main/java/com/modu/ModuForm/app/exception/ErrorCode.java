@@ -12,6 +12,8 @@ public enum ErrorCode {
     NO_SUCH_SURVEY_ID("40022"),
     NO_SUCH_ANSWER_ID("40023"),
 
+    AUTH_EXPIRED("40031"),
+
     SERVER_ERROR("50000");
 
     private final String code;

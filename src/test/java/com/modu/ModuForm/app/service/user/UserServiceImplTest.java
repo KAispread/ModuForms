@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,7 @@ class UserServiceImplTest {
             User userEntity = userRegister.toUserEntity();
 
             when(userRepository.save(any())).thenReturn(userEntity);
-            when(accessRepository.save(any())).thenReturn(userRegister.toAccessEntity(userEntity));
+            when(accessRepository.save(any())).thenReturn(userRegister.toAccessEntity(userEntity, new BCryptPasswordEncoder()));
             when(userRepository.findByNickName(nickname)).thenReturn(Optional.ofNullable(userEntity));
 
             //when

@@ -18,19 +18,19 @@
             </p>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-            <form th:action="@{/app/users/logins (redirectURL=${param.redirectURL})}" method="post" th:object="${login}" class="p-4 p-md-5 border rounded-3 bg-light">
+            <form th:action="@{/login/proc (redirectURL=${param.redirectURL})}" method="post" th:object="${login}" class="p-4 p-md-5 border rounded-3 bg-light">
                 <div style="margin-bottom: 1rem" th:if="${#fields.hasGlobalErrors()}">
                     <small th:each="error : ${#fields.globalErrors()}" th:text="${error}" class="filed-error-text"></small>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input th:field="*{userId}" th:errorclass="filed-error-box" type="text" class="form-control" id="userId" placeholder="ID">
+                    <input th:field="*{userId}" name="username" th:errorclass="filed-error-box" type="text" class="form-control" id="userId" placeholder="ID">
                     <label th:text="#{input.user.id}" for="userId">아이디</label>
                     <div th:errors="*{userId}" class="filed-error-text">
                     </div>
                 </div>
                 <div class="form-floating mb-3">
-                    <input th:field="*{password}" th:errorclass="filed-error-box" type="password" class="form-control" id="password" placeholder="Password">
+                    <input th:field="*{password}" name="password" th:errorclass="filed-error-box" type="password" class="form-control" id="password" placeholder="Password">
                     <label th:text="#{input.user.password}" for="password">비밀번호</label>
                     <div th:errors="*{password}" class="filed-error-text">
                     </div>

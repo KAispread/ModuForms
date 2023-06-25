@@ -1,18 +1,15 @@
 package com.modu.ModuForm.app.web.controller.user;
 
 import com.modu.ModuForm.app.domain.user.common.Gender;
-import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.exception.invalid.InvalidUserIdPwException;
 import com.modu.ModuForm.app.service.user.UserAccountService;
 import com.modu.ModuForm.app.service.user.UserServiceImpl;
-import com.modu.ModuForm.app.web.config.auth.jwt.JwtHandler;
-import com.modu.ModuForm.app.web.dto.user.LoginRequest;
 import com.modu.ModuForm.app.web.dto.user.UserDetails;
 import com.modu.ModuForm.app.web.dto.user.UserRegister;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,11 +17,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
 
 @Api(tags = "User DATA handling API")
 @Slf4j
@@ -34,7 +29,6 @@ import static com.modu.ModuForm.app.web.config.auth.jwt.JwtCookie.ENCRYPT;
 public class UserController {
     private final UserServiceImpl userService;
     private final UserAccountService userAccountService;
-    private final JwtHandler jwtHandler;
 
     @Operation(summary = "회원가입", description = "회원가입 요청을 처리합니다.")
     @PostMapping
@@ -51,38 +45,13 @@ public class UserController {
         return "redirect:/users/login";
     }
 
-    @Operation(summary = "로그인 요청 처리", description = "JWT 로그인 요청을 처리합니다.")
-    @PostMapping("/logins")
-    public String loginJwt(@Validated @ModelAttribute(name = "login") LoginRequest loginRequest, BindingResult bindingResult,
-                           @RequestParam(defaultValue = "/") String redirectURL,
-                           HttpServletResponse response) {
-        if (bindingResult.hasErrors()) {
-            log.warn("error={}", bindingResult);
-            return "user/loginForm";
-        }
-
-        User user;
-        try {
-            user = userService.login(loginRequest).getUsers();
-        } catch (InvalidUserIdPwException IdPwException) {
-            bindingResult.reject("login", null, "아이디나 비밀번호가 맞지 않습니다.");
-            log.warn("login error={}", bindingResult);
-            return "user/loginForm";
-        }
-
-        response.addCookie(jwtHandler.createEncryptJwtCookie(user));
-        return "redirect:" + redirectURL;
-    }
-
     @Operation(summary = "로그아웃 요청 처리", description = "로그아웃 요청을 처리합니다.")
-    @PostMapping("/logouts")
+    @PostMapping("/logout")
     public void logoutJwt(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            log.warn("No Cookies available");
-            return;
-        }
-        jwtHandler.invalidate(ENCRYPT, response);
+        response.setHeader("AuthAT", null);
+        response.setHeader("AuthRT", null);
+
+        SecurityContextHolder.clearContext();
     }
 
     // 회원 정보 수정

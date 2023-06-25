@@ -2,7 +2,7 @@ package com.modu.ModuForm.app.web.config.auth;
 
 import com.modu.ModuForm.app.domain.user.acess.Access;
 import com.modu.ModuForm.app.domain.user.User;
-import com.modu.ModuForm.app.web.config.auth.dto.SessionUser;
+import com.modu.ModuForm.app.web.config.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
